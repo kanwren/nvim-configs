@@ -6,7 +6,7 @@ endif
 let g:loaded_sesh = 1
 
 if !exists('g:sesh_dir') || !g:sesh_dir
-    let g:sesh_dir = stdpath('config') . '/sessions/'
+    let g:sesh_dir = stdpath('data') . '/sessions/'
 endif
 
 function! s:GetSessions(arglead, cmdline, cursorpos) abort

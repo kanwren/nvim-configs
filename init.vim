@@ -84,7 +84,7 @@
 " Spelling and thesaurus
     let $LANG='en'
     set nospell spelllang=en_us
-    let &thesaurus=stdpath('config') . '/thesaurus/mthesaur.txt'
+    let &thesaurus=stdpath('data') . '/thesaurus/mthesaur.txt'
 
 " Timeouts
     " Time out on mappings after 3 seconds
