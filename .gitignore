@@ -1,0 +1,21 @@
+# vim-plug should be downloaded separately
+autoload/plug.vim*
+
+# Temporary files created by vim
+tmp/
+backup/
+undo/
+
+# Plugins managed by vim-plug
+plugged/
+
+# Large files for spelling, etc.
+spell/
+thesaurus/
+
+# Files to save setup between vim sessions
+sessions
+
+# Netrw
+.netrwhist
+.netrwbook
