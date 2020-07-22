@@ -1,7 +1,7 @@
 DOCNAME = foo
 MAIN = $(DOCNAME).tex
 
-SRC = $(glob *.tex)
+SRC = $(wildcard *.tex)
 
 .PHONY: all
 all: $(DOCNAME).pdf
