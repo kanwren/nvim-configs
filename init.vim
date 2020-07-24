@@ -295,7 +295,10 @@
         Plug 'rakr/vim-one'
 
         " LSP
-        "Plug 'neovim/nvim-lsp'
+        Plug 'neovim/nvim-lsp'
+        Plug 'nvim-lua/completion-nvim'
+        Plug 'nvim-lua/diagnostic-nvim'
+        Plug 'SirVer/ultisnips'
 
         " Language-specific plugins
         Plug 'neovimhaskell/haskell-vim', { 'for': 'haskell' }
@@ -320,6 +323,55 @@
 " Netrw
     let g:netrw_banner=0
     let g:netrw_liststyle=3
+
+" LSP setup
+lua << EOF
+  local nvim_lsp = require('nvim_lsp')
+
+  local on_attach = function(_, bufnr)
+    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+    require'diagnostic'.on_attach()
+    require'completion'.on_attach()
+
+    -- Mappings.
+    local opts = { noremap=true, silent=true }
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gK', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>lt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>lr', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>ld', '<cmd>lua vim.lsp.util.show_line_diagnostics()<CR>', opts)
+  end
+
+  local servers = { 'rnix', 'texlab', 'tsserver' }
+  for _, lsp in ipairs(servers) do
+    nvim_lsp[lsp].setup {
+      on_attach = on_attach,
+    }
+  end
+EOF
+
+    let g:completion_enable_snippet = 'UltiSnips'
+    let g:completion_enable_fuzzy_match = 1
+
+    let g:diagnostic_enable_virtual_text = 1
+    let g:diagnostic_trimmed_virtual_text = '30'
+    let g:space_before_virtual_text = 5
+    let g:diagnostic_insert_delay = 1
+
+    " fix conflict between completion-nvim and autopairs
+    let g:completion_confirm_key = ""
+    inoremap <expr> <CR> pumvisible() ? "\<Plug>(completion_confirm_completion)" : "\<CR>"
+
+    set completeopt=menuone,noinsert,noselect
+    inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+    inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+    nnoremap <Leader>lk :PrevDiagnosticCycle<CR>
+    nnoremap <Leader>lj :NextDiagnosticCycle<CR>
 
 " vim-visual-multi
     let g:VM_leader = '\'
