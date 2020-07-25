@@ -381,6 +381,8 @@ EOF
 
 " caw
     let g:caw_operator_keymappings = 1
+    nmap gco <Plug>(caw:jump:comment-next)
+    nmap gcO <Plug>(caw:jump:comment-prev)
 
 " Rooter
     " Don't trigger automatically
