@@ -278,11 +278,12 @@
 
         " Utility
         Plug 'tpope/vim-surround'                " Mappings for inserting/changing/deleting surrounding characters/elements
-        Plug 'tpope/vim-repeat'                  " Repeat more things with .
         Plug 'mg979/vim-visual-multi'            " Multiple cursors (I will happily defend this philosophy)
         Plug 'airblade/vim-rooter'               " cd to project root
         Plug 'tpope/vim-eunuch'                  " File operations
-        Plug 'tpope/vim-commentary'              " Easy commenting
+        Plug 'tyru/caw.vim'                      " Easy commenting
+        Plug 'kana/vim-repeat'                   " Repeat more things with .
+        Plug 'kana/vim-operator-user'            " User-defined operators (needed for caw)
         Plug 'tpope/vim-abolish'                 " Smart substitution, spelling correction, etc.
         Plug 'tommcdo/vim-exchange'              " Operators for exchanging text
         Plug 'jiangmiao/auto-pairs', { 'for': [ 'rust', 'java', 'c', 'cpp', 'javascript', 'typescript' ] }
@@ -377,6 +378,9 @@ EOF
     let g:VM_leader = '\'
     nmap <C-j> <Plug>(VM-Add-Cursor-Down)
     nmap <C-k> <Plug>(VM-Add-Cursor-Up)
+
+" caw
+    let g:caw_operator_keymappings = 1
 
 " Rooter
     " Don't trigger automatically
