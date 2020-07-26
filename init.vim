@@ -340,7 +340,34 @@ lua << EOF
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>ld', '<cmd>lua vim.lsp.util.show_line_diagnostics()<CR>', opts)
   end
 
-  local servers = { 'rnix', 'tsserver', 'html', 'cssls', 'bashls', 'clangd', 'jsonls', 'yamlls', 'texlab' }
+  -- TODO: remove when root_pattern supports this
+  function root_pattern_glob(...)
+    local patterns = vim.tbl_flatten {...}
+    local function matcher(path)
+      for _, pattern in ipairs(patterns) do
+        if nvim_lsp.util.path.exists(vim.fn.glob(nvim_lsp.util.path.join(path, pattern))) then
+          return path
+        end
+      end
+    end
+    return function(startpath)
+      return nvim_lsp.util.search_ancestors(startpath, matcher)
+    end
+  end
+
+  local configs = require'nvim_lsp/configs'
+  if not configs.hls then
+    configs.hls = {
+      default_config = {
+        cmd = { 'haskell-language-server-wrapper', '--lsp' };
+        filetypes = { 'hs', 'lhs', 'haskell', 'lhaskell' };
+        root_dir = root_pattern_glob("*.cabal", "cabal.project", "package.yaml", "stack.yaml", ".git");
+        settings = {};
+      };
+    }
+  end
+
+  local servers = { 'hls', 'rnix', 'tsserver', 'html', 'cssls', 'bashls', 'clangd', 'jsonls', 'yamlls', 'texlab' }
   for _, lsp in ipairs(servers) do
     nvim_lsp[lsp].setup {
       on_attach = on_attach,
