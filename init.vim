@@ -264,13 +264,6 @@
     " It's in the runtime *shrug*
     runtime macros/matchit.vim
 
-    let g:lsp_diagnostics_enabled = 1
-    let g:lsp_signs_enabled = 1
-    let g:lsp_diagnostics_echo_cursor = 1
-    let g:lsp_signs_error = { 'text': '✗' }
-    let g:lsp_signs_warning = { 'text': '!' }
-    let g:lsp_signs_hint = { 'test': '?' }
-
     silent! if !empty(glob(stdpath('data') . '/site/autoload/plug.vim'))
                 \ && plug#begin(stdpath('data') . '/plugged')
         " Functionality
@@ -347,7 +340,7 @@ lua << EOF
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>ld', '<cmd>lua vim.lsp.util.show_line_diagnostics()<CR>', opts)
   end
 
-  local servers = { 'rnix', 'texlab', 'tsserver' }
+  local servers = { 'rnix', 'tsserver', 'html', 'cssls', 'bashls', 'clangd', 'jsonls', 'yamlls', 'texlab' }
   for _, lsp in ipairs(servers) do
     nvim_lsp[lsp].setup {
       on_attach = on_attach,
