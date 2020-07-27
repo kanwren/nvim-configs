@@ -131,7 +131,7 @@
         autocmd ColorScheme * highlight SpecialKey ctermfg=DarkBlue
         autocmd ColorScheme * highlight NonText ctermfg=DarkBlue
         " Highlight completion menu
-        autocmd ColorScheme * highlight Pmenu ctermbg=Black ctermfg=DarkGray
+        autocmd ColorScheme * highlight Pmenu ctermbg=Black ctermfg=LightGray
         autocmd ColorScheme * highlight PmenuSel ctermfg=White
     augroup END
 " }}}
@@ -268,6 +268,7 @@
                 \ && plug#begin(stdpath('data') . '/plugged')
         " Functionality
         Plug 'tpope/vim-fugitive'                " Git integration
+        Plug 'simnalamburt/vim-mundo'            " Undo tree
 
         " Utility
         Plug 'tpope/vim-surround'                " Mappings for inserting/changing/deleting surrounding characters/elements
