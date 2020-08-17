@@ -305,7 +305,7 @@
         Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
         Plug 'jason0x43/vim-js-indent', { 'for': [ 'javascript', 'typescript' ] }
         " Markdowns, etc.
-        Plug 'JamshedVesuna/vim-markdown-preview', { 'for': 'markdown' }
+        Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
         " Misc
         Plug 'PotatoesMaster/i3-vim-syntax', { 'for': 'i3' }
 
@@ -389,8 +389,8 @@ EOF
     let g:diagnostic_insert_delay = 1
 
     " fix conflict between completion-nvim and autopairs
-    let g:completion_confirm_key = ""
-    inoremap <expr> <CR> pumvisible() ? "\<Plug>(completion_confirm_completion)" : "\<CR>"
+    "let g:completion_confirm_key = ""
+    "inoremap <expr> <CR> pumvisible() ? "\<Plug>(completion_confirm_completion)" : "\<CR>"
 
     set completeopt=menuone,noinsert,noselect
     inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -432,13 +432,28 @@ EOF
     let g:hs_highlight_more_types = 1
 
 " markdown-preview
-    let vim_markdown_preview_pandoc = 1
-    let vim_markdown_preview_use_xdg_open = 1
+    let g:mkdp_auto_close = 0
+    let g:mkdp_refresh_slow = 1
+    let g:mkdp_preview_options = {
+        \ 'mkit': {},
+        \ 'katex': {},
+        \ 'uml': {},
+        \ 'maid': {},
+        \ 'disable_sync_scroll': 1,
+        \ 'sync_scroll_type': 'middle',
+        \ 'hide_yaml_meta': 1,
+        \ 'sequence_diagrams': {},
+        \ 'flowchart_diagrams': {},
+        \ 'content_editable': v:false
+        \ }
+    let g:mkdp_page_title = '${name}'
 
 " goyo/limelight
     let g:limelight_conceal_ctermfg = 'darkgray'
+    let g:goyo_width = 80
     function! s:goyo_enter()
         set noshowmode noshowcmd
+        set signcolumn=no foldcolumn=0
         set nolist
         set scrolloff=999
         set wrap breakindent
@@ -447,6 +462,7 @@ EOF
 
     function! s:goyo_leave()
         set showmode showcmd
+        set signcolumn=yes foldcolumn=1
         set list
         set scrolloff=0
         set nowrap nobreakindent
