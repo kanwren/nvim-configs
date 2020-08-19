@@ -1,5 +1,6 @@
-DOCNAME = foo
-MAIN = $(DOCNAME).tex
+snippet texlive
+DOCNAME = ${1}
+MAIN = ${2:$(DOCNAME)}.tex
 
 SRC = $(wildcard *.tex)
 
@@ -16,4 +17,4 @@ watch: $(SRC)
 .PHONY: clean
 clean: $(SRC)
 	latexmk -CA -jobname="$(DOCNAME)" $(MAIN)
-
+endsnippet

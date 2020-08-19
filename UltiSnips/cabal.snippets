@@ -1,0 +1,57 @@
+snippet library
+library
+	exposed-modules:
+	other-modules:
+	build-depends:
+		, base >=4.12.0.0
+	hs-source-dirs:
+		src
+	default-language:
+		Haskell2010
+	ghc-options:
+		-Wall
+		-O2
+endsnippet
+
+snippet executable
+executable ${1}
+	main-is:
+		Main.hs
+	other-modules:
+	build-depends:
+		, ${2:$1}
+		, base
+	hs-source-dirs:
+		${3}
+	default-language:
+		Haskell2010
+	ghc-options:
+		-Wall
+		-O2
+		-rtsopts
+		-threaded
+endsnippet
+
+snippet test
+test-suite ${1}
+	default-language:
+		Haskell2010
+	type:
+		exitcode-stdio-1.0
+	hs-source-dirs:
+		test
+	main-is:
+		Main.hs
+	build-depends:
+		, ${2}
+		, base
+		, tasty
+		, tasty-hunit
+		, hedgehog
+		, tasty-hedgehog
+	ghc-options:
+		-Wall
+		-O2
+		-threaded
+		-rtsopts
+endsnippet

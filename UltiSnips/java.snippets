@@ -1,0 +1,46 @@
+snippet sout
+System.out.println(${1});
+endsnippet
+
+snippet serr
+System.err.println(${1});
+endsnippet
+
+snippet psvm
+public static void main(String[] args) {
+	${0}
+}
+endsnippet
+
+snippet class
+class ${1} {
+	${0}
+}
+endsnippet
+
+snippet classc
+class ${1} {
+	$1(${2}) {
+		${3}
+	}
+}
+endsnippet
+
+snippet interface
+interface ${1} {
+	${0}
+}
+endsnippet
+
+snippet getter
+public ${1} get${2/^./\u$0/}() {
+	return this.${2};
+}
+endsnippet
+
+snippet setter
+public ${1} set${2/^./\u$0/}($1 $2) {
+	this.${2} = $2;
+}
+endsnippet
+

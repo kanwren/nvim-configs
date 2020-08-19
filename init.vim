@@ -143,17 +143,6 @@
     command! WS :execute ':silent w !sudo tee % > /dev/null' | :edit!
     " Show calendar and date/time
     command! Cal :!clear && cal -y; date -R
-
-    function! s:GetTemplates(arglead, cmdline, cursorpos) abort
-        let paths = split(glob(stdpath('config') . '/templates/*.txt'), "\n")
-        let names = map(paths, 'fnamemodify(v:val, ":t:r")')
-        if empty(a:arglead)
-            return names
-        else
-            return filter(names, {idx, val -> len(val) >= len(a:arglead) && val[:len(a:arglead) - 1] ==# a:arglead})
-        endif
-    endfunction
-    command! -bang -nargs=1 -complete=customlist,<SID>GetTemplates ReadTemplate execute 'read ' . stdpath('config') . '/templates/' . <q-args> . '.txt'
 " }}}
 
 " Mappings {{{
@@ -393,11 +382,12 @@ EOF
     "inoremap <expr> <CR> pumvisible() ? "\<Plug>(completion_confirm_completion)" : "\<CR>"
 
     set completeopt=menuone,noinsert,noselect
-    inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-    inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
     nnoremap <Leader>lk :PrevDiagnosticCycle<CR>
     nnoremap <Leader>lj :NextDiagnosticCycle<CR>
+    let g:UltiSnipsExpandTrigger = "<Tab>"
+    let g:UltiSnipsJumpForwardTrigger = "<C-l>"
+    let g:UltiSnipsJumpBackwardTrigger = "<C-b>"
 
 " vim-visual-multi
     let g:VM_leader = '\'

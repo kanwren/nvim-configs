@@ -1,0 +1,49 @@
+snippet notes-preamble
+---
+title: "${1:`strftime("%Y-%m-%d")`}"
+author: "Nicole Prindle"
+date: "${2:`strftime("%a %d %b %Y")`}"
+---
+
+Table of contents:
+[[toc]]
+
+endsnippet
+
+snippet pie-chart
+\`\`\` chart
+{
+	"type": "pie",
+	"data": {
+		"labels": [
+			"Pink",
+			"White",
+			"Blue"
+		],
+		"datasets": [
+			{
+				"data": [
+					300,
+					100,
+					50
+				],
+				"backgroundColor": [
+					"#F7A8B8",
+					"#FFFFFF",
+					"#55CDFC"
+				],
+				"hoverBackgroundColor": [
+					"#F7A8B8",
+					"#FFFFFF",
+					"#55CDFC"
+				]
+			}
+		]
+	},
+	"options": {
+		"animation": { "duration": 0 }
+	}
+}
+\`\`\`
+
+endsnippet

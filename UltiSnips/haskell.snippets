@@ -1,0 +1,56 @@
+snippet #!
+#! /usr/bin/env nix-shell
+#! nix-shell -i runhaskell -p "haskell.packages.ghc${1:8101}.ghcWithPackages (p: with p; [${2}])"
+endsnippet
+
+snippet #lang
+{-# language ${0} #-}
+endsnippet
+
+snippet #inline
+{-# inline ${0} #-}
+endsnippet
+
+snippet #noinline
+{-# noinline ${0} #-}
+endsnippet
+
+snippet #inlinable
+{-# inlinable ${0} #-}
+endsnippet
+
+snippet impq
+import qualified ${0} as ${1}
+endsnippet
+
+snippet newt
+newtype ${1} = ${2:$1} ${0}
+endsnippet
+
+snippet module
+module `substitute(substitute(expand(%:r), '[/\\]', '.', 'g'), '^\%(\1*\.\)\?', '', '')` () where
+endsnippet
+
+snippet main
+main :: IO ()
+main = ${0:pure ()}
+endsnippet
+
+snippet optparse
+import Options.Applicative
+
+data ${1:Args} = $1
+	{ _argsFoo :: Int
+	}
+
+args :: Parser Args
+args = Args
+	<$> do option auto $ short 'f' <> long "foo" <> metavar "FOO" <> help "Foo" <> value 0
+
+parseArgs :: IO Args
+parseArgs = customExecParser parserPrefs $ info (args <**> helper) infoMod
+	where
+		parserPrefs = prefs showHelpOnEmpty
+		infoMod = progDesc "TODO"
+endsnippet
+
