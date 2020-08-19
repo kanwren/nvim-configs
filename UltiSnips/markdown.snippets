@@ -1,13 +1,14 @@
 snippet notes-preamble
 ---
-title: "${1:`strftime("%Y-%m-%d")`}"
+title: "${1:`date +"%Y-%m-%d"`}"
 author: "Nicole Prindle"
-date: "${2:`strftime("%a %d %b %Y")`}"
+date: "${2:`date +"%a %d %b %Y"`}"
 ---
 
 Table of contents:
 [[toc]]
 
+$0
 endsnippet
 
 snippet pie-chart

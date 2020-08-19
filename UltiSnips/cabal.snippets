@@ -3,7 +3,7 @@ library
 	exposed-modules:
 	other-modules:
 	build-depends:
-		, base >=4.12.0.0
+		, base ${1:>=4.12.0.0}
 	hs-source-dirs:
 		src
 	default-language:
@@ -11,6 +11,7 @@ library
 	ghc-options:
 		-Wall
 		-O2
+$0
 endsnippet
 
 snippet executable
@@ -30,6 +31,7 @@ executable ${1}
 		-O2
 		-rtsopts
 		-threaded
+$0
 endsnippet
 
 snippet test
@@ -54,4 +56,5 @@ test-suite ${1}
 		-O2
 		-threaded
 		-rtsopts
+$0
 endsnippet
