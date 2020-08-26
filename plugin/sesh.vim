@@ -21,6 +21,9 @@ endfunction
 
 " Saving a session
 function! s:MkSession(bang, ...) abort
+    if !isdirectory(g:sesh_dir)
+        call mkdir(g:sesh_dir, 'p')
+    endif
     if a:0 > 0
         execute "mksession" . a:bang . " " . g:sesh_dir . '/' . a:1 . ".vim"
         echo "Saved session to " . g:sesh_dir . '/' . a:1 . ".vim"
