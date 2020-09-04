@@ -258,6 +258,7 @@
         " Functionality
         Plug 'tpope/vim-fugitive'                " Git integration
         Plug 'simnalamburt/vim-mundo'            " Undo tree
+        Plug 'editorconfig/editorconfig-vim'
 
         " Utility
         Plug 'tpope/vim-surround'                " Mappings for inserting/changing/deleting surrounding characters/elements
@@ -282,12 +283,16 @@
 
         " LSP
         Plug 'neovim/nvim-lsp'
-        Plug 'nvim-lua/completion-nvim'
+        "Plug 'neovim/nvim-lspconfig'
         Plug 'nvim-lua/diagnostic-nvim'
+        Plug 'nvim-lua/completion-nvim'
+        Plug 'nvim-lua/lsp-status.nvim'
+        "Plug 'steelsojka/completion-buffers'
         Plug 'SirVer/ultisnips'
 
         " Language-specific plugins
         Plug 'neovimhaskell/haskell-vim', { 'for': 'haskell' }
+        Plug 'Twinside/vim-hoogle', { 'for': 'haskell' }
         Plug 'rust-lang/rust.vim', { 'for': 'rust' }
         Plug 'LnL7/vim-nix', { 'for': 'nix' }
         " Typescript/Javascript
@@ -297,6 +302,8 @@
         Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
         " Misc
         Plug 'PotatoesMaster/i3-vim-syntax', { 'for': 'i3' }
+
+        Plug 'tidalcycles/vim-tidal'
 
         " Collection of language packs
         " This should be loaded after language-specific plugins
@@ -311,80 +318,17 @@
     let g:netrw_liststyle=3
 
 " LSP setup
-lua << EOF
-  local nvim_lsp = require('nvim_lsp')
-
-  local on_attach = function(_, bufnr)
-    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-    require'diagnostic'.on_attach()
-    require'completion'.on_attach()
-
-    -- Mappings.
-    local opts = { noremap=true, silent=true }
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>ld', '<cmd>lua vim.lsp.util.show_line_diagnostics()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-]>', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '1gD', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gK', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>lr', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'g0', '<cmd>lua vim.lsp.buf.document_symbol()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gW', '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>', opts)
-  end
-
-  -- TODO: remove when root_pattern supports this
-  function root_pattern_glob(...)
-    local patterns = vim.tbl_flatten {...}
-    local function matcher(path)
-      for _, pattern in ipairs(patterns) do
-        if nvim_lsp.util.path.exists(vim.fn.glob(nvim_lsp.util.path.join(path, pattern))) then
-          return path
-        end
-      end
-    end
-    return function(startpath)
-      return nvim_lsp.util.search_ancestors(startpath, matcher)
-    end
-  end
-
-  local configs = require'nvim_lsp/configs'
-  if not configs.hls then
-    configs.hls = {
-      default_config = {
-        cmd = { 'haskell-language-server-wrapper', '--lsp' };
-        filetypes = { 'hs', 'lhs', 'haskell', 'lhaskell' };
-        root_dir = root_pattern_glob("*.cabal", "cabal.project", "package.yaml", "stack.yaml", ".git");
-        settings = {};
-      };
-    }
-  end
-
-  local servers = { 'hls', 'rnix', 'tsserver', 'html', 'cssls', 'bashls', 'clangd', 'jsonls', 'yamlls', 'texlab' }
-  for _, lsp in ipairs(servers) do
-    nvim_lsp[lsp].setup {
-      on_attach = on_attach,
-    }
-  end
-EOF
-
+    lua require('lsp-configs')
+    set completeopt=menuone,noinsert,noselect
     let g:completion_enable_snippet = 'UltiSnips'
     let g:completion_enable_fuzzy_match = 1
+    let g:completion_confirm_key = "\<C-y>"
 
     let g:diagnostic_enable_virtual_text = 1
     let g:diagnostic_trimmed_virtual_text = '30'
     let g:space_before_virtual_text = 5
     let g:diagnostic_insert_delay = 1
 
-    " fix conflict between completion-nvim and autopairs
-    "let g:completion_confirm_key = ""
-    "inoremap <expr> <CR> pumvisible() ? "\<Plug>(completion_confirm_completion)" : "\<CR>"
-
-    set completeopt=menuone,noinsert,noselect
-
-    nnoremap <Leader>lk :PrevDiagnosticCycle<CR>
-    nnoremap <Leader>lj :NextDiagnosticCycle<CR>
     let g:UltiSnipsExpandTrigger = "<Tab>"
     let g:UltiSnipsJumpForwardTrigger = "<C-l>"
     let g:UltiSnipsJumpBackwardTrigger = "<C-b>"
