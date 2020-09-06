@@ -283,7 +283,7 @@
 
         " LSP
         Plug 'neovim/nvim-lsp'
-        "Plug 'neovim/nvim-lspconfig'
+        Plug 'neovim/nvim-lspconfig'
         Plug 'nvim-lua/diagnostic-nvim'
         Plug 'nvim-lua/completion-nvim'
         Plug 'nvim-lua/lsp-status.nvim'
@@ -337,6 +337,21 @@
     let g:VM_leader = '\'
     nmap <C-j> <Plug>(VM-Add-Cursor-Down)
     nmap <C-k> <Plug>(VM-Add-Cursor-Up)
+
+" fugitive
+    " open git status pane for staging/committing/etc.
+    nnoremap <Leader>gs :Gstatus<CR>
+    " vertical split with the version at HEAD
+    nnoremap <Leader>gvs :Gvsplit<space>
+    " vertical diff with the version at HEAD
+    " ! focuses on the window with the current version
+    nnoremap <Leader>gvd :Gvdiffsplit!<space>
+    " :cd to repo root
+    nnoremap <Leader>gcd :Gcd<CR>
+    " :lcd (only current window) to repo root
+    nnoremap <Leader>glcd :Glcd<CR>
+    " :write and stage
+    nnoremap <Leader>gw :Gwrite<CR>
 
 " caw
     let g:caw_operator_keymappings = 1

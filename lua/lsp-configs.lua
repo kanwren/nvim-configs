@@ -107,7 +107,7 @@ if not configs.hls then
   }
 end
 
-local servers = { 'hls', 'rnix', 'tsserver', 'html', 'cssls', 'bashls', 'jsonls', 'yamlls', 'texlab' }
+local servers = { 'hls', 'rnix', 'tsserver', 'pyls', 'html', 'cssls', 'bashls', 'jsonls', 'yamlls', 'texlab' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
