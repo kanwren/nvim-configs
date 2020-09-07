@@ -99,16 +99,30 @@ local configs = require'nvim_lsp/configs'
 if not configs.hls then
   configs.hls = {
     default_config = {
-      cmd = { 'haskell-language-server-wrapper', '--lsp' };
-      filetypes = { 'haskell', 'hs', 'lhs', 'lhaskell' };
-      root_dir = root_pattern_glob('hie.yaml', '*.cabal', 'cabal.project', 'package.yaml', 'stack.yaml', '.git');
-      settings = {};
-    };
+      cmd = { 'haskell-language-server-wrapper', '--lsp' },
+      filetypes = { 'haskell', 'hs', 'lhs', 'lhaskell' },
+      root_dir = root_pattern_glob('hie.yaml', '*.cabal', 'cabal.project', 'package.yaml', 'stack.yaml', '.git'),
+      settings = {},
+    },
   }
 end
 
-local servers = { 'hls', 'rnix', 'tsserver', 'pyls', 'html', 'cssls', 'bashls', 'jsonls', 'yamlls', 'texlab' }
-for _, lsp in ipairs(servers) do
+nvim_lsp.pyls.setup {
+  on_attach = on_attach,
+  capabilities = lsp_status.capabilities,
+  settings = {
+    pyls = {
+      plugins = {
+        pydocstyle = {
+          enabled = true,
+        }
+      }
+    }
+  }
+}
+
+local other_servers = { 'hls', 'rnix', 'tsserver', 'html', 'cssls', 'bashls', 'jsonls', 'yamlls', 'texlab' }
+for _, lsp in ipairs(other_servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
     capabilities = lsp_status.capabilities,
