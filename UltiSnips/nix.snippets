@@ -52,3 +52,17 @@ texlive.combine {
 }
 endsnippet
 
+snippet ghc-override
+ghcOverride = input: ovl: input.override (old: {
+	overrides = lib.composeExtensions (old.overrides or (_: _: { })) ovl;
+});
+endsnippet
+
+snippet fix-hoogle
+fixGhcWithHoogle = input: ghcOverride input (hself: hsuper: {
+	ghcWithHoogle = selector:
+		hsuper.ghcWithHoogle (ps: builtins.filter (x: x != null) (selector ps));
+	ghc = hsuper.ghc // { withHoogle = hself.ghcWithHoogle; };
+});
+endsnippet
+
