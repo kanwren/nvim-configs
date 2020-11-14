@@ -329,11 +329,6 @@
     let g:completion_enable_fuzzy_match = 1
     let g:completion_confirm_key = "\<C-y>"
 
-    let g:diagnostic_enable_virtual_text = 1
-    let g:diagnostic_trimmed_virtual_text = '30'
-    let g:space_before_virtual_text = 5
-    let g:diagnostic_insert_delay = 1
-
     let g:UltiSnipsExpandTrigger = "<Tab>"
     let g:UltiSnipsJumpForwardTrigger = "<C-l>"
     let g:UltiSnipsJumpBackwardTrigger = "<C-b>"
