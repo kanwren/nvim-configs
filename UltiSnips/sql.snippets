@@ -1,0 +1,13 @@
+snippet mkdb
+drop database if exists ${1};
+create database if not exists $1;
+use $1;
+endsnippet
+
+snippet mktable
+drop table if exists ${1};
+create table $1 (
+	$0
+) engine=innodb;
+endsnippet
+
