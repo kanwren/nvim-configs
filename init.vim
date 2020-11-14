@@ -228,6 +228,8 @@
     nnoremap <Leader><Leader> :GFiles<CR>
     " Search all files
     nnoremap <Leader>ff :Files<CR>
+    " Ripgrep search
+    nnoremap <Leader>fs :Rg<Space>
 "}}}
 
 " Abbreviations {{{
@@ -250,6 +252,8 @@
 " }}}
 
 " Plugins {{{
+    " let g:lc3_detect_asm = 1
+
     " It's in the runtime *shrug*
     runtime macros/matchit.vim
 
@@ -282,7 +286,6 @@
         Plug 'junegunn/limelight.vim'
 
         " LSP
-        Plug 'neovim/nvim-lsp'
         Plug 'neovim/nvim-lspconfig'
         Plug 'nvim-lua/diagnostic-nvim'
         Plug 'nvim-lua/completion-nvim'
@@ -302,8 +305,11 @@
         Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
         " Misc
         Plug 'PotatoesMaster/i3-vim-syntax', { 'for': 'i3' }
+        " Plug 'nprindle/lc3.vim'
 
         Plug 'tidalcycles/vim-tidal'
+
+        Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 
         " Collection of language packs
         " This should be loaded after language-specific plugins
@@ -422,6 +428,17 @@
         autocmd!
         autocmd! User GoyoEnter nested call <SID>goyo_enter()
         autocmd! User GoyoLeave nested call <SID>goyo_leave()
+    augroup END
+
+" firenvim
+    if exists('g:started_by_firenvim')
+      set laststatus=0
+      set signcolumn=no
+    endif
+
+    augroup firenvim_group
+        autocmd!
+        autocmd BufEnter github.com_*.txt set filetype=markdown
     augroup END
 " }}}
 
