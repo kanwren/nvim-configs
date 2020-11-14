@@ -54,16 +54,6 @@ function peek_definition()
   end
 end
 
-function insert_type_signature()
-  local curr_buf = vim.api.nvim_get_current_buf()
-  local curr_row = vim.api.nvim_buf_get_mark(curr_buf, '.')[1]
-  vim.lsp.buf.hover()
-  bufs = vim.api.nvim_list_bufs()
-  new_buf = bufs[#bufs]
-  local type_sig = vim.trim(vim.api.nvim_buf_get_lines(new_buf, 0, 1, false)[1])
-  vim.api.nvim_buf_set_lines(curr_buf, curr_row - 1, curr_row - 1, false, { type_sig })
-end
-
 local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
   completion.on_attach()
