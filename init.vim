@@ -287,7 +287,6 @@
 
         " LSP
         Plug 'neovim/nvim-lspconfig'
-        Plug 'nvim-lua/diagnostic-nvim'
         Plug 'nvim-lua/completion-nvim'
         Plug 'nvim-lua/lsp-status.nvim'
         "Plug 'steelsojka/completion-buffers'

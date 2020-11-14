@@ -1,5 +1,4 @@
 local nvim_lsp = require('nvim_lsp')
-local diagnostic = require('diagnostic')
 local completion = require('completion')
 
 local lsp_status = require('lsp-status')
@@ -55,9 +54,18 @@ function peek_definition()
   end
 end
 
+function insert_type_signature()
+  local curr_buf = vim.api.nvim_get_current_buf()
+  local curr_row = vim.api.nvim_buf_get_mark(curr_buf, '.')[1]
+  vim.lsp.buf.hover()
+  bufs = vim.api.nvim_list_bufs()
+  new_buf = bufs[#bufs]
+  local type_sig = vim.trim(vim.api.nvim_buf_get_lines(new_buf, 0, 1, false)[1])
+  vim.api.nvim_buf_set_lines(curr_buf, curr_row - 1, curr_row - 1, false, { type_sig })
+end
+
 local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-  diagnostic.on_attach()
   completion.on_attach()
   lsp_status.on_attach(client, bufnr)
 
@@ -80,32 +88,14 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', ']d', ':NextDiagnosticCycle<CR>', opts)
 end
 
--- TODO: remove when root_pattern supports this
-function root_pattern_glob(...)
-  local patterns = vim.tbl_flatten {...}
-  local function matcher(path)
-    for _, pattern in ipairs(patterns) do
-      if nvim_lsp.util.path.exists(vim.fn.glob(nvim_lsp.util.path.join(path, pattern))) then
-        return path
-      end
-    end
-  end
-  return function(startpath)
-    return nvim_lsp.util.search_ancestors(startpath, matcher)
-  end
-end
-
-local configs = require'nvim_lsp/configs'
-if not configs.hls then
-  configs.hls = {
-    default_config = {
-      cmd = { 'haskell-language-server-wrapper', '--lsp' },
-      filetypes = { 'haskell', 'hs', 'lhs', 'lhaskell' },
-      root_dir = root_pattern_glob('hie.yaml', '*.cabal', 'cabal.project', 'package.yaml', 'stack.yaml', '.git'),
-      settings = {},
-    },
-  }
-end
+nvim_lsp.hls.setup {
+  on_attach = on_attach,
+  capabilities = lsp_status.capabilities,
+  root_dir = function(fname)
+    return nvim_lsp.util.root_pattern('hie.yaml', '*.cabal', 'cabal.project', 'package.yaml', 'stack.yaml', '.git')(fname) or '.'
+  end,
+  settings = {},
+}
 
 nvim_lsp.pyls.setup {
   on_attach = on_attach,
@@ -114,14 +104,14 @@ nvim_lsp.pyls.setup {
     pyls = {
       plugins = {
         pydocstyle = {
-          enabled = true,
+          enabled = false,
         }
       }
     }
   }
 }
 
-local other_servers = { 'hls', 'rnix', 'tsserver', 'html', 'cssls', 'bashls', 'jsonls', 'yamlls', 'texlab' }
+local other_servers = { 'rnix', 'tsserver', 'clangd', 'html', 'cssls', 'bashls', 'jsonls', 'yamlls', 'texlab' }
 for _, lsp in ipairs(other_servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
