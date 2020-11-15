@@ -261,7 +261,7 @@
                 \ && plug#begin(stdpath('data') . '/plugged')
         " Functionality
         Plug 'tpope/vim-fugitive'                " Git integration
-        Plug 'simnalamburt/vim-mundo'            " Undo tree
+        Plug 'airblade/vim-gitgutter'
         Plug 'editorconfig/editorconfig-vim'
 
         " Utility
