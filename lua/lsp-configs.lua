@@ -1,4 +1,4 @@
-local nvim_lsp = require('nvim_lsp')
+local lspconfig = require('lspconfig')
 local completion = require('completion')
 
 local lsp_status = require('lsp-status')
@@ -90,16 +90,16 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
 end
 
-nvim_lsp.hls.setup {
+lspconfig.hls.setup {
   on_attach = on_attach,
   capabilities = lsp_status.capabilities,
   root_dir = function(fname)
-    return nvim_lsp.util.root_pattern('hie.yaml', '*.cabal', 'cabal.project', 'package.yaml', 'stack.yaml', '.git')(fname) or '.'
+    return lspconfig.util.root_pattern('hie.yaml', '*.cabal', 'cabal.project', 'package.yaml', 'stack.yaml', '.git')(fname) or '.'
   end,
   settings = {},
 }
 
-nvim_lsp.pyls.setup {
+lspconfig.pyls.setup {
   on_attach = on_attach,
   capabilities = lsp_status.capabilities,
   settings = {
@@ -115,7 +115,7 @@ nvim_lsp.pyls.setup {
 
 local other_servers = { 'rnix', 'tsserver', 'clangd', 'html', 'cssls', 'bashls', 'jsonls', 'yamlls', 'texlab' }
 for _, lsp in ipairs(other_servers) do
-  nvim_lsp[lsp].setup {
+  lspconfig[lsp].setup {
     on_attach = on_attach,
     capabilities = lsp_status.capabilities,
   }
