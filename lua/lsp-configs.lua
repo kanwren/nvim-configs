@@ -107,6 +107,10 @@ lspconfig.pyls.setup {
       plugins = {
         pydocstyle = {
           enabled = false,
+        },
+        pycodestyle = {
+          enable = true,
+          ignore = { "E111", "E501", "E302", "W391" },
         }
       }
     }
