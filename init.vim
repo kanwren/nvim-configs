@@ -67,7 +67,7 @@
     set nowrap
     set textwidth=80
     set colorcolumn=+1
-    set formatoptions=croqjln
+    set formatoptions=croqjlnt
 
 " Searching
     set hlsearch incsearch               " enabled by default
@@ -304,11 +304,11 @@
         Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
         " Misc
         Plug 'PotatoesMaster/i3-vim-syntax', { 'for': 'i3' }
-        " Plug 'nprindle/lc3.vim'
+        Plug 'nprindle/lc3.vim'
 
         Plug 'tidalcycles/vim-tidal'
 
-        Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+        " Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 
         " Collection of language packs
         " This should be loaded after language-specific plugins
