@@ -117,7 +117,7 @@ lspconfig.pyls.setup {
   }
 }
 
-local other_servers = { 'rnix', 'tsserver', 'clangd', 'bashls', 'texlab' }
+local other_servers = { 'rnix', 'tsserver', 'clangd', 'bashls', 'texlab', 'yamlls', 'jsonls', 'html', 'cssls' }
 for _, lsp in ipairs(other_servers) do
   lspconfig[lsp].setup {
     on_attach = on_attach,
