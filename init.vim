@@ -275,7 +275,7 @@
 
         " Utility
         Plug 'tpope/vim-surround'                " Mappings for inserting/changing/deleting surrounding characters/elements
-        Plug 'mg979/vim-visual-multi'            " Multiple cursors (I will happily defend this philosophy)
+        Plug 'mg979/vim-visual-multi'            " Multiple cursors (I will fight about this)
         Plug 'airblade/vim-rooter'               " cd to project root
         Plug 'tpope/vim-eunuch'                  " File operations
         Plug 'tyru/caw.vim'                      " Easy commenting
@@ -291,8 +291,6 @@
 
         " Interface/colorschemes
         Plug 'rakr/vim-one'
-        Plug 'junegunn/goyo.vim'
-        Plug 'junegunn/limelight.vim'
 
         " LSP
         Plug 'neovim/nvim-lspconfig'
@@ -303,21 +301,14 @@
 
         " Language-specific plugins
         Plug 'neovimhaskell/haskell-vim', { 'for': 'haskell' }
-        Plug 'Twinside/vim-hoogle', { 'for': 'haskell' }
         Plug 'rust-lang/rust.vim', { 'for': 'rust' }
         Plug 'LnL7/vim-nix', { 'for': 'nix' }
         " Typescript/Javascript
         Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
         Plug 'jason0x43/vim-js-indent', { 'for': [ 'javascript', 'typescript' ] }
-        " Markdowns, etc.
-        Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
         " Misc
         Plug 'PotatoesMaster/i3-vim-syntax', { 'for': 'i3' }
         Plug 'nprindle/lc3.vim'
-
-        Plug 'tidalcycles/vim-tidal'
-
-        " Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 
         " Collection of language packs
         " This should be loaded after language-specific plugins
@@ -388,61 +379,6 @@
     let g:hs_highlight_debug = 1
     let g:hs_highlight_types = 1
     let g:hs_highlight_more_types = 1
-
-" markdown-preview
-    let g:mkdp_auto_close = 0
-    let g:mkdp_refresh_slow = 1
-    let g:mkdp_preview_options = {
-        \ 'mkit': {},
-        \ 'katex': {},
-        \ 'uml': {},
-        \ 'maid': {},
-        \ 'disable_sync_scroll': 1,
-        \ 'sync_scroll_type': 'middle',
-        \ 'hide_yaml_meta': 1,
-        \ 'sequence_diagrams': {},
-        \ 'flowchart_diagrams': {},
-        \ 'content_editable': v:false
-        \ }
-    let g:mkdp_page_title = '${name}'
-
-" goyo/limelight
-    let g:limelight_conceal_ctermfg = 'darkgray'
-    let g:goyo_width = 80
-    function! s:goyo_enter()
-        set noshowmode noshowcmd
-        set signcolumn=no foldcolumn=0
-        set nolist
-        set scrolloff=999
-        set wrap breakindent
-        Limelight
-    endfunction
-
-    function! s:goyo_leave()
-        set showmode showcmd
-        set signcolumn=yes foldcolumn=1
-        set list
-        set scrolloff=0
-        set nowrap nobreakindent
-        Limelight!
-    endfunction
-
-    augroup goyo_group
-        autocmd!
-        autocmd! User GoyoEnter nested call <SID>goyo_enter()
-        autocmd! User GoyoLeave nested call <SID>goyo_leave()
-    augroup END
-
-" firenvim
-    if exists('g:started_by_firenvim')
-      set laststatus=0
-      set signcolumn=no
-    endif
-
-    augroup firenvim_group
-        autocmd!
-        autocmd BufEnter github.com_*.txt set filetype=markdown
-    augroup END
 " }}}
 
 " Colors {{{
