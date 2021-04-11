@@ -348,9 +348,14 @@
 
 " indentLine
     let g:indentLine_char = '│'
+    nnoremap <Leader>mi :IndentLinesToggle<CR>
+
+" vim-gitgutter
+    nnoremap <Leader>mgg :GitGutterToggle<CR>
+    nnoremap <Leader>mgb :GitGutterBufferToggle<CR>
 
 " nvim-tree
-    map <F2> :NvimTreeToggle<CR>
+    noremap <F2> :NvimTreeToggle<CR>
     let g:nvim_tree_disable_netrw = 0    " don't disable netrw
     let g:nvim_tree_auto_close = 1       " close if last window open
 
