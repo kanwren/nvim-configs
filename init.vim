@@ -67,7 +67,7 @@
     set nowrap
     set textwidth=80
     set colorcolumn=+1
-    set formatoptions=croqjlnt
+    set formatoptions=croqjln
 
 " Searching
     set hlsearch incsearch               " enabled by default
@@ -128,8 +128,9 @@
         autocmd ColorScheme * highlight Todo ctermbg=DarkRed ctermfg=LightGray
         autocmd ColorScheme * highlight SpellBad cterm=underline ctermfg=red
         " Highlight listchars and non-printable characters
-        autocmd ColorScheme * highlight SpecialKey ctermfg=DarkBlue
-        autocmd ColorScheme * highlight NonText ctermfg=DarkBlue
+        autocmd ColorScheme * highlight SpecialKey ctermfg=LightBlue
+        autocmd ColorScheme * highlight NonText ctermfg=LightBlue
+        autocmd ColorScheme * highlight Whitespace ctermfg=LightBlue
         " Highlight completion menu
         autocmd ColorScheme * highlight Pmenu ctermbg=Black ctermfg=LightGray
         autocmd ColorScheme * highlight PmenuSel ctermfg=White
