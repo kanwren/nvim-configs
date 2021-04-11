@@ -11,6 +11,11 @@
         if !isdirectory(d) | call mkdir(d, 'p') | endif
     endfor
 
+" Colors
+    if has("termguicolors")
+        set termguicolors
+    endif
+
 " Diff algorithm
     set diffopt+=internal,algorithm:patience
 
@@ -126,7 +131,7 @@
         autocmd ColorScheme * highlight ColorColumn ctermbg=DarkGray guibg=#282c34
         " Highlight TODO and spelling mistakes in intentionally red
         autocmd ColorScheme * highlight Todo ctermbg=DarkRed ctermfg=LightGray guibg=DarkRed guifg=LightGray
-        autocmd ColorScheme * highlight SpellBad cterm=underline ctermfg=red gui=underline guifg=red
+        autocmd ColorScheme * highlight SpellBad cterm=underline ctermfg=Red gui=underline guifg=Red
         " Highlight listchars and non-printable characters
         autocmd ColorScheme * highlight SpecialKey ctermfg=LightBlue guifg=#1f75fe
         autocmd ColorScheme * highlight NonText ctermfg=LightBlue guifg=#1f75fe
@@ -293,6 +298,7 @@
         Plug 'Yggdroot/indentLine'
         Plug 'kyazdani42/nvim-web-devicons'
         Plug 'kyazdani42/nvim-tree.lua'
+        Plug 'norcalli/nvim-colorizer.lua'
 
         " LSP
         Plug 'neovim/nvim-lspconfig'
@@ -348,6 +354,9 @@
     let g:nvim_tree_disable_netrw = 0    " don't disable netrw
     let g:nvim_tree_auto_close = 1       " close if last window open
 
+" nvim-colorizer
+    lua require'colorizer'.setup { 'css'; 'javascript'; 'typescript'; 'html'; 'vim'; }
+
 " fugitive
     " open git status pane for staging/committing/etc.
     nnoremap <Leader>gs :Gstatus<CR>
@@ -397,9 +406,6 @@
     let &t_EI.="\e[1 q"
     let &t_te.="\e[0 q"
 
-    if has("termguicolors")
-        set termguicolors
-    endif
     colorscheme onedark
 " }}}
 
