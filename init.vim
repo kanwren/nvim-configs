@@ -78,7 +78,7 @@
 " Folds
     set foldenable
     set foldmethod=manual
-    set foldcolumn=1
+    " set foldcolumn=1
     set foldlevelstart=99
 
 " Spelling and thesaurus
@@ -115,25 +115,25 @@
     augroup highlight_group
         autocmd!
         " Highlight trailing whitespace
-        autocmd ColorScheme * highlight ExtraWhitespace ctermbg=DarkBlue
+        autocmd ColorScheme * highlight ExtraWhitespace ctermbg=DarkBlue guibg=#1f75fe
         " Left column
         autocmd ColorScheme *
-                    \   highlight FoldColumn ctermbg=NONE
-                    \ | highlight Folded ctermbg=NONE ctermfg=DarkCyan
-                    \ | highlight LineNr ctermbg=NONE ctermfg=DarkCyan
-                    \ | highlight CursorLineNr ctermbg=NONE ctermfg=LightGray
+                    \   highlight FoldColumn ctermbg=NONE guibg=NONE
+                    \ | highlight Folded ctermbg=NONE ctermfg=DarkCyan guibg=NONE guifg=LightBlue
+                    \ | highlight LineNr ctermbg=NONE ctermfg=DarkCyan guibg=NONE guifg=DarkCyan
+                    \ | highlight CursorLineNr ctermbg=NONE ctermfg=LightGray guibg=NONE guifg=LightGray
         " Highlight text width boundary boundary
-        autocmd ColorScheme * highlight ColorColumn ctermbg=DarkGray
+        autocmd ColorScheme * highlight ColorColumn ctermbg=DarkGray guibg=#282c34
         " Highlight TODO and spelling mistakes in intentionally red
-        autocmd ColorScheme * highlight Todo ctermbg=DarkRed ctermfg=LightGray
-        autocmd ColorScheme * highlight SpellBad cterm=underline ctermfg=red
+        autocmd ColorScheme * highlight Todo ctermbg=DarkRed ctermfg=LightGray guibg=DarkRed guifg=LightGray
+        autocmd ColorScheme * highlight SpellBad cterm=underline ctermfg=red gui=underline guifg=red
         " Highlight listchars and non-printable characters
-        autocmd ColorScheme * highlight SpecialKey ctermfg=LightBlue
-        autocmd ColorScheme * highlight NonText ctermfg=LightBlue
-        autocmd ColorScheme * highlight Whitespace ctermfg=LightBlue
+        autocmd ColorScheme * highlight SpecialKey ctermfg=LightBlue guifg=#1f75fe
+        autocmd ColorScheme * highlight NonText ctermfg=LightBlue guifg=#1f75fe
+        autocmd ColorScheme * highlight Whitespace ctermfg=LightBlue guifg=Cyan
         " Highlight completion menu
-        autocmd ColorScheme * highlight Pmenu ctermbg=Black ctermfg=LightGray
-        autocmd ColorScheme * highlight PmenuSel ctermfg=White
+        autocmd ColorScheme * highlight Pmenu ctermbg=Black ctermfg=LightGray guibg=Black guifg=LightGray
+        autocmd ColorScheme * highlight PmenuSel ctermfg=White guifg=White
     augroup END
 " }}}
 
@@ -294,9 +294,6 @@
         Plug 'kyazdani42/nvim-web-devicons'
         Plug 'kyazdani42/nvim-tree.lua'
 
-        " Colorschemes
-        Plug 'rakr/vim-one'
-
         " LSP
         Plug 'neovim/nvim-lspconfig'
         Plug 'nvim-lua/completion-nvim'
@@ -400,7 +397,10 @@
     let &t_EI.="\e[1 q"
     let &t_te.="\e[0 q"
 
-    colorscheme one
+    if has("termguicolors")
+        set termguicolors
+    endif
+    colorscheme onedark
 " }}}
 
 set secure
