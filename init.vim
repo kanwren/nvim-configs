@@ -270,7 +270,6 @@
                 \ && plug#begin(stdpath('data') . '/plugged')
         " Functionality
         Plug 'tpope/vim-fugitive'                " Git integration
-        Plug 'airblade/vim-gitgutter'
         Plug 'editorconfig/editorconfig-vim'
 
         " Utility
@@ -289,7 +288,13 @@
         Plug 'junegunn/fzf'
         Plug 'junegunn/fzf.vim'
 
-        " Interface/colorschemes
+        " UI
+        Plug 'airblade/vim-gitgutter'
+        Plug 'Yggdroot/indentLine'
+        Plug 'kyazdani42/nvim-web-devicons'
+        Plug 'kyazdani42/nvim-tree.lua'
+
+        " Colorschemes
         Plug 'rakr/vim-one'
 
         " LSP
@@ -337,6 +342,14 @@
     let g:VM_leader = '\'
     nmap <C-j> <Plug>(VM-Add-Cursor-Down)
     nmap <C-k> <Plug>(VM-Add-Cursor-Up)
+
+" indentLine
+    let g:indentLine_char = '│'
+
+" nvim-tree
+    map <F2> :NvimTreeToggle<CR>
+    let g:nvim_tree_disable_netrw = 0    " don't disable netrw
+    let g:nvim_tree_auto_close = 1       " close if last window open
 
 " fugitive
     " open git status pane for staging/committing/etc.
