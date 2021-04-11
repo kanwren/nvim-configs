@@ -224,6 +224,14 @@
     endfunction
     nnoremap <Leader>i :call <SID>ChangeIndent()<CR>
 
+    function! AppendModeline()
+      let l:modeline = printf(" vim: set ft=%s ts=%d sts=%d sw=%d %set :",
+            \ &filetype, &tabstop, &softtabstop, &shiftwidth, &expandtab ? '' : 'no')
+      let l:modeline = substitute(&commentstring, "%s", l:modeline, "")
+      call append(line("$"), l:modeline)
+    endfunction
+    command! Modeline :call AppendModeline()
+
 " fzf mappings (<Leader>f)
     " Search all git ls-files files
     nnoremap <Leader><Leader> :GFiles<CR>
