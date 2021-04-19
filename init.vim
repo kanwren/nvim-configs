@@ -29,7 +29,7 @@
     set undolevels=10000
 
 " Navigation
-    set mouse-=a
+    set mouse=nv
     set scrolloff=0
 
 " Display
@@ -297,6 +297,7 @@
 
         " UI
         Plug 'airblade/vim-gitgutter'
+        Plug 'wfxr/minimap.vim'
         Plug 'Yggdroot/indentLine'
         Plug 'kyazdani42/nvim-web-devicons'
         Plug 'kyazdani42/nvim-tree.lua'
@@ -352,6 +353,15 @@
     let g:indentLine_char = '│'
     let g:indentLine_defaultGroup = 'IndentLine'
     nnoremap <Leader>mi :IndentLinesToggle<CR>
+
+" minimap
+    let g:minimap_width = 25
+    augroup minimap_group
+        autocmd!
+        autocmd ColorScheme * highlight MinimapSelected guifg=Magenta
+    augroup END
+    let g:minimap_highlight = "MinimapSelected"
+    nnoremap <Leader>mm :MinimapToggle<CR>
 
 " vim-gitgutter
     nnoremap <Leader>mgg :GitGutterToggle<CR>
