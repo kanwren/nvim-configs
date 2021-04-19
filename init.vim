@@ -139,6 +139,8 @@
         " Highlight completion menu
         autocmd ColorScheme * highlight Pmenu ctermbg=Black ctermfg=LightGray guibg=Black guifg=LightGray
         autocmd ColorScheme * highlight PmenuSel ctermfg=White guifg=White
+        " Indent lines
+        autocmd ColorScheme * highlight IndentLine guifg=#111111
     augroup END
 " }}}
 
@@ -348,6 +350,7 @@
 
 " indentLine
     let g:indentLine_char = '│'
+    let g:indentLine_defaultGroup = 'IndentLine'
     nnoremap <Leader>mi :IndentLinesToggle<CR>
 
 " vim-gitgutter
