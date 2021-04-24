@@ -117,6 +117,24 @@ lspconfig.pyls.setup {
   }
 }
 
+lspconfig.rust_analyzer.setup({
+  on_attach=on_attach,
+  settings = {
+    ["rust-analyzer"] = {
+      assist = {
+        importMergeBehavior = "last",
+        importPrefix = "by_self",
+      },
+      cargo = {
+        loadOutDirsFromCheck = true,
+      },
+      procMacro = {
+        enable = true,
+      },
+    }
+  }
+})
+
 local other_servers = { 'rnix', 'tsserver', 'clangd', 'bashls', 'texlab', 'yamlls', 'jsonls', 'html', 'cssls' }
 for _, lsp in ipairs(other_servers) do
   lspconfig[lsp].setup {
