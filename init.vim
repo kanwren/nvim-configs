@@ -184,6 +184,8 @@
     nnoremap <Leader>t :Scratch<CR>
     " Run makeprg and automatically return
     nnoremap m<CR> :make<CR><CR>
+    " Because I type it way too often
+    nnoremap <Leader>w :w<CR>
 
 " Managing Whitespace
     " Delete trailing whitespace and retab
@@ -240,12 +242,14 @@
     command! Modeline :call AppendModeline()
 
 " fzf mappings (<Leader>f)
-    " Search all git ls-files files
-    nnoremap <Leader><Leader> :GFiles<CR>
     " Search all files
     nnoremap <Leader>ff :Files<CR>
+    " Search all git ls-files files
+    nnoremap <Leader>fg :GFiles<CR>
     " Ripgrep search
     nnoremap <Leader>fs :Rg<Space>
+    " Same as <Leader>fg since it's so common
+    nnoremap <Leader><Leader> :GFiles<CR>
 "}}}
 
 " Abbreviations {{{
@@ -352,7 +356,7 @@
 " indentLine
     let g:indentLine_char = '│'
     let g:indentLine_defaultGroup = 'IndentLine'
-    nnoremap <Leader>mi :IndentLinesToggle<CR>
+    nnoremap <Leader>ui :IndentLinesToggle<CR>
 
 " minimap
     let g:minimap_width = 25
@@ -361,14 +365,14 @@
         autocmd ColorScheme * highlight MinimapSelected guifg=Magenta
     augroup END
     let g:minimap_highlight = "MinimapSelected"
-    nnoremap <Leader>mm :MinimapToggle<CR>
+    nnoremap <Leader>umm :MinimapToggle<CR>
 
 " vim-gitgutter
-    nnoremap <Leader>mgg :GitGutterToggle<CR>
-    nnoremap <Leader>mgb :GitGutterBufferToggle<CR>
+    nnoremap <Leader>ugg :GitGutterToggle<CR>
+    nnoremap <Leader>ugb :GitGutterBufferToggle<CR>
 
 " nvim-tree
-    noremap <F2> :NvimTreeToggle<CR>
+    noremap <Leader>ut :NvimTreeToggle<CR>
     let g:nvim_tree_disable_netrw = 0    " don't disable netrw
     let g:nvim_tree_auto_close = 1       " close if last window open
 

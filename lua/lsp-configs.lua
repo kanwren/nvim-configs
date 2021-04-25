@@ -88,6 +88,9 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gW', '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+  -- management
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>lx', '<cmd>LspStop<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>lX', '<cmd>LspRestart<CR>', opts)
 end
 
 lspconfig.hls.setup {
