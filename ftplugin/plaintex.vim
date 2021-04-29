@@ -1,3 +1,6 @@
+" Fix bug with indentLine hiding chars
+setlocal conceallevel=0
+
 setlocal makeprg=pdflatex\ -quiet\ -aux-directory=%:h\ -output-directory\ %:h\ %
 
 setlocal expandtab
