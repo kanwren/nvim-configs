@@ -272,7 +272,7 @@
 " }}}
 
 " Plugins {{{
-    " let g:lc3_detect_asm = 1
+    let g:lc3_detect_asm = 1
 
     " It's in the runtime *shrug*
     runtime macros/matchit.vim
@@ -324,6 +324,9 @@
         " Misc
         Plug 'PotatoesMaster/i3-vim-syntax', { 'for': 'i3' }
         Plug 'nprindle/lc3.vim'
+
+        " Colorschemes
+        Plug 'romainl/vim-dichromatic'          " For taking screenshots that might be read by colorblind students
 
         " Collection of language packs
         " This should be loaded after language-specific plugins
