@@ -138,7 +138,7 @@ lspconfig.rust_analyzer.setup({
   }
 })
 
-local other_servers = { 'rnix', 'tsserver', 'clangd', 'bashls', 'texlab', 'yamlls', 'jsonls', 'html', 'cssls' }
+local other_servers = { 'rnix', 'tsserver', 'clangd', 'texlab' }
 for _, lsp in ipairs(other_servers) do
   lspconfig[lsp].setup {
     on_attach = on_attach,
