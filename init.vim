@@ -357,6 +357,7 @@
     nmap <C-k> <Plug>(VM-Add-Cursor-Up)
 
 " indentLine
+    let g:indentLine_enabled = 0
     let g:indentLine_char = '│'
     let g:indentLine_defaultGroup = 'IndentLine'
     nnoremap <Leader>ui :IndentLinesToggle<CR>
