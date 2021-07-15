@@ -76,6 +76,7 @@
 
 " Searching
     set hlsearch incsearch               " enabled by default
+    set inccommand=nosplit               " (neovim) show :s effects as you type
     set magic
     set noignorecase smartcase
     set showmatch
@@ -324,6 +325,7 @@
         " Misc
         Plug 'PotatoesMaster/i3-vim-syntax', { 'for': 'i3' }
         Plug 'nprindle/lc3.vim'
+        Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
 
         " Colorschemes
         Plug 'romainl/vim-dichromatic'          " For taking screenshots that might be read by colorblind students
@@ -406,6 +408,13 @@
 " Rooter
     " Don't trigger automatically
     let g:rooter_manual_only = 1
+
+" markdown-preview
+    let g:mkdp_auto_close = 0"
+    let g:mkdp_preview_options = {
+                \ 'disable_sync_scroll': 1,
+                \ 'hide_yaml_meta': 0,
+                \ }
 
 " haskell-vim
     let g:haskell_enable_quantification = 1   " `forall`
