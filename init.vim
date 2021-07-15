@@ -245,17 +245,7 @@
       call append(line("$"), l:modeline)
     endfunction
     command! Modeline :call AppendModeline()
-
-" fzf mappings (<Leader>f)
-    " Search all files
-    nnoremap <Leader>ff :Files<CR>
-    " Search all git ls-files files
-    nnoremap <Leader>fg :GFiles<CR>
-    " Ripgrep search
-    nnoremap <Leader>fs :Rg<Space>
-    " Same as <Leader>fg since it's so common
-    nnoremap <Leader><Leader> :GFiles<CR>
-"}}}
+" }}}
 
 " Abbreviations {{{
 " Common sequences
@@ -301,8 +291,9 @@
         Plug 'jiangmiao/auto-pairs', { 'for': [ 'rust', 'java', 'c', 'cpp', 'javascript', 'typescript' ] }
 
         " Fuzzy finding
-        Plug 'junegunn/fzf'
-        Plug 'junegunn/fzf.vim'
+        Plug 'nvim-lua/popup.nvim'
+        Plug 'nvim-lua/plenary.nvim'
+        Plug 'nvim-telescope/telescope.nvim'
 
         " UI
         Plug 'airblade/vim-gitgutter'
@@ -345,6 +336,21 @@
 " Netrw
     let g:netrw_banner=0
     let g:netrw_liststyle=3
+
+" telescope mappings (<Leader>f)
+    nnoremap <Leader>ff <cmd>Telescope find_files<CR>
+    nnoremap <Leader>fg <cmd>Telescope git_files<CR>
+    nnoremap <Leader><Leader> <cmd>Telescope git_files<CR>
+    nnoremap <Leader>fr <cmd>Telescope live_grep<CR>
+    nnoremap <Leader>fK <cmd>Telescope grep_string<CR>
+    nnoremap <Leader>fo <cmd>Telescope oldfiles<CR>
+    nnoremap <Leader>fe <cmd>Telescope file_browser<CR>
+    nnoremap <Leader>fb <cmd>Telescope buffers<CR>
+    nnoremap <Leader>ft <cmd>Telescope tags<CR>
+    nnoremap <Leader>fh <cmd>Telescope help_tags<CR>
+    nnoremap <Leader>fm <cmd>Telescope keymaps<CR>
+    nnoremap <Leader>fz <cmd>Telescope spell_suggest<CR>
+    " TODO: configure lsp-related telescope pickers
 
 " LSP setup
     lua require('lsp-configs')
