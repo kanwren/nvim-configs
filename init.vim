@@ -152,6 +152,10 @@
     command! WS :execute ':silent w !sudo tee % > /dev/null' | :edit!
     " Show calendar and date/time
     command! Cal :!clear && cal -y; date -R
+
+    function! RandomSha() abort
+        return trim(system("fold -w 256 /dev/urandom | head -n1 | sha256sum | awk '{print $1}'"))
+    endfunction
 " }}}
 
 " Mappings {{{
