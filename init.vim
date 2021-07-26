@@ -295,6 +295,8 @@
         Plug 'nvim-lua/plenary.nvim'
         Plug 'nvim-telescope/telescope.nvim'
 
+        Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
+
         " UI
         Plug 'airblade/vim-gitgutter'
         Plug 'wfxr/minimap.vim'
