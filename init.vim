@@ -164,6 +164,19 @@
     map <Space> <nop>
     map <S-Space> <Space>
     let mapleader=" "
+    " Note: leader mappings fall into the following groups:
+    " - <Leader>l - LSP
+    " - <Leader>g - git (fugitive and gitgutter)
+    " - <Leader>f - telescope; find files, grep, etc.
+    " - <Leader>o - option changes; indentation, etc.
+    " - <Leader>s - session operations
+    " - <Leader>u - enabling/disabling UI settings
+    " - <Leader>i - misc. common editing operations
+    " - <Leader>b - operations on buffers
+    " with the following special top-level mappings for common operations:
+    " - <Leader>d - open file drawer
+    " - <Leader>r - register-to-register copy
+    " - <Leader><Tab> - retab and remove trailing whitespace
 
 " Essential
     " Work by visual line without a count, but normal when used with one
@@ -180,30 +193,32 @@
     nnoremap <silent> * :let wv=winsaveview()<CR>*:call winrestview(wv)<CR>
     nnoremap <silent> # :let wv=winsaveview()<CR>#:call winrestview(wv)<CR>
 
+" Buffers
+    nnoremap <Leader>bn :bnext<CR>
+    nnoremap <Leader>bp :bprevious<CR>
+    nnoremap <Leader>bd :bdelete<CR>
+    nnoremap <Leader>bx :bdelete!<CR>
+    " Show buffers and prompt for a buffer command
+    nnoremap <Leader>b<Space> :buffers<CR>:b
+    " Open a temporary unlisted scratch buffer
+    nnoremap <Leader>bt :Scratch<CR>
+
 " Editing
     " Split current line by provided regex (\zs or \ze to preserve separators)
     nnoremap gs :s//\r/g<Left><Left><Left><Left><Left>
     " Start a visual substitute
     xnoremap gs :s/\%V
-    " Open a temporary unlisted scratch buffer
-    nnoremap <Leader>t :Scratch<CR>
-    " Run makeprg and automatically return
-    nnoremap m<CR> :make<CR><CR>
-    " Because I type it way too often
-    nnoremap <Leader>w :w<CR>
-
-" Managing Whitespace
     " Delete trailing whitespace and retab
     nnoremap <silent> <Leader><Tab> :let wv=winsaveview()<CR>:keeppatterns %s/\s\+\ze\r\=$//e \| nohlsearch \| retab<CR>:call winrestview(wv) \| unlet wv<CR>
     " Add blank line below/above line/selection, keep cursor in same position (can take count)
-    nnoremap <silent> <Leader>n :<C-u>call append(line("."), repeat([''], v:count1)) \| call append(line(".") - 1, repeat([''], v:count1))<CR>
+    nnoremap <silent> <Leader>in :<C-u>call append(line("."), repeat([''], v:count1)) \| call append(line(".") - 1, repeat([''], v:count1))<CR>
     " Expand line by padding visual block selection with spaces
     function! s:Expand() abort
         let l = getpos("'<")
         let r = getpos("'>")
         execute 'normal gv' . (abs(r[2] + r[3] - l[2] - l[3]) + 1) . 'I '
     endfunction
-    vnoremap <Leader>e <Esc>:call <SID>Expand()<CR>
+    vnoremap <Leader>ie <Esc>:call <SID>Expand()<CR>
 
 " Registers
     " Copy contents of register to another (provides ' as an alias for ")
@@ -225,8 +240,13 @@
     endfor
 
 " Quick settings changes
+    " Edit vimrc
+    nnoremap <Leader>ov :e $MYVIMRC<CR>
     " Filetype ftplugin editing
-    nnoremap <expr> <Leader>vf ':edit ' . stdpath('config') . '/ftplugin/<C-r>=&filetype<CR>.vim<CR>'
+    command! FTPlugin execute ':edit ' . stdpath('config') . '/ftplugin/' . &filetype . '.vim'
+    nnoremap <Leader>of :FTPlugin<CR>
+    " Edit snippets for filetype
+    nnoremap <Leader>os :UltiSnipsEdit<CR>
     " Change indent level on the fly
     function s:ChangeIndent() abort
         let i=input('ts=sts=sw=')
@@ -236,7 +256,7 @@
         redraw
         echo 'ts=' . &tabstop . ', sts=' . &softtabstop . ', sw='  . &shiftwidth . ', et='  . &expandtab
     endfunction
-    nnoremap <Leader>i :call <SID>ChangeIndent()<CR>
+    nnoremap <Leader>oi :call <SID>ChangeIndent()<CR>
 
     function! AppendModeline()
       let l:modeline = printf(" vim: set ft=%s ts=%d sts=%d sw=%d %set :",
@@ -245,6 +265,14 @@
       call append(line("$"), l:modeline)
     endfunction
     command! Modeline :call AppendModeline()
+
+" UI toggles
+    nnoremap <Leader>uw :set wrap!<CR>
+    nnoremap <Leader>unn :set number!<CR>
+    nnoremap <Leader>unr :set relativenumber!<CR>
+    nnoremap <expr> <Leader>usl (':set laststatus=' . (&laststatus == 0 ? '2' : '0') . '<CR>')
+    nnoremap <expr> <Leader>usc (':set signcolumn=' . (&signcolumn == 'no' ? 'yes' : 'no'))
+    nnoremap <Leader>ul :set list!<CR>
 " }}}
 
 " Abbreviations {{{
@@ -295,8 +323,6 @@
         Plug 'nvim-lua/plenary.nvim'
         Plug 'nvim-telescope/telescope.nvim'
 
-        Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
-
         " UI
         Plug 'airblade/vim-gitgutter'
         Plug 'wfxr/minimap.vim'
@@ -311,6 +337,8 @@
         Plug 'nvim-lua/lsp-status.nvim'
         "Plug 'steelsojka/completion-buffers'
         Plug 'SirVer/ultisnips'
+
+        Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 
         " Language-specific plugins
         Plug 'neovimhaskell/haskell-vim', { 'for': 'haskell' }
@@ -352,6 +380,12 @@
     nnoremap <Leader>fh <cmd>Telescope help_tags<CR>
     nnoremap <Leader>fm <cmd>Telescope keymaps<CR>
     nnoremap <Leader>fz <cmd>Telescope spell_suggest<CR>
+    nnoremap <Leader>fcg <cmd>Telescope git_commits<CR>
+    nnoremap <Leader>fcb <cmd>Telescope git_bcommits<CR>
+    nnoremap <Leader>f: <cmd>Telescope commands<CR>
+    nnoremap <Leader>fj <cmd>Telescope jumplist<CR>
+    nnoremap <Leader>flg0 <cmd>Telescope lsp_document_symbols<CR>
+    nnoremap <Leader>flgW <cmd>Telescope lsp_workspace_symbols<CR>
     " TODO: configure lsp-related telescope pickers
 
 " LSP setup
@@ -388,9 +422,12 @@
 " vim-gitgutter
     nnoremap <Leader>ugg :GitGutterToggle<CR>
     nnoremap <Leader>ugb :GitGutterBufferToggle<CR>
+    nnoremap <Leader>ghu <Plug>(GitGutterUndoHunk)
+    nnoremap <Leader>ghs <Plug>(GitGutterStageHunk)
+    nnoremap <Leader>ghp <Plug>(GitGutterPreviewHunk)
 
 " nvim-tree
-    noremap <Leader>ut :NvimTreeToggle<CR>
+    noremap <Leader>d :NvimTreeToggle<CR>
     let g:nvim_tree_disable_netrw = 0    " don't disable netrw
     let g:nvim_tree_auto_close = 1       " close if last window open
 
