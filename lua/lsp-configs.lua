@@ -1,18 +1,13 @@
-local lspconfig = require('lspconfig')
-local completion = require('completion')
+local ok1, lspconfig  = pcall(require, 'lspconfig')
+local ok2, completion = pcall(require, 'completion')
+local ok3, lsp_status = pcall(require, 'lsp-status')
+local ok4, treesitter = pcall(require, 'nvim-treesitter')
+if not (ok1 and ok2 and ok3 and ok4) then
+    error("missing plugin dependencies, lsp configs not loaded")
+    return
+end
 
-local lsp_status = require('lsp-status')
-lsp_status.register_progress()
-lsp_status.config({
-  status_symbol = '',
-  indicator_errors = 'e',
-  indicator_warnings = 'w',
-  indicator_info = 'i',
-  indicator_hint = 'h',
-  indicator_ok = '✔️',
-  spinner_frames = { '⣾', '⣽', '⣻', '⢿', '⡿', '⣟', '⣯', '⣷' },
-})
-
+-- diagnostics {{{
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
     virtual_text = {
@@ -24,6 +19,22 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     -- signs = true,
   }
 )
+-- }}}
+
+-- lsp_status {{{
+lsp_status.register_progress()
+lsp_status.config({
+  status_symbol = '',
+  indicator_errors = 'e',
+  indicator_warnings = 'w',
+  indicator_info = 'i',
+  indicator_hint = 'h',
+  indicator_ok = '✔️',
+  spinner_frames = { '⣾', '⣽', '⣻', '⢿', '⡿', '⣟', '⣯', '⣷' },
+})
+-- }}}
+
+-- utilities {{{
 
 -- Taken from https://www.reddit.com/r/neovim/comments/gyb077/nvimlsp_peek_defination_javascript_ttserver/
 function preview_location(location, context, before_context)
@@ -66,11 +77,10 @@ function peek_definition()
   end
 end
 
-local on_attach = function(client, bufnr)
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-  completion.on_attach()
-  lsp_status.on_attach(client, bufnr)
+-- }}}
 
+-- lsp mappings{{{
+function setup_lsp_mappings(client, bufnr)
   -- Mappings.
   local opts = { noremap=true, silent=true }
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>ld', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
@@ -92,6 +102,16 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>lx', '<cmd>LspStop<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>lX', '<cmd>LspRestart<CR>', opts)
 end
+-- }}}
+
+local on_attach = function(client, bufnr)
+  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+  completion.on_attach()
+  lsp_status.on_attach(client, bufnr)
+  setup_lsp_mappings(client, bufnr)
+end
+
+-- lsp servers {{{
 
 lspconfig.hls.setup {
   on_attach = on_attach,
@@ -146,7 +166,11 @@ for _, lsp in ipairs(other_servers) do
   }
 end
 
-require'nvim-treesitter.configs'.setup {
+-- }}}
+
+-- treesitter {{{
+
+treesitter.setup {
   ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   ignore_install = { },            -- List of parsers to ignore installing
   highlight = {
@@ -167,3 +191,23 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 
+-- }}}
+
+-- completion {{{
+
+vim.o.completeopt = 'menuone,noinsert,noselect'
+vim.g.completion_enable_snippet = 'UltiSnips'
+vim.g.completion_enable_fuzzy_match = 1
+vim.g.completion_confirm_key = ''
+
+-- }}}
+
+-- UltiSnips {{{
+
+vim.g.UltiSnipsExpandTrigger = '<Tab>'
+vim.g.UltiSnipsJumpForwardTrigger = '<C-l>'
+vim.g.UltiSnipsJumpBackwardTrigger = '<C-b>'
+
+-- }}}
+
+-- vim: set foldmethod=marker:

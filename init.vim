@@ -300,69 +300,15 @@
     " It's in the runtime *shrug*
     runtime macros/matchit.vim
 
-    silent! if !empty(glob(stdpath('data') . '/site/autoload/plug.vim'))
-                \ && plug#begin(stdpath('data') . '/plugged')
-        " Functionality
-        Plug 'tpope/vim-fugitive'                " Git integration
-        Plug 'editorconfig/editorconfig-vim'
+lua << EOF
+    local ok, _ = require('plugins')
+    _G.plugins_loaded = ok
 
-        " Utility
-        Plug 'tpope/vim-surround'                " Mappings for inserting/changing/deleting surrounding characters/elements
-        Plug 'mg979/vim-visual-multi'            " Multiple cursors (I will fight about this)
-        Plug 'airblade/vim-rooter'               " cd to project root
-        Plug 'tpope/vim-eunuch'                  " File operations
-        Plug 'tyru/caw.vim'                      " Easy commenting
-        Plug 'kana/vim-repeat'                   " Repeat more things with .
-        Plug 'kana/vim-operator-user'            " User-defined operators (needed for caw)
-        Plug 'tpope/vim-abolish'                 " Smart substitution, spelling correction, etc.
-        Plug 'tommcdo/vim-exchange'              " Operators for exchanging text
-        Plug 'jiangmiao/auto-pairs', { 'for': [ 'rust', 'java', 'c', 'cpp', 'javascript', 'typescript' ] }
+    if plugins_loaded then
+        require('lsp-configs')
+    end
+EOF
 
-        " Fuzzy finding
-        Plug 'nvim-lua/popup.nvim'
-        Plug 'nvim-lua/plenary.nvim'
-        Plug 'nvim-telescope/telescope.nvim'
-
-        " UI
-        Plug 'airblade/vim-gitgutter'
-        Plug 'wfxr/minimap.vim'
-        Plug 'Yggdroot/indentLine'
-        Plug 'kyazdani42/nvim-web-devicons'
-        Plug 'kyazdani42/nvim-tree.lua'
-        Plug 'norcalli/nvim-colorizer.lua'
-
-        " LSP
-        Plug 'neovim/nvim-lspconfig'
-        Plug 'nvim-lua/completion-nvim'
-        Plug 'nvim-lua/lsp-status.nvim'
-        "Plug 'steelsojka/completion-buffers'
-        Plug 'SirVer/ultisnips'
-
-        Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
-
-        " Language-specific plugins
-        Plug 'neovimhaskell/haskell-vim', { 'for': 'haskell' }
-        Plug 'rust-lang/rust.vim', { 'for': 'rust' }
-        Plug 'LnL7/vim-nix', { 'for': 'nix' }
-        " Typescript/Javascript
-        Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
-        Plug 'jason0x43/vim-js-indent', { 'for': [ 'javascript', 'typescript' ] }
-        " Misc
-        Plug 'PotatoesMaster/i3-vim-syntax', { 'for': 'i3' }
-        Plug 'nprindle/lc3.vim'
-        Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
-
-        " Colorschemes
-        Plug 'romainl/vim-dichromatic'          " For taking screenshots that might be read by colorblind students
-
-        " Collection of language packs
-        " This should be loaded after language-specific plugins
-        Plug 'sheerun/vim-polyglot'
-        call plug#end()
-    endif
-" }}}
-
-" Plugin settings {{{
 " Netrw
     let g:netrw_banner=0
     let g:netrw_liststyle=3
@@ -387,17 +333,6 @@
     nnoremap <Leader>flg0 <cmd>Telescope lsp_document_symbols<CR>
     nnoremap <Leader>flgW <cmd>Telescope lsp_workspace_symbols<CR>
     " TODO: configure lsp-related telescope pickers
-
-" LSP setup
-    lua require('lsp-configs')
-    set completeopt=menuone,noinsert,noselect
-    let g:completion_enable_snippet = 'UltiSnips'
-    let g:completion_enable_fuzzy_match = 1
-    let g:completion_confirm_key = "\<C-y>"
-
-    let g:UltiSnipsExpandTrigger = "<Tab>"
-    let g:UltiSnipsJumpForwardTrigger = "<C-l>"
-    let g:UltiSnipsJumpBackwardTrigger = "<C-b>"
 
 " vim-visual-multi
     let g:VM_leader = '\'
@@ -432,7 +367,16 @@
     let g:nvim_tree_auto_close = 1       " close if last window open
 
 " nvim-colorizer
-    lua require'colorizer'.setup { 'css'; 'javascript'; 'typescript'; 'html'; 'vim'; }
+lua << EOF
+    if plugins_loaded then
+        local ok, colorizer = pcall(require, 'colorizer')
+        if ok then
+            colorizer.setup { 'css'; 'javascript'; 'typescript'; 'html'; 'vim'; }
+        else
+            error("missing colorizer")
+        end
+    end
+EOF
 
 " fugitive
     " open git status pane for staging/committing/etc.
