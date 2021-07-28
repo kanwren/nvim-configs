@@ -422,9 +422,9 @@
 " vim-gitgutter
     nnoremap <Leader>ugg :GitGutterToggle<CR>
     nnoremap <Leader>ugb :GitGutterBufferToggle<CR>
-    nnoremap <Leader>ghu <Plug>(GitGutterUndoHunk)
-    nnoremap <Leader>ghs <Plug>(GitGutterStageHunk)
-    nnoremap <Leader>ghp <Plug>(GitGutterPreviewHunk)
+    nmap <Leader>ghu <Plug>(GitGutterUndoHunk)
+    nmap <Leader>ghs <Plug>(GitGutterStageHunk)
+    nmap <Leader>ghp <Plug>(GitGutterPreviewHunk)
 
 " nvim-tree
     noremap <Leader>d :NvimTreeToggle<CR>
