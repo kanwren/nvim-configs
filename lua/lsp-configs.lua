@@ -102,7 +102,7 @@ lspconfig.hls.setup {
   settings = {},
 }
 
-lspconfig.pyls.setup {
+lspconfig.pylsp.setup {
   on_attach = on_attach,
   capabilities = lsp_status.capabilities,
   settings = {
