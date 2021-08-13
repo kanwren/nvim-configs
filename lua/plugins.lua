@@ -38,8 +38,10 @@ augroup END
 
 vim.cmd [[packadd packer.nvim]]
 
+local packer_compile_path = fn.stdpath('data') .. '/site/lua/packer_compiled.lua'
 local packer_config = {
-  compile_path = fn.stdpath('data') .. '/packer_compiled.lua'
+  -- NOTE: this has to be in &runtimepath
+  compile_path = packer_compile_path
 }
 
 local function setup_plugins()
@@ -113,5 +115,11 @@ local function setup_plugins()
 end
 
 local plugins = require('packer').startup({ setup_plugins, config = packer_config })
+
+if exists(packer_compile_path) then
+  require'packer_compiled'
+else
+  print('Warning: packer not compiled, lazy-loading not initialized')
+end
 
 return true, plugins
