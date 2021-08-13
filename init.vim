@@ -295,8 +295,6 @@
 " }}}
 
 " Plugins {{{
-    let g:lc3_detect_asm = 1
-
     " It's in the runtime *shrug*
     runtime macros/matchit.vim
 
@@ -402,8 +400,51 @@ EOF
     " Don't trigger automatically
     let g:rooter_manual_only = 1
 
+" goyo/limelight
+    let g:limelight_conceal_ctermfg = 'darkgray'
+    let g:goyo_width = 80
+
+    function! s:goyo_enter()
+        let s:goyo_cache = {
+                    \ 'showmode': &showmode,
+                    \ 'showcmd': &showcmd,
+                    \ 'signcolumn': &signcolumn,
+                    \ 'foldcolumn': &foldcolumn,
+                    \ 'list': &list,
+                    \ 'scrolloff': &scrolloff,
+                    \ 'wrap': &wrap,
+                    \ 'breakindent': &breakindent,
+                    \ }
+        set noshowmode noshowcmd
+        set signcolumn=no foldcolumn=0
+        set nolist
+        set scrolloff=999
+        set wrap breakindent
+        Limelight
+    endfunction
+
+    function! s:goyo_leave()
+        let &showmode = s:goyo_cache['showmode']
+        let &showcmd = s:goyo_cache['showcmd']
+        let &signcolumn = s:goyo_cache['signcolumn']
+        let &foldcolumn = s:goyo_cache['foldcolumn']
+        let &list = s:goyo_cache['list']
+        let &scrolloff = s:goyo_cache['scrolloff']
+        let &wrap = s:goyo_cache['wrap']
+        let &breakindent = s:goyo_cache['breakindent']
+        Limelight!
+    endfunction
+
+    augroup goyo_group
+        autocmd!
+        autocmd! User GoyoEnter nested call <SID>goyo_enter()
+        autocmd! User GoyoLeave nested call <SID>goyo_leave()
+    augroup END
+
+    nnoremap <Leader>ugy :Goyo<CR>
+
 " markdown-preview
-    let g:mkdp_auto_close = 0"
+    let g:mkdp_auto_close = 0
     let g:mkdp_preview_options = {
                 \ 'disable_sync_scroll': 1,
                 \ 'hide_yaml_meta': 0,

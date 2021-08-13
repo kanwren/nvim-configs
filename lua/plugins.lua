@@ -78,6 +78,8 @@ local function setup_plugins()
   use 'kyazdani42/nvim-web-devicons'
   use 'kyazdani42/nvim-tree.lua'
   use 'norcalli/nvim-colorizer.lua'
+  use 'junegunn/goyo.vim'
+  use 'junegunn/limelight.vim'
 
   -- LSP
   use {
