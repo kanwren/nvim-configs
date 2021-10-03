@@ -96,11 +96,6 @@ vim.api.nvim_command('runtime macros/matchit.vim')
   make_map('n', '<Leader>ui', ':IndentLinesToggle<CR>', { noremap = true })
 -- }}}
 
--- Rooter {{{
-  -- Don't trigger automatically
-  vim.g.rooter_manual_only = 1
--- }}}
-
 -- markdown-preview {{{
   vim.g.mkdp_auto_close = 0
   vim.g.mkdp_preview_options = {

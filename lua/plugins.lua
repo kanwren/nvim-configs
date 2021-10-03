@@ -54,13 +54,16 @@ local function setup_plugins()
   -- Utility
   use 'tpope/vim-surround'                -- Mappings for inserting/changing/deleting surrounding characters/elements
   use 'mg979/vim-visual-multi'            -- Multiple cursors (I will fight about this)
-  use 'airblade/vim-rooter'               -- cd to project root
-  use 'tpope/vim-eunuch'                  -- File operations
-  use 'tyru/caw.vim'                      -- Easy commenting
-  use 'kana/vim-repeat'                   -- Repeat more things with .
-  use 'kana/vim-operator-user'            -- User-defined operators (needed for caw)
-  use 'tpope/vim-abolish'                 -- Smart substitution, spelling correction, etc.
   use 'tommcdo/vim-exchange'              -- Operators for exchanging text
+  use 'tpope/vim-eunuch'                  -- File operations
+  use {                                   -- Easy commenting
+    'tyru/caw.vim',
+    requires = {
+      'kana/vim-operator-user'            -- User-defined operators (needed for caw)
+    }
+  }
+  use 'kana/vim-repeat'                   -- Repeat more things with .
+  use 'tpope/vim-abolish'                 -- Smart substitution, spelling correction, etc.
   use {
     'jiangmiao/auto-pairs',
     ft = { 'rust', 'java', 'c', 'cpp', 'javascript', 'typescript' },
@@ -100,7 +103,7 @@ local function setup_plugins()
     -- 'nvim-treesitter/completion-treesitter',
     -- 'steelsojka/completion-buffers',
   }
-  use 'SirVer/ultisnips'
+  use 'SirVer/ultisnips'                  -- snippets (also a provider for snippets completion)
 
   -- Language-specific plugins
   use {
@@ -111,13 +114,10 @@ local function setup_plugins()
     'iamcco/markdown-preview.nvim',
     run = 'cd app && yarn install',
   }
+  -- use 'sheerun/vim-polyglot'          -- collection of language packs
 
   -- Colorschemes
   use 'romainl/vim-dichromatic'          -- For taking screenshots that might be read by colorblind students
-
-  -- Collection of language packs
-  -- This should be loaded after language-specific plugins
-  use 'sheerun/vim-polyglot'
 end
 
 local plugins = require('packer').startup({ setup_plugins, config = packer_config })
