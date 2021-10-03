@@ -294,16 +294,9 @@
     endif
 " }}}
 
-" Plugins {{{
 lua << EOF
-    local ok, _ = require('plugins')
-    _G.plugins_loaded = ok
-    if plugins_loaded then
-        require('lsp-configs')
-        require('plugin-configs')
-    end
+    require('core')
 EOF
-" }}}
 
 " Colors {{{
     let &t_ti.="\e[1 q"

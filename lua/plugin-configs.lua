@@ -1,49 +1,53 @@
-if not plugins_loaded then
-  return
-end
-
-local make_map = vim.api.nvim_set_keymap
+utils = require('utils')
+map = utils.map
 
 -- It's in the runtime *shrug*
 vim.api.nvim_command('runtime macros/matchit.vim')
 
 -- vim-visual-multi {{{
+if utils.plugins.has('vim-visual-multi') then
   vim.g.VM_leader = '\\'
-  make_map('n', '<C-j>', '<Plug>(VM-Add-Cursor-Down)', {})
-  make_map('n', '<C-k>', '<Plug>(VM-Add-Cursor-Up)', {})
+  map.nmap('<C-j>', '<Plug>(VM-Add-Cursor-Down)')
+  map.nmap('<C-k>', '<Plug>(VM-Add-Cursor-Up)')
+end
 -- }}}
 
 -- telescope {{{
-  make_map('n', '<Leader>ff', '<cmd>Telescope find_files<CR>', { noremap = true })
-  make_map('n', '<Leader>fg', '<cmd>Telescope git_files<CR>', { noremap = true })
-  make_map('n', '<Leader><Leader>', '<cmd>Telescope git_files<CR>', { noremap = true })
-  make_map('n', '<Leader>fr', '<cmd>Telescope live_grep<CR>', { noremap = true })
-  make_map('n', '<Leader>fK', '<cmd>Telescope grep_string<CR>', { noremap = true })
-  make_map('n', '<Leader>fo', '<cmd>Telescope oldfiles<CR>', { noremap = true })
-  make_map('n', '<Leader>fe', '<cmd>Telescope file_browser<CR>', { noremap = true })
-  make_map('n', '<Leader>fb', '<cmd>Telescope buffers<CR>', { noremap = true })
-  make_map('n', '<Leader>ft', '<cmd>Telescope tags<CR>', { noremap = true })
-  make_map('n', '<Leader>fh', '<cmd>Telescope help_tags<CR>', { noremap = true })
-  make_map('n', '<Leader>fm', '<cmd>Telescope keymaps<CR>', { noremap = true })
-  make_map('n', '<Leader>fz', '<cmd>Telescope spell_suggest<CR>', { noremap = true })
-  make_map('n', '<Leader>fcg', '<cmd>Telescope git_commits<CR>', { noremap = true })
-  make_map('n', '<Leader>fcb', '<cmd>Telescope git_bcommits<CR>', { noremap = true })
-  make_map('n', '<Leader>f:', '<cmd>Telescope commands<CR>', { noremap = true })
-  make_map('n', '<Leader>fj', '<cmd>Telescope jumplist<CR>', { noremap = true })
-  make_map('n', '<Leader>flg0', '<cmd>Telescope lsp_document_symbols<CR>', { noremap = true })
-  make_map('n', '<Leader>flgW', '<cmd>Telescope lsp_workspace_symbols<CR>', { noremap = true })
+if utils.plugins.has('telescope.nvim') then
+  map.nnoremap('<Leader>ff', '<cmd>Telescope find_files<CR>')
+  map.nnoremap('<Leader>fg', '<cmd>Telescope git_files<CR>')
+  map.nnoremap('<Leader><Leader>', '<cmd>Telescope git_files<CR>')
+  map.nnoremap('<Leader>fr', '<cmd>Telescope live_grep<CR>')
+  map.nnoremap('<Leader>fK', '<cmd>Telescope grep_string<CR>')
+  map.nnoremap('<Leader>fo', '<cmd>Telescope oldfiles<CR>')
+  map.nnoremap('<Leader>fe', '<cmd>Telescope file_browser<CR>')
+  map.nnoremap('<Leader>fb', '<cmd>Telescope buffers<CR>')
+  map.nnoremap('<Leader>ft', '<cmd>Telescope tags<CR>')
+  map.nnoremap('<Leader>fh', '<cmd>Telescope help_tags<CR>')
+  map.nnoremap('<Leader>fm', '<cmd>Telescope keymaps<CR>')
+  map.nnoremap('<Leader>fz', '<cmd>Telescope spell_suggest<CR>')
+  map.nnoremap('<Leader>fcg', '<cmd>Telescope git_commits<CR>')
+  map.nnoremap('<Leader>fcb', '<cmd>Telescope git_bcommits<CR>')
+  map.nnoremap('<Leader>f:', '<cmd>Telescope commands<CR>')
+  map.nnoremap('<Leader>fj', '<cmd>Telescope jumplist<CR>')
+  map.nnoremap('<Leader>flg0', '<cmd>Telescope lsp_document_symbols<CR>')
+  map.nnoremap('<Leader>flgW', '<cmd>Telescope lsp_workspace_symbols<CR>')
   -- TODO: configure lsp-related telescope pickers
+end
 -- }}}
 
 -- nvim-tree {{{
-  make_map('n', '<Leader>d', '<cmd>NvimTreeToggle<CR>', { noremap = true })
+if utils.plugins.has('nvim-tree.lua') then
+  map.nnoremap('<Leader>d', '<cmd>NvimTreeToggle<CR>')
   require('nvim-tree').setup {
     -- disable_netrw = false,
     auto_close = true,
   }
+end
 -- }}}
 
 -- minimap {{{
+if utils.plugins.has('minimap.vim') then
   vim.g.minimap_width = 25
   vim.cmd([[
     augroup minimap_group
@@ -52,59 +56,73 @@ vim.api.nvim_command('runtime macros/matchit.vim')
     augroup END
   ]])
   vim.g.minimap_highlight = "MinimapSelected"
-  make_map('n', '<Leader>umm', '<cmd>MinimapToggle<CR>', { noremap = true })
+  map.nnoremap('<Leader>umm', '<cmd>MinimapToggle<CR>')
+end
 -- }}}
 
 -- nvim-colorizer {{{
+if utils.plugins.has('nvim-colorizer.lua') then
   require('colorizer').setup { 'css', 'javascript', 'typescript', 'html', 'vim' }
+end
 -- }}}
 
 -- fugitive {{{
+if utils.plugins.has('vim-fugitive') then
   -- open git status pane for staging/committing/etc.
-  make_map('n', '<Leader>gs', '<cmd>Gstatus<CR>', { noremap = true })
+  map.nnoremap('<Leader>gs', '<cmd>Gstatus<CR>')
   -- vertical split with the version at HEAD
-  make_map('n', '<Leader>gvs', '<cmd>Gvsplit<space>', { noremap = true })
+  map.nnoremap('<Leader>gvs', '<cmd>Gvsplit<space>')
   -- vertical diff with the version at HEAD
   -- ! focuses on the window with the current version
-  make_map('n', '<Leader>gvd', '<cmd>Gvdiffsplit!<space>', { noremap = true })
+  map.nnoremap('<Leader>gvd', '<cmd>Gvdiffsplit!<space>')
   -- :cd to repo root
-  make_map('n', '<Leader>gcd', '<cmd>Gcd<CR>', { noremap = true })
+  map.nnoremap('<Leader>gcd', '<cmd>Gcd<CR>')
   -- :lcd (only current window) to repo root
-  make_map('n', '<Leader>glcd', '<cmd>Glcd<CR>', { noremap = true })
+  map.nnoremap('<Leader>glcd', '<cmd>Glcd<CR>')
   -- :write and stage
-  make_map('n', '<Leader>gw', '<cmd>Gwrite<CR>', { noremap = true })
+  map.nnoremap('<Leader>gw', '<cmd>Gwrite<CR>')
+end
 -- }}}
 
 -- vim-gitgutter {{{
-  make_map('n', '<Leader>ugg', '<cmd>GitGutterToggle<CR>', { noremap = true })
-  make_map('n', '<Leader>ugb', '<cmd>GitGutterBufferToggle<CR>', { noremap = true })
-  make_map('n', '<Leader>ghu', '<Plug>(GitGutterUndoHunk)', {})
-  make_map('n', '<Leader>ghs', '<Plug>(GitGutterStageHunk)', {})
-  make_map('n', '<Leader>ghp', '<Plug>(GitGutterPreviewHunk)', {})
+if utils.plugins.has('vim-gitgutter') then
+  map.nnoremap('<Leader>ugg', '<cmd>GitGutterToggle<CR>')
+  map.nnoremap('<Leader>ugb', '<cmd>GitGutterBufferToggle<CR>')
+  map.nmap('n', '<Leader>ghu', '<Plug>(GitGutterUndoHunk)', {})
+  map.nmap('n', '<Leader>ghs', '<Plug>(GitGutterStageHunk)', {})
+  map.nmap('n', '<Leader>ghp', '<Plug>(GitGutterPreviewHunk)', {})
+end
 -- }}}
 
 -- caw {{{
+if utils.plugins.has('caw.vim') then
   vim.g.caw_operator_keymappings = 1
-  make_map('n', 'gco', '<Plug>(caw:jump:comment-next)', {})
-  make_map('n', 'gcO', '<Plug>(caw:jump:comment-prev)', {})
+  map.nmap('n', 'gco', '<Plug>(caw:jump:comment-next)', {})
+  map.nmap('n', 'gcO', '<Plug>(caw:jump:comment-prev)', {})
+end
 -- }}}
 
 -- indentLine {{{
+if utils.plugins.has('indentLine') then
   vim.g.indentLine_enabled = 0
   vim.g.indentLine_char = '│'
   vim.g.indentLine_defaultGroup = 'IndentLine'
-  make_map('n', '<Leader>ui', ':IndentLinesToggle<CR>', { noremap = true })
+  map.nnoremap('<Leader>ui', ':IndentLinesToggle<CR>')
+end
 -- }}}
 
 -- markdown-preview {{{
+if utils.plugins.has('markdown-preview.nvim') then
   vim.g.mkdp_auto_close = 0
   vim.g.mkdp_preview_options = {
     disable_sync_scroll = 1,
     hide_yaml_meta = 0,
   }
+end
 -- }}}
 
 -- goyo/limelight {{{
+if utils.plugins.has('goyo.vim') and utils.plugins.has('limelight.vim') then
   vim.g.limelight_conceal_ctermfg = 'darkgray'
   vim.g.goyo_width = 80
 
@@ -138,7 +156,8 @@ vim.api.nvim_command('runtime macros/matchit.vim')
     augroup END
   ]])
 
-  make_map('n', '<Leader>ugy', '<cmd>Goyo<CR>', { noremap = true })
+  map.nnoremap('<Leader>ugy', '<cmd>Goyo<CR>')
+end
 -- }}}
 
 -- vim: set foldmethod=marker:

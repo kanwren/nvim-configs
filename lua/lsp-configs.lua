@@ -1,3 +1,5 @@
+local utils = require('utils')
+
 local ok1, lspconfig          = pcall(require, 'lspconfig')
 local ok2, completion         = pcall(require, 'completion')
 local ok3, lsp_status         = pcall(require, 'lsp-status')
@@ -200,17 +202,15 @@ treesitter_configs.setup {
 -- completion {{{
 
 vim.o.completeopt = 'menuone,noinsert,noselect'
-vim.g.completion_enable_snippet = 'UltiSnips'
 vim.g.completion_enable_fuzzy_match = 1
 vim.g.completion_confirm_key = ''
 
--- }}}
-
--- UltiSnips {{{
-
-vim.g.UltiSnipsExpandTrigger = '<Tab>'
-vim.g.UltiSnipsJumpForwardTrigger = '<C-l>'
-vim.g.UltiSnipsJumpBackwardTrigger = '<C-b>'
+if utils.plugins.has('ultisnips') then
+  vim.g.completion_enable_snippet = 'UltiSnips'
+  vim.g.UltiSnipsExpandTrigger = '<Tab>'
+  vim.g.UltiSnipsJumpForwardTrigger = '<C-l>'
+  vim.g.UltiSnipsJumpBackwardTrigger = '<C-b>'
+end
 
 -- }}}
 
