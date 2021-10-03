@@ -49,9 +49,10 @@
 
 -- Display {{{
   vim.o.lazyredraw = true              -- don't redraw until after command/macro
-  vim.o.shortmess = vim.o.shortmess ..
-    'I' .. -- disable Vim intro screen
-    'c'    -- don't give ins-completion-menu messages
+  vim.o.shortmess = vim.o.shortmess .. table.concat({
+    'I', -- disable Vim intro screen
+    'c', -- don't give ins-completion-menu messages
+  })
 
   -- sensible split defaults
   vim.o.splitbelow = true
@@ -111,13 +112,14 @@
   vim.o.softtabstop = 4              -- expand tabs to 4 spaces
   vim.o.shiftwidth = 4               -- use 4 spaces when using > or <
   vim.o.shiftround = false
-  vim.o.cinoptions = vim.o.cinoptions ..
-    ':0' .. -- 'case' should be inline with 'switch'
-    'L0' .. -- labels should be inline with block
-    'g0' .. -- C++ scope declarations should be inline with block
-    'j1' .. -- indent Java anonymous classes correctly
-    'J1' .. -- indent JS object declarations correctly
-    '#0'    -- don't indent pragma lines
+  vim.o.cinoptions = vim.o.cinoptions .. table.concat({
+    ':0', -- 'case' should be inline with 'switch'
+    'L0', -- labels should be inline with block
+    'g0', -- C++ scope declarations should be inline with block
+    'j1', -- indent Java anonymous classes correctly
+    'J1', -- indent JS object declarations correctly
+    '#0', -- don't indent pragma lines
+  })
 -- }}}
 
 -- Formatting {{{

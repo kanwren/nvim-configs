@@ -54,23 +54,23 @@ local map = vim.api.nvim_set_keymap
   map('n', '<Leader>bd', '<cmd>bdelete<CR>', { noremap = true })
   map('n', '<Leader>bx', '<cmd>bdelete!<CR>', { noremap = true })
   -- Show buffers and prompt for a buffer command
-  map('n', '<Leader>b<Space>', '<cmd>buffers<CR><cmd>b', { noremap = true })
+  map('n', '<Leader>b<Space>', '<cmd>buffers<CR>:b', { noremap = true })
   -- Open a temporary unlisted scratch buffer
   map('n', '<Leader>bt', '<cmd>Scratch<CR>', { noremap = true })
 -- }}}
 
 -- Editing {{{
   -- Split current line by provided regex (\zs or \ze to preserve separators)
-  map('n', 'gs', '<cmd>s//\\r/g<Left><Left><Left><Left><Left>', { noremap = true })
+  map('n', 'gs', ':s//\\r/g<Left><Left><Left><Left><Left>', { noremap = true })
 
   -- Start a visual substitute
-  map('x', 'gs', '<cmd>s/\\%V', { noremap = true })
+  map('x', 'gs', ':s/\\%V', { noremap = true })
 
   -- Delete trailing whitespace and retab
   function clean_whitespace()
     local wv = vim.fn.winsaveview()
     vim.cmd([[
-      keeppatters %s/\\s\\+\\ze\\r\\=$//e
+      keeppatterns %s/\s\+\ze\r\=$//e
       nohlsearch
       retab
     ]])
