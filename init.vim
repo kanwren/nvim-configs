@@ -90,6 +90,7 @@
 " Spelling and thesaurus
     let $LANG='en'
     set nospell spelllang=en_us
+    " Fetch from http://www.gutenberg.org/files/3202/files/mthesaur.txt
     let &thesaurus=stdpath('data') . '/thesaurus/mthesaur.txt'
 
 " Timeouts
@@ -150,12 +151,6 @@
     command! Scratch new | setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile
     " Force sudo write trick
     command! WS :execute ':silent w !sudo tee % > /dev/null' | :edit!
-    " Show calendar and date/time
-    command! Cal :!clear && cal -y; date -R
-
-    function! RandomSha() abort
-        return trim(system("fold -w 256 /dev/urandom | head -n1 | sha256sum | awk '{print $1}'"))
-    endfunction
 " }}}
 
 " Mappings {{{
