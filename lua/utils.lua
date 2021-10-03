@@ -37,8 +37,4 @@ function M.plugins.has(name)
   end
 end
 
-M.map = {}
-function M.map.nmap(k, v) vim.api.nvim_set_keymap('n', k, v, {}) end
-function M.map.nnoremap(k, v) vim.api.nvim_set_keymap('n', k, v, { noremap = true }) end
-
 return M

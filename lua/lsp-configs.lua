@@ -85,24 +85,25 @@ end
 function setup_lsp_mappings(client, bufnr)
   -- Mappings.
   local opts = { noremap=true, silent=true }
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>ld', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-]>', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '1gD', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gK', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>lr', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>la', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-w>}', '<cmd>lua peek_definition()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'g0', '<cmd>lua vim.lsp.buf.document_symbol()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gW', '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+  local make_map = function(k, v) vim.api.nvim_buf_set_keymap(bufnr, 'n', k, v, opts) end
+  make_map('<Leader>ld', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>')
+  make_map('gd', '<cmd>lua vim.lsp.buf.declaration()<CR>')
+  make_map('<C-]>', '<Cmd>lua vim.lsp.buf.definition()<CR>')
+  make_map('gD', '<cmd>lua vim.lsp.buf.implementation()<CR>')
+  make_map('1gD', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
+  make_map('K', '<cmd>lua vim.lsp.buf.hover()<CR>')
+  make_map('gK', '<cmd>lua vim.lsp.buf.signature_help()<CR>')
+  make_map('gr', '<cmd>lua vim.lsp.buf.references()<CR>')
+  make_map('<Leader>lr', '<cmd>lua vim.lsp.buf.rename()<CR>')
+  make_map('<Leader>la', '<cmd>lua vim.lsp.buf.code_action()<CR>')
+  make_map('<C-w>}', '<cmd>lua peek_definition()<CR>')
+  make_map('g0', '<cmd>lua vim.lsp.buf.document_symbol()<CR>')
+  make_map('gW', '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>')
+  make_map('[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
+  make_map(']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
   -- management
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>lx', '<cmd>LspStop<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<Leader>lX', '<cmd>LspRestart<CR>', opts)
+  make_map('<Leader>lx', '<cmd>LspStop<CR>')
+  make_map('<Leader>lX', '<cmd>LspRestart<CR>')
 end
 -- }}}
 
