@@ -63,7 +63,7 @@ end
 
 -- nvim-colorizer {{{
 if utils.plugins.has('nvim-colorizer.lua') then
-  require('colorizer').setup { 'css', 'javascript', 'typescript', 'html', 'vim' }
+  require('colorizer').setup { 'css', 'javascript', 'typescript', 'html', 'vim', 'lua' }
 end
 -- }}}
 
