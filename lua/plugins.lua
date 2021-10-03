@@ -30,7 +30,7 @@ if not packer_exists() then
 end
 
 -- Compile plugins after editing file
-vim.api.nvim_exec ([[
+vim.api.nvim_exec([[
 augroup compile_plugins
   autocmd! BufWritePost plugins.lua source <afile> | PackerCompile
 augroup END
@@ -67,42 +67,46 @@ local function setup_plugins()
   }
 
   -- Fuzzy finding
-  use 'nvim-lua/popup.nvim'
-  use 'nvim-lua/plenary.nvim'
-  use 'nvim-telescope/telescope.nvim'
+  use {
+    'nvim-telescope/telescope.nvim',
+    requires = {
+      'nvim-lua/popup.nvim',
+      'nvim-lua/plenary.nvim',
+    }
+  }
 
   -- UI
-  use 'airblade/vim-gitgutter'
-  use 'wfxr/minimap.vim'
-  use 'Yggdroot/indentLine'
-  use 'kyazdani42/nvim-web-devicons'
-  use 'kyazdani42/nvim-tree.lua'
-  use 'norcalli/nvim-colorizer.lua'
-  use 'junegunn/goyo.vim'
-  use 'junegunn/limelight.vim'
+  use {                                   -- file browser
+    'kyazdani42/nvim-tree.lua',
+    requires = { 'kyazdani42/nvim-web-devicons' }
+  }
+  use 'airblade/vim-gitgutter'            -- git gutter
+  use 'wfxr/minimap.vim'                  -- VS Code-like minimap
+  use 'Yggdroot/indentLine'               -- show indent markers
+  use 'norcalli/nvim-colorizer.lua'       -- show hex codes as colors
+  use 'junegunn/goyo.vim'                 -- distraction-free writing
+  use 'junegunn/limelight.vim'            -- only highlight current paragraph
 
   -- LSP
-  use {
+  use 'neovim/nvim-lspconfig'             -- common LSP configurations
+  use {                                   -- tree-sitter-based highlighting/indentation/etc.
     'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate',
   }
-  use 'neovim/nvim-lspconfig'
-  use 'nvim-lua/lsp-status.nvim'
-  use 'nvim-lua/completion-nvim'
-  -- use 'nvim-treesitter/completion-treesitter'
-  -- use 'steelsojka/completion-buffers'
+  use 'nvim-lua/lsp-status.nvim'          -- generating statusline components from LSP
+  -- completion
+  use {
+    'nvim-lua/completion-nvim',
+    -- 'nvim-treesitter/completion-treesitter',
+    -- 'steelsojka/completion-buffers',
+  }
   use 'SirVer/ultisnips'
 
   -- Language-specific plugins
-  use { 'neovimhaskell/haskell-vim', ft = { 'haskell' } }
-  use { 'rust-lang/rust.vim', ft = { 'rust' } }
-  use { 'LnL7/vim-nix', ft = { 'nix' } }
-  -- Typescript/Javascript
-  use { 'leafgarland/typescript-vim', ft = { 'typescript' } }
-  use { 'jason0x43/vim-js-indent', ft = { 'javascript', 'typescript' } }
-  -- Misc
-  use { 'PotatoesMaster/i3-vim-syntax', ft = { 'i3' } }
-  use { 'nprindle/lc3.vim' }
+  use {
+    'PotatoesMaster/i3-vim-syntax',
+    ft = { 'i3' },
+  }
   use {
     'iamcco/markdown-preview.nvim',
     run = 'cd app && yarn install',
