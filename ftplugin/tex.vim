@@ -1,13 +1,11 @@
-setlocal makeprg=pdflatex\ -quiet\ -aux-directory=%:h\ -output-directory\ %:h\ %
+" Fix bug with indentLine hiding chars
+setlocal conceallevel=0
 
 setlocal expandtab
 setlocal textwidth=80
 setlocal breakindent
 " Automatically wrap at textwidth
 setlocal formatoptions+=t
-
-" View PDF
-nnoremap <buffer> <C-p> :! zathura %<.pdf &<CR><CR>
 
 function! s:ElongateSurrounding(start, end, surrounds) abort
     let left = a:surrounds[0]

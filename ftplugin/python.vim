@@ -1,2 +1,2 @@
 setlocal nosmartindent foldmethod=indent
-setlocal cc=161
+setlocal colorcolumn=161

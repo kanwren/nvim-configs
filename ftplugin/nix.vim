@@ -1,9 +1,5 @@
 setlocal tabstop=2 softtabstop=2 shiftwidth=2
 
-" Pre-fill NPG information from surrounding block
-" Assumes fields are ordered as owner, repo, rev, sha256
-nnoremap <buffer> <Leader>NP vaB%<Esc>:let @h=@/<CR>/owner<CR>f""jyi"j0f""kyi":NPG <C-r>j <C-r>k
-
 function! ConvertHash(hash, to, ...) abort
     let hash = a:hash
     " If hash doesn't start with format specifier
