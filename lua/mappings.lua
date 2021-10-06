@@ -39,8 +39,8 @@ local map = vim.api.nvim_set_keymap
   -- Makes temporary macros faster
   map('n', 'Q', '@q', { noremap = true })
   -- Repeat macros/commands across visual selections
-  map('x', 'Q', '<cmd>normal @q<CR>', { noremap = true, silent = true })
-  map('x', '.', '<cmd>normal .<CR>', { noremap = true, silent = true })
+  map('x', 'Q', ':normal @q<CR>', { noremap = true, silent = true })
+  map('x', '.', ':normal .<CR>', { noremap = true, silent = true })
   -- Redraw page and clear highlights
   map('', '<C-l>', '<cmd>nohlsearch<CR><C-l>', { noremap = true, silent = true })
   -- Search word underneath cursor/selection but don't jump
@@ -79,7 +79,7 @@ local map = vim.api.nvim_set_keymap
   map('n', '<Leader><Tab>', '<cmd>call v:lua.clean_whitespace()<CR>', { noremap = true, silent = true })
 
   -- Add blank line below/above line/selection, keep cursor in same position (can take count)
-  map('n', '<Leader>in ', "<cmd><C-u>call append(line('.'), repeat([''], v:count1)) | call append(line('.') - 1, repeat([''], v:count1))<CR>", { noremap = true, silent = true })
+  map('n', '<Leader>in', "<cmd>call append(line('.'), repeat([''], v:count1)) | call append(line('.') - 1, repeat([''], v:count1))<CR>", { noremap = true, silent = true })
 
   -- Expand line by padding visual block selection with spaces
   function expand_sel()
