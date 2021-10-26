@@ -180,13 +180,13 @@ end
 
 -- Date/time abbreviations
   -- 2018-09-15
-  iabbrev('xymd', os.date("%Y-%m-%d"), { expr = true })
+  iabbrev('xymd', 'strftime("%Y-%m-%d")', { expr = true })
   -- Sat 15 Sep 2018
-  iabbrev('xdate', os.date("%a %d %b %Y"), { expr = true })
+  iabbrev('xdate', 'strftime("%a %d %b %Y")', { expr = true })
   -- 23:31
-  iabbrev('xtime', os.date("%H:%M"), { expr = true })
+  iabbrev('xtime', 'strftime("%H:%M")', { expr = true })
   -- 2018-09-15T23:31:54
-  iabbrev('xiso', os.date("%Y-%m-%dT%H:%M:%S"), { expr = true })
+  iabbrev('xiso', 'strftime("%Y-%m-%dT%H:%M:%S")', { expr = true })
 -- }}}
 
 -- vim:foldmethod=marker
