@@ -41,7 +41,8 @@ end
 if utils.plugins.has('nvim-tree.lua') then
   make_map('n', '<Leader>d', '<cmd>NvimTreeToggle<CR>', { noremap = true })
   require('nvim-tree').setup {
-    -- disable_netrw = false,
+    disable_netrw = false,
+    hijack_netrw = false,
     auto_close = true,
   }
 end

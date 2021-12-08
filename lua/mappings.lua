@@ -46,6 +46,8 @@ local map = vim.api.nvim_set_keymap
   -- Search word underneath cursor/selection but don't jump
   map('n', '*', '<cmd>let wv=winsaveview()<CR>*<cmd>call winrestview(wv)<CR>', { noremap = true, silent = true })
   map('n', '#', '<cmd>let wv=winsaveview()<CR>#<cmd>call winrestview(wv)<CR>', { noremap = true, silent = true })
+
+  map('n', '<Leader>w', '<cmd>w<CR>', { noremap = true })
 -- }}}
 
 -- Buffers {{{

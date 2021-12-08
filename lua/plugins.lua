@@ -66,7 +66,7 @@ local function setup_plugins()
   use 'tpope/vim-abolish'                 -- Smart substitution, spelling correction, etc.
   use {
     'jiangmiao/auto-pairs',
-    ft = { 'rust', 'java', 'c', 'cpp', 'javascript', 'typescript' },
+    ft = { 'java', 'c', 'cpp', 'javascript', 'typescript' },
   }
 
   -- Fuzzy finding
