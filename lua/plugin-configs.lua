@@ -48,20 +48,6 @@ if utils.plugins.has('nvim-tree.lua') then
 end
 -- }}}
 
--- minimap {{{
-if utils.plugins.has('minimap.vim') then
-  vim.g.minimap_width = 25
-  vim.cmd([[
-    augroup minimap_group
-        autocmd!
-        autocmd ColorScheme * highlight MinimapSelected guifg=Magenta
-    augroup END
-  ]])
-  vim.g.minimap_highlight = "MinimapSelected"
-  make_map('n', '<Leader>umm', '<cmd>MinimapToggle<CR>', { noremap = true })
-end
--- }}}
-
 -- nvim-colorizer {{{
 if utils.plugins.has('nvim-colorizer.lua') then
   require('colorizer').setup { 'css', 'javascript', 'typescript', 'html', 'vim', 'lua' }

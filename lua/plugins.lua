@@ -84,7 +84,7 @@ local function setup_plugins()
     requires = { 'kyazdani42/nvim-web-devicons' }
   }
   use 'airblade/vim-gitgutter'            -- git gutter
-  use 'wfxr/minimap.vim'                  -- VS Code-like minimap
+  -- use 'wfxr/minimap.vim'                  -- VS Code-like minimap
   use 'Yggdroot/indentLine'               -- show indent markers
   use 'norcalli/nvim-colorizer.lua'       -- show hex codes as colors
   use 'junegunn/goyo.vim'                 -- distraction-free writing
