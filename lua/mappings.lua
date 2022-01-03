@@ -12,6 +12,8 @@
 -- * <Leader>r - register-to-register copy
 -- * <Leader><Tab> - retab and remove trailing whitespace
 
+local utils = require('utils')
+
 local map = vim.api.nvim_set_keymap
 
 -- Utility commands {{{
@@ -119,7 +121,7 @@ local map = vim.api.nvim_set_keymap
 
   -- Filetype ftplugin editing
   vim.cmd([[
-    command! FTPlugin execute ':edit ' . stdpath('config') . '/ftplugin/' . &filetype . '.vim'
+    command! FTPlugin execute ':edit ]] .. utils.stdpath('config') .. [[/ftplugin/' . &filetype . '.vim'
   ]])
   map('n', '<Leader>of', '<cmd>FTPlugin<CR>', { noremap = true })
 

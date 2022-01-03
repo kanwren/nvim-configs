@@ -37,4 +37,13 @@ function M.plugins.has(name)
   end
 end
 
+function M.stdpath(p)
+  local val = vim.env['NVIM_NIX_STDPATH_' .. p]
+  if val then
+    return val
+  else
+    return vim.fn.stdpath(p)
+  end
+end
+
 return M
