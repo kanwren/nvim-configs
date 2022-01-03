@@ -94,7 +94,7 @@ local function setup_plugins()
   use 'neovim/nvim-lspconfig'             -- common LSP configurations
   use {                                   -- tree-sitter-based highlighting/indentation/etc.
     'nvim-treesitter/nvim-treesitter',
-    run = ':TSUpdate',
+    -- run = ':TSUpdate',
   }
   use 'nvim-lua/lsp-status.nvim'          -- generating statusline components from LSP
   -- completion
