@@ -13,12 +13,9 @@
   outputs = { self, nixpkgs, flake-utils, flake-compat }:
     flake-utils.lib.eachDefaultSystem (system:
       let
+        inherit (nixpkgs) lib;
         pkgs = nixpkgs.legacyPackages.${system};
-      in
-      {
-        defaultPackage = self.packages.${system}.neovim;
-
-        packages.neovim =
+        mkNeovim = { includeDeps }:
           let
             nvim = pkgs.neovim.override {
               # Can't set customRC here, since it will assume a .vim extension
@@ -34,9 +31,41 @@
               # this will be added to &runtimepath
               wrapProgram $out/bin/nvim \
                 --set NVIM_NIX_STDPATH_config ${./.} \
-                --add-flags "-u ${./init.lua}"
+                --add-flags "-u ${./init.lua}" ${
+                  lib.optionalString includeDeps "--prefix PATH : ${lib.makeBinPath deps}"
+                }
             '';
           });
+        deps = lib.concatLists [
+          (with pkgs; [
+            # core
+            xxd
+
+            # for plugins
+            fzf
+            code-minimap
+
+            # LSP
+            rnix-lsp
+            texlab
+            clang-tools
+            haskell-language-server
+            rust-analyzer
+          ])
+          (with pkgs.nodePackages; [
+            typescript-language-server
+          ])
+          (with pkgs.python39Packages; [
+            python-lsp-server
+            python-lsp-black
+            pylsp-mypy
+          ])
+        ];
+      in
+      {
+        defaultPackage = self.packages.${system}.neovim;
+        packages.neovim = mkNeovim { includeDeps = false; };
+        packages.neovim-with-plugin-deps = mkNeovim { includeDeps = true; };
       }
     );
 }
