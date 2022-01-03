@@ -42,6 +42,7 @@
             xxd
 
             # for plugins
+            yarn
             fzf
             code-minimap
 
