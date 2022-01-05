@@ -127,6 +127,7 @@
   vim.o.textwidth = 80
   vim.o.colorcolumn = '+1'
   vim.o.formatoptions = 'croqjln'
+  vim.opt.comments:remove('n:>')     -- don't treat '>' as a default comment leader
 -- }}}
 
 -- Searching {{{
