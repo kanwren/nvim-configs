@@ -114,6 +114,11 @@ local function setup_plugins()
     'iamcco/markdown-preview.nvim',
     run = 'cd app && yarn install',
   }
+  use {
+    'unisonweb/unison',
+    branch = 'trunk',
+    rtp = 'editor-support/vim',
+  }
   -- use 'sheerun/vim-polyglot'          -- collection of language packs
 
   -- Colorschemes

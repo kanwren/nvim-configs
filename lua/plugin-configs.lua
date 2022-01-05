@@ -148,4 +148,11 @@ if utils.plugins.has('goyo.vim') and utils.plugins.has('limelight.vim') then
 end
 -- }}}
 
+-- unison {{{
+if utils.plugins.has('unison') then
+  vim.g.unison_api_port = 6789
+  vim.g.unison_api_token = 'local_ucm'
+end
+-- }}}
+
 -- vim: set foldmethod=marker:
