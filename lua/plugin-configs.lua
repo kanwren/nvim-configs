@@ -148,6 +148,18 @@ if utils.plugins.has('goyo.vim') and utils.plugins.has('limelight.vim') then
 end
 -- }}}
 
+-- HighStr {{{
+if utils.plugins.has('HighStr.nvim') then
+  for i = 0, 9 do
+    make_map("v", "<Leader>h" .. i, ":<c-u>HSHighlight " .. i .. "<CR>", { noremap = true, silent = true })
+  end
+  make_map("v", "<Leader>h1", ":<c-u>HSHighlight 1<CR>", { noremap = true, silent = true })
+  make_map("n", "<Leader>hr", ":<c-u>HSRmHighlight<CR>", { noremap = true, silent = true })
+  make_map("v", "<Leader>hr", ":<c-u>HSRmHighlight<CR>", { noremap = true, silent = true })
+  make_map("n", "<Leader>hc", ":<c-u>HSRmHighlight rm_all<CR>", { noremap = true, silent = true })
+end
+-- }}}
+
 -- unison {{{
 if utils.plugins.has('unison') then
   vim.g.unison_api_port = 6789

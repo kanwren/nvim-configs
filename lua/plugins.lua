@@ -89,11 +89,13 @@ local function setup_plugins()
   use 'norcalli/nvim-colorizer.lua'       -- show hex codes as colors
   use 'junegunn/goyo.vim'                 -- distraction-free writing
   use 'junegunn/limelight.vim'            -- only highlight current paragraph
+  use 'Pocco81/HighStr.nvim'              -- add highlighter marks
 
   -- LSP
   use 'neovim/nvim-lspconfig'             -- common LSP configurations
   use {                                   -- tree-sitter-based highlighting/indentation/etc.
     'nvim-treesitter/nvim-treesitter',
+    commit = '668de0951a36ef17016074f1120b6aacbe6c4515',
     -- run = ':TSUpdate',
   }
   use 'nvim-lua/lsp-status.nvim'          -- generating statusline components from LSP
