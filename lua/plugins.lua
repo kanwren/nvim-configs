@@ -57,10 +57,10 @@ local function setup_plugins()
   use 'tommcdo/vim-exchange'              -- Operators for exchanging text
   use 'tpope/vim-eunuch'                  -- File operations
   use {                                   -- Easy commenting
-    'tyru/caw.vim',
-    requires = {
-      'kana/vim-operator-user'            -- User-defined operators (needed for caw)
-    }
+    'numToStr/Comment.nvim',
+    config = function()
+      require('Comment').setup()
+    end
   }
   use 'kana/vim-repeat'                   -- Repeat more things with .
   use 'tpope/vim-abolish'                 -- Smart substitution, spelling correction, etc.
@@ -69,7 +69,7 @@ local function setup_plugins()
     ft = { 'java', 'c', 'cpp', 'javascript', 'typescript' },
   }
 
-  -- Fuzzy finding
+  -- UI
   use {
     'nvim-telescope/telescope.nvim',
     requires = {
@@ -77,8 +77,6 @@ local function setup_plugins()
       'nvim-lua/plenary.nvim',
     }
   }
-
-  -- UI
   use {                                   -- file browser
     'kyazdani42/nvim-tree.lua',
     requires = { 'kyazdani42/nvim-web-devicons' }
@@ -87,8 +85,10 @@ local function setup_plugins()
   -- use 'wfxr/minimap.vim'                  -- VS Code-like minimap
   use 'Yggdroot/indentLine'               -- show indent markers
   use 'norcalli/nvim-colorizer.lua'       -- show hex codes as colors
-  use 'junegunn/goyo.vim'                 -- distraction-free writing
-  use 'junegunn/limelight.vim'            -- only highlight current paragraph
+  use {
+    'junegunn/goyo.vim',                  -- distraction-free writing
+    'junegunn/limelight.vim'              -- only highlight current paragraph
+  }
   use 'Pocco81/HighStr.nvim'              -- add highlighter marks
 
   -- LSP
@@ -122,9 +122,6 @@ local function setup_plugins()
     rtp = 'editor-support/vim',
   }
   -- use 'sheerun/vim-polyglot'          -- collection of language packs
-
-  -- Colorschemes
-  use 'romainl/vim-dichromatic'          -- For taking screenshots that might be read by colorblind students
 end
 
 local plugins = require('packer').startup({ setup_plugins, config = packer_config })
