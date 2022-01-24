@@ -59,7 +59,10 @@ local function setup_plugins()
   use {                                   -- Easy commenting
     'numToStr/Comment.nvim',
     config = function()
-      require('Comment').setup()
+      local ok, m = pcall(require, 'Comment')
+      if ok then
+        m.setup()
+      end
     end
   }
   use 'kana/vim-repeat'                   -- Repeat more things with .

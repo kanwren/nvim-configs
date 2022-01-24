@@ -82,14 +82,6 @@ if utils.plugins.has('vim-gitgutter') then
 end
 -- }}}
 
--- caw {{{
-if utils.plugins.has('caw.vim') then
-  vim.g.caw_operator_keymappings = 1
-  make_map('n', 'gco', '<Plug>(caw:jump:comment-next)', {})
-  make_map('n', 'gcO', '<Plug>(caw:jump:comment-prev)', {})
-end
--- }}}
-
 -- indentLine {{{
 if utils.plugins.has('indentLine') then
   vim.g.indentLine_enabled = 0
