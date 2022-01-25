@@ -40,6 +40,7 @@
           (with pkgs; [
             # core
             xxd
+            git
 
             # for plugins
             stdenv.cc
@@ -65,8 +66,8 @@
         ];
       in
       {
-        defaultPackage = self.packages.${system}.neovim;
-        packages.neovim = mkNeovim { includeDeps = false; };
+        defaultPackage = self.packages.${system}.neovim-with-plugin-deps;
+        packages.neovim-no-plugin-deps = mkNeovim { includeDeps = false; };
         packages.neovim-with-plugin-deps = mkNeovim { includeDeps = true; };
       }
     );
