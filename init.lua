@@ -22,8 +22,13 @@ require('mappings')
 local ok, _ = require('plugins')
 plugins_loaded = ok
 if plugins_loaded then
-    require('lsp-configs')
-    require('plugin-configs')
+  require('lsp-configs')
+  require('plugin-configs')
 end
 
-vim.api.nvim_command('colorscheme onedark')
+-- source local init if it exists
+-- (in 'data' since 'config' might contain version-controlled config)
+local local_init_path = utils.stdpath('data') .. '/local_init.lua'
+if utils.path_exists(local_init_path) == 'file' then
+  vim.api.nvim_command('luafile ' .. local_init_path)
+end

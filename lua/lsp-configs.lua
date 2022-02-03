@@ -5,8 +5,8 @@ local ok2, completion         = pcall(require, 'completion')
 local ok3, lsp_status         = pcall(require, 'lsp-status')
 local ok4, treesitter_configs = pcall(require, 'nvim-treesitter.configs')
 if not (ok1 and ok2 and ok3 and ok4) then
-    error("missing plugin dependencies, lsp configs not loaded")
-    return
+  error("missing plugin dependencies, lsp configs not loaded")
+  return
 end
 
 -- diagnostics {{{

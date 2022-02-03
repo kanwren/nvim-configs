@@ -37,6 +37,11 @@ function M.plugins.has(name)
   end
 end
 
+function M.path_exists(filename)
+  local stat = vim.loop.fs_stat(filename)
+  return stat and stat.type or false
+end
+
 function M.stdpath(p)
   local val = vim.env['NVIM_NIX_STDPATH_' .. p]
   if val then

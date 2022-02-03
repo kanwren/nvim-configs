@@ -1,15 +1,12 @@
+local utils = require('utils')
+
 local fn = vim.fn
 local command = vim.api.nvim_command
-
-local function exists(filename)
-  local stat = vim.loop.fs_stat(filename)
-  return stat and stat.type or false
-end
 
 local packer_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 
 local function packer_exists()
-  return exists(packer_path) == 'directory'
+  return utils.path_exists(packer_path) == 'directory'
 end
 
 if not packer_exists() then
@@ -129,7 +126,7 @@ end
 
 local plugins = require('packer').startup({ setup_plugins, config = packer_config })
 
-if exists(packer_compile_path) then
+if utils.path_exists(packer_compile_path) then
   require'packer_compiled'
 else
   print('Warning: packer not compiled, lazy-loading not initialized')
