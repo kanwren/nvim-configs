@@ -86,7 +86,7 @@ function setup_lsp_mappings(client, bufnr)
   -- Mappings.
   local opts = { noremap=true, silent=true }
   local make_map = function(k, v) vim.api.nvim_buf_set_keymap(bufnr, 'n', k, v, opts) end
-  make_map('<Leader>ld', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>')
+  make_map('<Leader>ld', '<cmd>lua vim.diagnostic.open_float()<CR>')
   make_map('gd', '<cmd>lua vim.lsp.buf.declaration()<CR>')
   make_map('<C-]>', '<Cmd>lua vim.lsp.buf.definition()<CR>')
   make_map('gD', '<cmd>lua vim.lsp.buf.implementation()<CR>')
@@ -99,8 +99,8 @@ function setup_lsp_mappings(client, bufnr)
   make_map('<C-w>}', '<cmd>lua peek_definition()<CR>')
   make_map('g0', '<cmd>lua vim.lsp.buf.document_symbol()<CR>')
   make_map('gW', '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>')
-  make_map('[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
-  make_map(']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
+  make_map('[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
+  make_map(']d', '<cmd>lua vim.diagnostic.goto_next()<CR>')
   -- management
   make_map('<Leader>lx', '<cmd>LspStop<CR>')
   make_map('<Leader>lX', '<cmd>LspRestart<CR>')
