@@ -37,6 +37,20 @@ function M.plugins.has(name)
   end
 end
 
+function M.read_file(filename)
+  local fd = assert(vim.loop.fs_open(filename, "r", 438))
+  local stat = assert(vim.loop.fs_fstat(fd))
+  local data = assert(vim.loop.fs_read(fd, stat.size, 0))
+  assert(vim.loop.fs_close(fd))
+  return data
+end
+
+function M.write_file(filename, contents, flag, mode)
+  local fd = assert(vim.loop.fs_open(filename, flag, mode or 438))
+  local stat = assert(vim.loop.fs_write(fd, contents, -1))
+  assert(vim.loop.fs_close(fd))
+end
+
 function M.path_exists(filename)
   local stat = vim.loop.fs_stat(filename)
   return stat and stat.type or false

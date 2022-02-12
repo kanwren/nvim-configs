@@ -26,6 +26,8 @@ if plugins_loaded then
   require('plugin-configs')
 end
 
+require('colorscheme')
+
 -- source local init if it exists
 -- (in 'data' since 'config' might contain version-controlled config)
 local local_init_path = utils.stdpath('data') .. '/local_init.lua'
