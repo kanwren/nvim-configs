@@ -1,10 +1,11 @@
 local utils = require('utils')
 
 local ok1, lspconfig          = pcall(require, 'lspconfig')
-local ok2, completion         = pcall(require, 'completion')
+local ok2, cmp                = pcall(require, 'cmp')
 local ok3, lsp_status         = pcall(require, 'lsp-status')
 local ok4, treesitter_configs = pcall(require, 'nvim-treesitter.configs')
-if not (ok1 and ok2 and ok3 and ok4) then
+local ok5, cmp_nvim_lsp       = pcall(require, 'cmp_nvim_lsp')
+if not (ok1 and ok2 and ok3 and ok4 and ok5) then
   error("missing plugin dependencies, lsp configs not loaded")
   return
 end
@@ -107,18 +108,75 @@ function setup_lsp_mappings(client, bufnr)
 end
 -- }}}
 
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = vim.tbl_extend('keep', capabilities, lsp_status.capabilities)
+
+-- completion {{{
+
+vim.o.completeopt = 'menuone,noinsert,noselect'
+vim.g.completion_enable_fuzzy_match = 1
+vim.g.completion_confirm_key = ''
+
+if utils.plugins.has('ultisnips') then
+  vim.g.completion_enable_snippet = 'UltiSnips'
+  vim.g.UltiSnipsExpandTrigger = '<Tab>'
+  vim.g.UltiSnipsJumpForwardTrigger = '<C-l>'
+  vim.g.UltiSnipsJumpBackwardTrigger = '<C-b>'
+end
+
+-- Completion setup
+cmp.setup({
+  snippet = {
+    -- TODO: pick a different snippets plugin
+    expand = function(args)
+      vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+    end,
+  },
+  mapping = {
+    ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
+    ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
+    ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+    -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
+    -- ['<C-y>'] = cmp.config.disable,
+    -- ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+    ['<C-e>'] = cmp.mapping({
+      i = cmp.mapping.abort(),
+      c = cmp.mapping.close(),
+    }),
+  },
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp' },
+    { name = 'ultisnips' }, -- For ultisnips users.
+  }, {
+    { name = 'buffer' },
+  })
+})
+
+-- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+-- cmp.setup.cmdline('/', { sources = { { name = 'buffer' } } })
+
+-- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline(':', {
+  sources = cmp.config.sources({ { name = 'path' } }, { { name = 'cmdline' } })
+})
+
+capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
+
+-- }}}
+
 local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-  completion.on_attach()
   lsp_status.on_attach(client, bufnr)
   setup_lsp_mappings(client, bufnr)
 end
 
 -- lsp servers {{{
 
+local capabiliti
+
 lspconfig.hls.setup {
   on_attach = on_attach,
-  capabilities = lsp_status.capabilities,
+  capabilities = capabilities,
   root_dir = function(fname)
     return lspconfig.util.root_pattern('hie.yaml', '*.cabal', 'cabal.project', 'package.yaml', 'stack.yaml', '.git')(fname) or '.'
   end,
@@ -127,7 +185,7 @@ lspconfig.hls.setup {
 
 lspconfig.pylsp.setup {
   on_attach = on_attach,
-  capabilities = lsp_status.capabilities,
+  capabilities = capabilities,
   settings = {
     pyls = {
       plugins = {
@@ -145,6 +203,7 @@ lspconfig.pylsp.setup {
 
 lspconfig.rust_analyzer.setup({
   on_attach=on_attach,
+  capabilities = capabilities,
   settings = {
     ["rust-analyzer"] = {
       assist = {
@@ -165,7 +224,7 @@ local other_servers = { 'rnix', 'tsserver', 'clangd', 'texlab' }
 for _, lsp in ipairs(other_servers) do
   lspconfig[lsp].setup {
     on_attach = on_attach,
-    capabilities = lsp_status.capabilities,
+    capabilities = capabilities,
   }
 end
 
@@ -197,21 +256,6 @@ treesitter_configs.setup {
     enable = true,
   },
 }
-
--- }}}
-
--- completion {{{
-
-vim.o.completeopt = 'menuone,noinsert,noselect'
-vim.g.completion_enable_fuzzy_match = 1
-vim.g.completion_confirm_key = ''
-
-if utils.plugins.has('ultisnips') then
-  vim.g.completion_enable_snippet = 'UltiSnips'
-  vim.g.UltiSnipsExpandTrigger = '<Tab>'
-  vim.g.UltiSnipsJumpForwardTrigger = '<C-l>'
-  vim.g.UltiSnipsJumpBackwardTrigger = '<C-b>'
-end
 
 -- }}}
 

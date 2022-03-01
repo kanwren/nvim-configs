@@ -101,11 +101,16 @@ local function setup_plugins()
   use 'nvim-lua/lsp-status.nvim'          -- generating statusline components from LSP
   -- completion
   use {
-    'nvim-lua/completion-nvim',
+    'hrsh7th/cmp-nvim-lsp',
+    'hrsh7th/cmp-buffer',
+    'hrsh7th/cmp-path',
+    'hrsh7th/cmp-cmdline',
+    'hrsh7th/nvim-cmp',
+    'SirVer/ultisnips',                   -- snippets (also a provider for snippets completion)
+    'quangnguyen30192/cmp-nvim-ultisnips',
     -- 'nvim-treesitter/completion-treesitter',
     -- 'steelsojka/completion-buffers',
   }
-  use 'SirVer/ultisnips'                  -- snippets (also a provider for snippets completion)
 
   -- Language-specific plugins
   use {
