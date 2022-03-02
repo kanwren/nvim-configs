@@ -184,10 +184,14 @@ cmp.setup({
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
 -- cmp.setup.cmdline('/', { sources = { { name = 'buffer' } } })
 
--- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-cmp.setup.cmdline(':', {
-  sources = cmp.config.sources({ { name = 'path' } }, { { name = 'cmdline' } })
-})
+-- Use cmdline & path source for ':'
+-- TODO: re-enable once %-expansion is no longer broken
+-- cmp.setup.cmdline(':', {
+--   sources = cmp.config.sources(
+--     { { name = 'path' } },
+--     { { name = 'cmdline' } }
+--   )
+-- })
 
 capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
 
