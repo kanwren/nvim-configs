@@ -12,6 +12,7 @@ local lspconfig          = load('lspconfig', results)
 local cmp                = load('cmp', results)
 local cmp_nvim_lsp       = load('cmp_nvim_lsp', results)
 local cmp_context        = load('cmp.config.context', results)
+local lspkind            = load('lspkind', results)
 local treesitter_configs = load('nvim-treesitter.configs', results)
 local lsp_status         = load('lsp-status', results)
 
@@ -171,7 +172,13 @@ cmp.setup({
       return not cmp_context.in_treesitter_capture("comment")
         and not cmp_context.in_syntax_group("Comment")
     end
-  end
+  end,
+  formatting = {
+    format = lspkind.cmp_format({
+      mode = 'symbol_text',
+      maxwidth = 60,
+    })
+  }
 })
 
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).

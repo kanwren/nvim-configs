@@ -106,6 +106,7 @@ local function setup_plugins()
     'hrsh7th/cmp-path',
     'hrsh7th/cmp-cmdline',
     'hrsh7th/nvim-cmp',
+    'onsails/lspkind-nvim',               -- completion menu formatting
     'SirVer/ultisnips',                   -- snippets (also a provider for snippets completion)
     'quangnguyen30192/cmp-nvim-ultisnips',
     -- 'nvim-treesitter/completion-treesitter',
