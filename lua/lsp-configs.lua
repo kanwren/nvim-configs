@@ -1,13 +1,25 @@
 local utils = require('utils')
 
-local ok1, lspconfig          = pcall(require, 'lspconfig')
-local ok2, cmp                = pcall(require, 'cmp')
-local ok3, lsp_status         = pcall(require, 'lsp-status')
-local ok4, treesitter_configs = pcall(require, 'nvim-treesitter.configs')
-local ok5, cmp_nvim_lsp       = pcall(require, 'cmp_nvim_lsp')
-if not (ok1 and ok2 and ok3 and ok4 and ok5) then
-  error("missing plugin dependencies, lsp configs not loaded")
-  return
+local function load(name, results)
+  local ok, res = pcall(require, name)
+  results[#results + 1] = ok
+  return res
+end
+
+local results = {}
+
+local lspconfig          = load('lspconfig', results)
+local cmp                = load('cmp', results)
+local cmp_nvim_lsp       = load('cmp_nvim_lsp', results)
+local cmp_context        = load('cmp.config.context', results)
+local treesitter_configs = load('nvim-treesitter.configs', results)
+local lsp_status         = load('lsp-status', results)
+
+for _, ok in pairs(results) do
+  if not ok then
+    error("missing plugin dependencies, lsp configs not loaded")
+    return
+  end
 end
 
 -- diagnostics {{{
@@ -149,7 +161,17 @@ cmp.setup({
     { name = 'ultisnips' }, -- For ultisnips users.
   }, {
     { name = 'buffer' },
-  })
+  }),
+  enabled = function()
+    -- disable completion in comments
+    -- keep command mode completion enabled when cursor is in a comment
+    if vim.api.nvim_get_mode().mode == 'c' then
+      return true
+    else
+      return not cmp_context.in_treesitter_capture("comment")
+        and not cmp_context.in_syntax_group("Comment")
+    end
+  end
 })
 
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).

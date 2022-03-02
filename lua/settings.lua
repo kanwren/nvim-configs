@@ -79,6 +79,8 @@
   vim.o.wildmenu = true
   vim.opt.wildmode = { 'longest:list', 'full' }
 
+  vim.o.pumheight = 20
+
   vim.o.signcolumn = 'yes'
 -- }}}
 
