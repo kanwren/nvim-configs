@@ -43,7 +43,7 @@ if utils.plugins.has('nvim-tree.lua') then
   require('nvim-tree').setup {
     disable_netrw = false,
     hijack_netrw = false,
-    auto_close = true,
+    auto_close = false,
   }
 end
 -- }}}
