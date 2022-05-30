@@ -66,9 +66,9 @@
         ];
       in
       {
-        defaultPackage = self.packages.${system}.neovim-with-plugin-deps;
+        defaultPackage = self.packages.${system}.neovim;
         packages.neovim-no-plugin-deps = mkNeovim { includeDeps = false; };
-        packages.neovim-with-plugin-deps = mkNeovim { includeDeps = true; };
+        packages.neovim = mkNeovim { includeDeps = true; };
       }
     );
 }
