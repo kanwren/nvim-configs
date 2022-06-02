@@ -125,12 +125,17 @@ local function setup_plugins(use)
   }
   use {                          -- file browser
     'kyazdani42/nvim-tree.lua',
-    requires = { 'kyazdani42/nvim-web-devicons' },
+    requires = { 'kyazdani42/nvim-web-devicons', opt = true },
     config = function() require('config.nvim-tree') end,
   }
   use {
     'sanfusu/neovim-undotree',
     config = function() require('config.undotree') end,
+  }
+  use {
+    'nvim-lualine/lualine.nvim',
+    requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+    config = function() require('config.statusline') end,
   }
   use {
     'folke/which-key.nvim',

@@ -9,6 +9,7 @@ catppuccin.setup {
     nvimtree = {
       show_root = true,
     },
+    which_key = true,
   },
 }
 
