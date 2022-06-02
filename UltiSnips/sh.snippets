@@ -1,7 +1,0 @@
-snippet :join_by
-join_by() { local IFS="\$1"; shift; echo "$*"; }
-endsnippet
-
-snippet :define
-define() { IFS=$'\n' read -r -d '' "\${1}" || true; }
-endsnippet

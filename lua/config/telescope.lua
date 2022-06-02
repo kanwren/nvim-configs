@@ -1,0 +1,20 @@
+-- TODO: better mappings
+vim.keymap.set('n', '<Leader>ff', '<cmd>Telescope find_files<CR>', { noremap = true })
+vim.keymap.set('n', '<Leader>fg', '<cmd>Telescope git_files<CR>', { noremap = true })
+vim.keymap.set('n', '<Leader>fr', '<cmd>Telescope live_grep<CR>', { noremap = true })
+vim.keymap.set('n', '<Leader>fK', '<cmd>Telescope grep_string<CR>', { noremap = true })
+vim.keymap.set('n', '<Leader>fo', '<cmd>Telescope oldfiles<CR>', { noremap = true })
+vim.keymap.set('n', '<Leader>fe', '<cmd>Telescope file_browser<CR>', { noremap = true })
+vim.keymap.set('n', '<Leader>fb', '<cmd>Telescope buffers<CR>', { noremap = true })
+vim.keymap.set('n', '<Leader>ft', '<cmd>Telescope tags<CR>', { noremap = true })
+vim.keymap.set('n', '<Leader>fh', '<cmd>Telescope help_tags<CR>', { noremap = true })
+vim.keymap.set('n', '<Leader>fm', '<cmd>Telescope keymaps<CR>', { noremap = true })
+vim.keymap.set('n', '<Leader>fz', '<cmd>Telescope spell_suggest<CR>', { noremap = true })
+vim.keymap.set('n', '<Leader>fcg', '<cmd>Telescope git_commits<CR>', { noremap = true })
+vim.keymap.set('n', '<Leader>fcb', '<cmd>Telescope git_bcommits<CR>', { noremap = true })
+vim.keymap.set('n', '<Leader>f:', '<cmd>Telescope commands<CR>', { noremap = true })
+vim.keymap.set('n', '<Leader>fj', '<cmd>Telescope jumplist<CR>', { noremap = true })
+vim.keymap.set('n', '<Leader>flg0', '<cmd>Telescope lsp_document_symbols<CR>', { noremap = true })
+vim.keymap.set('n', '<Leader>flgW', '<cmd>Telescope lsp_workspace_symbols<CR>', { noremap = true })
+
+-- TODO: configure lsp-related telescope pickers

@@ -15,7 +15,7 @@
       let
         inherit (nixpkgs) lib;
         pkgs = nixpkgs.legacyPackages.${system};
-        mkNeovim = { includeDeps }:
+        mkNeovim = { includeDeps ? true, includeConfigs ? true }:
           let
             nvim = pkgs.neovim.override {
               # Can't set customRC here, since it will assume a .vim extension
@@ -29,11 +29,11 @@
               # Wrap neovim to add an environment variable that will tell
               # init.lua where the copy of the configs are in the nix store;
               # this will be added to &runtimepath
-              wrapProgram $out/bin/nvim \
-                --set NVIM_NIX_STDPATH_config ${./.} \
-                --add-flags "-u ${./init.lua}" ${
-                  lib.optionalString includeDeps "--prefix PATH : ${lib.makeBinPath deps}"
-                }
+              wrapProgram $out/bin/nvim ${
+                lib.optionalString includeConfigs "--set NVIM_NIX_STDPATH_config ${./.} --add-flags \"-u ${./init.lua}\""
+              } ${
+                lib.optionalString includeDeps "--prefix PATH : ${lib.makeBinPath deps}"
+              }
             '';
           });
         deps = lib.concatLists [
@@ -67,8 +67,9 @@
       in
       {
         defaultPackage = self.packages.${system}.neovim;
+        packages.neovim = mkNeovim {};
         packages.neovim-no-plugin-deps = mkNeovim { includeDeps = false; };
-        packages.neovim = mkNeovim { includeDeps = true; };
+        packages.neovim-no-config = mkNeovim { includeConfigs = false; };
       }
     );
 }

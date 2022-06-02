@@ -1,36 +1,52 @@
 -- When using Nix, the config will be in the Nix store, not in
 -- stdpath('config'), so the nvim executable is wrapped to set
--- 'NEOVIM_NIX_STDPATH_x' for a given stdpath(x). Figuring this out is handled
--- by the 'stdpath' wrapper in lua/utils.lua, but this wouldn't be locatable
--- until &runtimepath is bootstrapped, so this check needs to be performed
--- manually at first.
+-- 'NEOVIM_NIX_STDPATH_x' for a given stdpath(x).
 local nix_nvim_config_path = vim.env['NVIM_NIX_STDPATH_config']
+local config_path
 if nix_nvim_config_path then
   vim.opt_global.runtimepath:prepend(nix_nvim_config_path)
+  config_path = nix_nvim_config_path
+else
+  config_path = vim.fn.stdpath('config')
 end
 
-local utils = require('utils')
+if vim.fn.has('nvim-0.7') == 0 then
+  vim.notify('configuration requires neovim v0.7+', vim.log.levels.ERROR)
+  return
+end
+
+do
+  local ok, _ = pcall(require, 'impatient')
+  if not ok then
+    vim.notify('impatient.nvim not installed', vim.log.levels.WARN)
+  end
+end
 
 require('settings')
-
--- TODO: migrate autocmds to lua
-local autocmds_path = utils.stdpath('config') .. '/au.vim'
-vim.api.nvim_command('source ' .. autocmds_path)
-
 require('mappings')
+require('autocmd')
 
-local ok, _ = require('plugins')
-plugins_loaded = ok
-if plugins_loaded then
-  require('lsp-configs')
-  require('plugin-configs')
+do
+  local ok, plugins = require('plugins')
+  if not ok then
+    return
+  end
 end
 
-require('colorscheme')
+require('lsp-config')
+require('colors')
 
--- source local init if it exists
--- (in 'data' since 'config' might contain version-controlled config)
-local local_init_path = utils.stdpath('data') .. '/local_init.lua'
-if utils.path_exists(local_init_path) == 'file' then
-  vim.api.nvim_command('luafile ' .. local_init_path)
-end
+-- TODO: plugins
+-- - undo tree
+-- - Git integration (currently 'tpope/vim-fugitive', but cosmic has a replacement)
+-- - statusline (maybe lualine?)
+-- - autopairs (currently 'jiangmiao/auto-pairs')
+-- - git gutter (currently 'airblade/vim-gitgutter', maybe gitsigns?)
+-- - 'junegunn/goyo.vim', 'junegunn/limelight.vim'
+-- - dashboard (vim-startify?)
+-- - session manager
+
+-- TODO: LSP configuration
+-- - statusline
+-- - formatting
+-- - mappings

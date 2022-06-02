@@ -1,3 +1,5 @@
+-- TODO: redocument everything
+
 -- Basic {{{
   vim.o.ffs = 'unix'
   vim.o.secure = true
@@ -61,6 +63,8 @@
   -- line numbers
   vim.o.number = true
   vim.o.relativenumber = true
+  vim.o.cursorline = true
+  vim.o.cursorlineopt = 'number'
 
   vim.o.list = true
   vim.opt.listchars = {
@@ -153,7 +157,7 @@
   vim.env.LANG = 'en'
   vim.o.spell = false
   vim.o.spelllang = 'en_us'
-  -- Fetch from http://www.gutenberg.org/files/3202/files/mthesaur.txt
+  -- from http://www.gutenberg.org/files/3202/files/mthesaur.txt
   vim.o.thesaurus = vim.fn.stdpath('data') .. '/thesaurus/mthesaur.txt'
 -- }}}
 
@@ -167,5 +171,3 @@
   -- Diagnostic messages
   vim.o.updatetime = 300
 -- }}}
-
--- vim:foldmethod=marker
