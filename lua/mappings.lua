@@ -83,11 +83,13 @@ local keymap = vim.keymap
 -- Quick settings changes {{{
   -- Change indent level on the fly
   function change_indent()
-      local indent_level = vim.fn.input('ts=sts=sw=') + 0
+      local indent_level = tonumber(vim.fn.input('ts=sts=sw='))
       if indent_level then
         vim.bo.tabstop = indent_level
         vim.bo.softtabstop = indent_level
         vim.bo.shiftwidth = indent_level
+      else
+        return
       end
       vim.api.nvim_command('redraw')
       print('ts=' .. vim.bo.tabstop .. ', sts=' .. vim.bo.softtabstop .. ', sw='  .. vim.bo.shiftwidth .. ', et='  .. (vim.bo.expandtab and 1 or 0))

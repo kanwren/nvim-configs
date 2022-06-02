@@ -44,20 +44,26 @@ local function setup_plugins(use)
     enable = false,
   }
   use 'tpope/vim-abolish'        -- Smart substitution, spelling correction, etc.
+  use 'lambdalisue/vim-protocol' -- edit remote files without netrw
 
   -- Settings
   use 'editorconfig/editorconfig-vim'
 
   -- Editing
-  use 'tpope/vim-surround'       -- inserting/changing/deleting delimiters
-  use {                          -- multiple cursors
+  use 'tpope/vim-surround'        -- inserting/changing/deleting delimiters
+  use {                           -- multiple cursors
     'mg979/vim-visual-multi',
     config = function() require('config.vim-visual-multi') end,
   }
-  use 'tommcdo/vim-exchange'     -- exchanging two regions
-  use {                          -- easy commenting
+  use 'tommcdo/vim-exchange'      -- exchanging two regions
+  use {                           -- easy commenting
     'numToStr/Comment.nvim',
     config = function() require('Comment').setup() end,
+  }
+  use 'AndrewRadev/splitjoin.vim' -- switch between single-line and multiline constructs
+  use {                           -- :NR command for narrowing a region
+    'chrisbra/NrrwRgn',
+    setup = function() require('setup.NrrwRgn') end,
   }
 
   -- LSP
@@ -69,6 +75,10 @@ local function setup_plugins(use)
   -- highlighting
   use {
     'nvim-treesitter/nvim-treesitter', -- tree-sitter-based highlighting/indentation/etc.
+    requires = {
+      'JoosepAlviste/nvim-ts-context-commentstring',
+      'mfussenegger/nvim-treehopper',
+    },
     config = function() require('config.treesitter') end,
   }
   -- snippets
@@ -95,8 +105,7 @@ local function setup_plugins(use)
       -- UI
       'hrsh7th/cmp-nvim-lsp-signature-help',                           -- highlight current arg in function signature
       'onsails/lspkind-nvim',                                          -- icons in completion menu
-      -- TODO:
-      -- 'lukas-reineke/cmp-under-comparator',                            -- sort leading underscores to end of list
+      'lukas-reineke/cmp-under-comparator',                            -- sort leading underscores to end of list
     },
     after = { 'LuaSnip', 'nvim-treesitter' },
     config = function() require('config.completion') end,
@@ -108,13 +117,9 @@ local function setup_plugins(use)
     requires = {
       'nvim-lua/popup.nvim',
       'nvim-lua/plenary.nvim',
-      -- TODO:
-      -- {
-      --   'nvim-telescope/telescope-frecency.nvim',
-      --   config = function() require('telescope').load_extension('frecency') end,
-      --   requires = { 'tami5/sqlite.lua' },
-      --   after = 'telescope.nvim',
-      -- }
+      -- Extensions
+      'nvim-telescope/telescope-ui-select.nvim',
+      'nvim-telescope/telescope-packer.nvim',
     },
     config = function() require('config.telescope') end,
   }
@@ -123,11 +128,18 @@ local function setup_plugins(use)
     requires = { 'kyazdani42/nvim-web-devicons' },
     config = function() require('config.nvim-tree') end,
   }
+  use {
+    'sanfusu/neovim-undotree',
+    config = function() require('config.undotree') end,
+  }
+  use {
+    'folke/which-key.nvim',
+    config = function() require('config.which-key') end,
+  }
   use {                          -- code minimap
     'wfxr/minimap.vim',
     config = function() require('config.minimap') end,
   }
-  use 'tversteeg/registers.nvim' -- register previews
   use {                          -- show indent mark
     'lukas-reineke/indent-blankline.nvim',
     config = function() require('config.indent-line') end,
@@ -138,6 +150,19 @@ local function setup_plugins(use)
     ft = { 'css', 'javascript', 'typescript', 'html', 'vim', 'lua' },
     config = function() require('colorizer').setup { 'css', 'javascript', 'typescript', 'html', 'vim', 'lua' } end,
   }
+  use 'tpope/vim-characterize'   -- see more character metadata in the 'ga' output
+
+  -- VCS
+  use 'rhysd/committia.vim'      -- better commit message editing
+  -- TODO: decide if this is needed, what with gitsigns <Leader>gb
+  use {                          -- see commit message of last commit under cursor (<Leader>gm)
+    'rhysd/git-messenger.vim',
+    config = function() require('config.git-messenger') end,
+  }
+  use {
+    'lewis6991/gitsigns.nvim',
+    config = function() require('config.gitsigns') end,
+  }
 
   -- Tools
   use {
@@ -146,6 +171,9 @@ local function setup_plugins(use)
     ft = { 'md' },
     config = function() require('config.markdown-preview') end,
   }
+
+  -- Colors
+  use { 'catppuccin/nvim', as = 'catppuccin' }
 
   -- Language-specific
   use {
@@ -158,9 +186,6 @@ local function setup_plugins(use)
   --   rtp = 'editor-support/vim',
   --   ft = { 'u' },
   -- }
-
-  -- Colors
-  use { 'catppuccin/nvim', as = 'catppuccin' }
 
   if packer_bootstrapped then
     require('packer').sync()

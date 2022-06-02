@@ -6,6 +6,7 @@ local cmp = require('cmp')
 local cmp_context = require('cmp.config.context')
 local lspkind = require('lspkind')
 local luasnip = require('luasnip')
+local cmp_under_comparator = require('cmp-under-comparator')
 
 function next_item(fallback)
   if cmp.visible() then
@@ -79,7 +80,19 @@ cmp.setup({
       mode = 'symbol_text',
       maxwidth = 70,
     })
-  }
+  },
+  sorting = {
+    comparators = {
+      cmp.config.compare.offset,
+      cmp.config.compare.exact,
+      cmp.config.compare.score,
+      cmp_under_comparator.under,
+      cmp.config.compare.kind,
+      cmp.config.compare.sort_text,
+      cmp.config.compare.length,
+      cmp.config.compare.order,
+    },
+  },
 })
 
 cmp.setup.cmdline('/', {

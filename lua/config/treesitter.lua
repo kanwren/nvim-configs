@@ -21,4 +21,12 @@ treesitter_configs.setup {
   incremental_selection = {
     enable = true,
   },
+  -- nvim-ts-context-commentstring
+  context_commentstring = {
+    enable = true,
+  },
 }
+
+-- nvim-ts-hint-textobject
+vim.keymap.set('o', 'm', ":<C-U>lua require('tsht').nodes()<CR>", { silent = true })
+vim.keymap.set('v', 'm', ":lua require('tsht').nodes()<CR>", { noremap = true, silent = true })

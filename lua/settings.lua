@@ -164,7 +164,7 @@
 -- Timeouts {{{
   -- Time out on mappings after 3 seconds
   vim.o.timeout = true
-  vim.o.timeoutlen = 3000
+  vim.o.timeoutlen = 1000
   -- Time out immediately on key codes
   vim.o.ttimeout = true
   vim.o.ttimeoutlen = 0

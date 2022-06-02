@@ -22,6 +22,7 @@ do
   end
 end
 
+require('disable')
 require('settings')
 require('mappings')
 require('autocmd')
