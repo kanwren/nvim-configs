@@ -1,4 +1,4 @@
-vim.keymap.set('n', '<Leader>d', '<cmd>NvimTreeToggle<CR>', { noremap = true })
+vim.keymap.set('n', '<Leader>d', '<cmd>NvimTreeToggle<CR>', { desc = 'toggle file tree', noremap = true })
 
 require('nvim-tree').setup {
   disable_netrw = true,

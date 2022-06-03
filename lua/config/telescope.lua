@@ -13,7 +13,7 @@ telescope.setup {
 telescope.load_extension('ui-select')
 telescope.load_extension('packer')
 
-vim.keymap.set('n', '<Leader>ff', '<cmd>Telescope find_files<CR>', { noremap = true })
-vim.keymap.set('n', '<Leader>fg', '<cmd>Telescope git_files<CR>', { noremap = true })
-vim.keymap.set('n', '<Leader>fr', '<cmd>Telescope live_grep<CR>', { noremap = true })
-vim.keymap.set('n', '<Leader>fb', '<cmd>Telescope buffers<CR>', { noremap = true })
+vim.keymap.set('n', '<Leader>ff', '<cmd>Telescope find_files<CR>', { desc = 'files', noremap = true })
+vim.keymap.set('n', '<Leader>fg', '<cmd>Telescope git_files<CR>', { desc = 'git files', noremap = true })
+vim.keymap.set('n', '<Leader>fr', '<cmd>Telescope live_grep<CR>', { desc = 'live grep', noremap = true })
+vim.keymap.set('n', '<Leader>fb', '<cmd>Telescope buffers<CR>', { desc = 'buffers', noremap = true })

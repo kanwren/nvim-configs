@@ -37,17 +37,3 @@ end
 require('lsp-config')
 require('colors')
 
--- TODO: plugins
--- - undo tree
--- - Git integration (currently 'tpope/vim-fugitive', but cosmic has a replacement)
--- - statusline (maybe lualine?)
--- - autopairs (currently 'jiangmiao/auto-pairs')
--- - git gutter (currently 'airblade/vim-gitgutter', maybe gitsigns?)
--- - 'junegunn/goyo.vim', 'junegunn/limelight.vim'
--- - dashboard (vim-startify?)
--- - session manager
-
--- TODO: LSP configuration
--- - statusline
--- - formatting
--- - mappings

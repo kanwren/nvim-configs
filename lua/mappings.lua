@@ -26,25 +26,25 @@ local keymap = vim.keymap
   keymap.set({'n', 'v', 'o'}, 'j', "(v:count == -1 ? 'gj' : 'j')", { noremap = true, silent = true, expr = true })
   keymap.set({'n', 'v', 'o'}, 'k', "(v:count == -1 ? 'gk' : 'k')", { noremap = true, silent = true, expr = true })
   -- Makes temporary macros faster
-  keymap.set('n', 'Q', '@q', { noremap = true })
+  keymap.set('n', 'Q', '@q', { desc = 'run @q', noremap = true })
   -- Repeat macros/commands across visual selections
-  keymap.set('x', 'Q', ':normal @q<CR>', { noremap = true, silent = true })
-  keymap.set('x', '.', ':normal .<CR>', { noremap = true, silent = true })
+  keymap.set('x', 'Q', ':normal @q<CR>', { desc = 'linewise @q', noremap = true, silent = true })
+  keymap.set('x', '.', ':normal .<CR>', { desc = 'linewise .', noremap = true, silent = true })
   -- Redraw page and clear highlights
-  keymap.set({'n', 'v', 'o'}, '<C-l>', '<cmd>nohlsearch<CR><C-l>', { noremap = true, silent = true })
+  keymap.set({'n', 'v', 'o'}, '<C-l>', '<cmd>nohlsearch<CR><C-l>', { desc = 'redraw', noremap = true, silent = true })
   -- Search word underneath cursor/selection but don't jump
-  keymap.set('n', '*', '<cmd>let wv=winsaveview()<CR>*<cmd>call winrestview(wv)<CR>', { noremap = true, silent = true })
-  keymap.set('n', '#', '<cmd>let wv=winsaveview()<CR>#<cmd>call winrestview(wv)<CR>', { noremap = true, silent = true })
+  keymap.set('n', '*', '<cmd>let wv=winsaveview()<CR>*<cmd>call winrestview(wv)<CR>', { desc = 'search word forwards', noremap = true, silent = true })
+  keymap.set('n', '#', '<cmd>let wv=winsaveview()<CR>#<cmd>call winrestview(wv)<CR>', { desc = 'search word backwards', noremap = true, silent = true })
 
-  keymap.set('n', '<Leader>w', '<cmd>w<CR>', { noremap = true })
+  keymap.set('n', '<Leader>w', '<cmd>w<CR>', { desc = 'write buffer', noremap = true })
 -- }}}
 
 -- Editing {{{
   -- Split current line by provided regex (\zs or \ze to preserve separators)
-  keymap.set('n', 'gs', ':s//\\r/g<Left><Left><Left><Left><Left>', { noremap = true })
+  keymap.set('n', 'gs', ':s//\\r/g<Left><Left><Left><Left><Left>', { desc = 'regex split line', noremap = true })
 
   -- Start a visual substitute
-  keymap.set('x', 'gs', ':s/\\%V', { noremap = true })
+  keymap.set('x', 'gs', ':s/\\%V', { desc = 'visual substitute', noremap = true })
 
   -- Delete trailing whitespace and retab
   function clean_whitespace()
@@ -56,7 +56,7 @@ local keymap = vim.keymap
     ]])
     vim.fn.winrestview(wv)
   end
-  keymap.set('n', '<Leader><Tab>', '<cmd>call v:lua.clean_whitespace()<CR>', { noremap = true, silent = true })
+  keymap.set('n', '<Leader><Tab>', '<cmd>call v:lua.clean_whitespace()<CR>', { desc = 'clean whitespace', noremap = true, silent = true })
 -- }}}
 
 -- Registers {{{
@@ -67,16 +67,18 @@ local keymap = vim.keymap
     vim.api.nvim_command('let @' .. r2 .. '=@' .. r1)
     vim.notify('Copied @' .. r1 .. ' to @' .. r2, vim.log.levels.INFO)
   end
-  keymap.set('n', '<Leader>r', '<cmd>call v:lua.reg_move()<CR>', { noremap = true, silent = true })
+  keymap.set('n', '<Leader>r', '<cmd>call v:lua.reg_move()<CR>', { desc = 'register copy', noremap = true, silent = true })
 -- }}}
 
 -- Matching navigation commands (like in unimpaired) {{{
-  for lowerkey, cmd in pairs({ b = 'b', t = 't', q = 'c', l = 'l' }) do
+  for lowerkey, cmd_desc in pairs({ b = { 'b', 'buffer' }, t = { 't', 'tab' }, q = { 'c', 'quickfix item' }, l = { 'l', 'loclist item' } }) do
     local upperkey = lowerkey:upper()
-    keymap.set('n', "]" .. lowerkey, "<cmd>" .. cmd .. "next<CR>",     { noremap = true })
-    keymap.set('n', "[" .. lowerkey, "<cmd>" .. cmd .. "previous<CR>", { noremap = true })
-    keymap.set('n', "]" .. upperkey, "<cmd>" .. cmd .. "last<CR>",     { noremap = true })
-    keymap.set('n', "[" .. upperkey, "<cmd>" .. cmd .. "first<CR>",    { noremap = true })
+    local cmd = cmd_desc[1]
+    local desc = cmd_desc[2]
+    keymap.set('n', "]" .. lowerkey, "<cmd>" .. cmd .. "next<CR>",     { desc = 'next ' .. desc, noremap = true })
+    keymap.set('n', "[" .. lowerkey, "<cmd>" .. cmd .. "previous<CR>", { desc = 'previous ' .. desc, noremap = true })
+    keymap.set('n', "]" .. upperkey, "<cmd>" .. cmd .. "last<CR>",     { desc = 'last ' .. desc, noremap = true })
+    keymap.set('n', "[" .. upperkey, "<cmd>" .. cmd .. "first<CR>",    { desc = 'first ' .. desc, noremap = true })
   end
 -- }}}
 
@@ -94,17 +96,17 @@ local keymap = vim.keymap
       vim.api.nvim_command('redraw')
       print('ts=' .. vim.bo.tabstop .. ', sts=' .. vim.bo.softtabstop .. ', sw='  .. vim.bo.shiftwidth .. ', et='  .. (vim.bo.expandtab and 1 or 0))
   end
-  keymap.set('n', '<Leader>oi', '<cmd>call v:lua.change_indent()<CR>', { noremap = true })
+  keymap.set('n', '<Leader>oi', '<cmd>call v:lua.change_indent()<CR>', { desc = 'set indentation', noremap = true })
 -- }}}
 
 -- UI toggles {{{
-  keymap.set('n', '<Leader>uw', '<cmd>setlocal wrap!<CR>', { noremap = true })
-  keymap.set('n', '<Leader>unn', '<cmd>setlocal number!<CR>', { noremap = true })
-  keymap.set('n', '<Leader>unr', '<cmd>setlocal relativenumber!<CR>', { noremap = true })
-  keymap.set('n', '<Leader>usl', "':setlocal laststatus=' . (&laststatus == 0 ? '2' : '0') . '<CR>'", { noremap = true, expr = true })
-  keymap.set('n', '<Leader>usc', "':setlocal signcolumn=' . (&signcolumn == 'no' ? 'yes' : 'no') . '<CR>'", { noremap = true, expr = true })
-  keymap.set('n', '<Leader>ufc', "':setlocal foldcolumn=' . (&foldcolumn == 0 ? 1 : 0) . '<CR>'", { noremap = true, expr = true })
-  keymap.set('n', '<Leader>ul', '<cmd>setlocal list!<CR>', { noremap = true })
+  keymap.set('n', '<Leader>uw', '<cmd>setlocal wrap!<CR>', { desc = 'toggle line wrapping', noremap = true })
+  keymap.set('n', '<Leader>unn', '<cmd>setlocal number!<CR>', { desc = 'toggle line numbers', noremap = true })
+  keymap.set('n', '<Leader>unr', '<cmd>setlocal relativenumber!<CR>', { desc = 'toggle relative line numbers', noremap = true })
+  keymap.set('n', '<Leader>usl', "':setlocal laststatus=' . (&laststatus == 0 ? '2' : '0') . '<CR>'", { desc = 'toggle statusline', noremap = true, expr = true })
+  keymap.set('n', '<Leader>usc', "':setlocal signcolumn=' . (&signcolumn == 'no' ? 'yes' : 'no') . '<CR>'", { desc = 'toggle sign column', noremap = true, expr = true })
+  keymap.set('n', '<Leader>ufc', "':setlocal foldcolumn=' . (&foldcolumn == 0 ? 1 : 0) . '<CR>'", { desc = 'toggle fold column', noremap = true, expr = true })
+  keymap.set('n', '<Leader>ul', '<cmd>setlocal list!<CR>', { desc = 'toggle listchars', noremap = true })
 -- }}}
 
 -- Abbreviations {{{

@@ -163,10 +163,7 @@ local function setup_plugins(use)
   -- VCS
   use 'rhysd/committia.vim'      -- better commit message editing
   -- TODO: decide if this is needed, what with gitsigns <Leader>gb
-  use {                          -- see commit message of last commit under cursor (<Leader>gm)
-    'rhysd/git-messenger.vim',
-    config = function() require('config.git-messenger') end,
-  }
+  use 'rhysd/git-messenger.vim'  -- see commit message of last commit under cursor (<Leader>gm)
   use {
     'lewis6991/gitsigns.nvim',
     config = function() require('config.gitsigns') end,

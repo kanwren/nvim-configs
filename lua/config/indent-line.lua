@@ -4,4 +4,4 @@ require('indent_blankline').setup {
   defaultGroup = 'IndentLine',
 }
 
-vim.keymap.set('n', '<Leader>ui', ':IndentBlanklineToggle<CR>', { noremap = true })
+vim.keymap.set('n', '<Leader>ui', ':IndentBlanklineToggle<CR>', { desc = 'toggle indent guides', noremap = true })

@@ -32,19 +32,21 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 )
 
 function setup_lsp_mappings(client, bufnr)
-  local opts = { noremap=true, silent=true }
-  local make_map = function(k, v) vim.api.nvim_buf_set_keymap(bufnr, 'n', k, v, opts) end
+  local make_map = function(k, v, desc)
+    local map_opts = { noremap = true, silent = true, desc = desc }
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', k, v, map_opts)
+  end
   -- TODO: https://raygervais.dev/articles/2021/3/neovim-lsp/
   -- TODO: https://github.com/CosmicNvim/CosmicNvim/blob/main/lua/cosmic/lsp/mappings.lua
   -- TODO: https://github.com/crivotz/nv-ide/blob/master/lua/settings/keymap.lua
-  make_map('<Leader>ld', '<cmd>lua vim.diagnostic.open_float()<CR>')
-  make_map('K', '<cmd>lua vim.lsp.buf.hover()<CR>')
-  make_map('<Leader>lr', '<cmd>lua vim.lsp.buf.rename()<CR>')
-  make_map('<Leader>la', '<cmd>lua vim.lsp.buf.code_action()<CR>')
-  make_map('[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
-  make_map(']d', '<cmd>lua vim.diagnostic.goto_next()<CR>')
-  make_map('<Leader>lx', '<cmd>LspStop<CR>')
-  make_map('<Leader>lX', '<cmd>LspRestart<CR>')
+  make_map('<Leader>ld', '<cmd>lua vim.diagnostic.open_float()<CR>', 'open float diagnostic')
+  make_map('K', '<cmd>lua vim.lsp.buf.hover()<CR>', 'hover')
+  make_map('<Leader>lr', '<cmd>lua vim.lsp.buf.rename()<CR>', 'rename')
+  make_map('<Leader>la', '<cmd>lua vim.lsp.buf.code_action()<CR>', 'code action')
+  make_map('[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', 'previous LSP diagnostic')
+  make_map(']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', 'next LSP diagnostic')
+  make_map('<Leader>lx', '<cmd>LspStop<CR>', 'stop LSP')
+  make_map('<Leader>lX', '<cmd>LspRestart<CR>', 'restart LSP')
 end
 
 local on_attach = function(client, bufnr)
