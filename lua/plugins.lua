@@ -128,16 +128,16 @@ local function setup_plugins(use)
     requires = { 'kyazdani42/nvim-web-devicons', opt = true },
     config = function() require('config.nvim-tree') end,
   }
-  use {
+  use {                          -- undo tree
     'sanfusu/neovim-undotree',
     config = function() require('config.undotree') end,
   }
-  use {
+  use {                          -- statusline
     'nvim-lualine/lualine.nvim',
     requires = { 'kyazdani42/nvim-web-devicons', opt = true },
     config = function() require('config.statusline') end,
   }
-  use {
+  use {                          -- keybindings popup
     'folke/which-key.nvim',
     config = function() require('config.which-key') end,
   }
@@ -145,11 +145,14 @@ local function setup_plugins(use)
     'wfxr/minimap.vim',
     config = function() require('config.minimap') end,
   }
-  use {                          -- show indent mark
+  use {                          -- show indent levels
     'lukas-reineke/indent-blankline.nvim',
     config = function() require('config.indent-line') end,
   }
-  use 'Pocco81/HighStr.nvim'     -- add temporary highlights
+  use {                          -- add temporary highlights
+    'Pocco81/HighStr.nvim',
+    config = function() require('config.highstr') end,
+  }
   use {                          -- show hex codes as colors
     'norcalli/nvim-colorizer.lua',
     ft = { 'css', 'javascript', 'typescript', 'html', 'vim', 'lua' },

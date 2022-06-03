@@ -1,8 +1,6 @@
 local wk = require('which-key')
 
-return
-
-wk.register({
+local maps = {
   ["<leader>"] = {
     ["<Tab>"] = "retab and remove trailing whitespace",
     ["g"] = {
@@ -46,7 +44,6 @@ wk.register({
       ["r"] = "ripgrep",
       ["g"] = "git files",
       ["f"] = "files",
-      ["m"] = "keymaps",
     },
     ["l"] = {
       name = "+lsp",
@@ -55,6 +52,11 @@ wk.register({
       ['a'] = 'code action',
       ['x'] = 'stop LSP',
       ['X'] = 'restart LSP',
+    },
+    ["h"] = {
+      name = "+highlight",
+      ['c'] = 'clear all',
+      ['r'] = 'remove',
     },
     ["o"] = {
       name = "+options",
@@ -67,15 +69,9 @@ wk.register({
   -- TODO: add other leaders (cr, gc, ys)
   ["g"] = {
     ["a"] = "character info",
-    ["b"] = "block comment",
-    ["c"] = "line comment",
     ["S"] = "split construct",
     ["J"] = "join construct",
     ["s"] = "split line",
-  },
-  ["c"] = {
-    ["r"] = "coerce",
-    ["x"] = "exchange",
   },
   ["\\"] = {
     name = "+visual-multi",
@@ -83,4 +79,21 @@ wk.register({
     ["/"] = "regex search",
     ["A"] = "select all",
   },
-})
+}
+
+local operators = {
+  ["ys"] = "surround",
+  ["yS"] = "surround line",
+  ["gc"] = "line comment",
+  ["gb"] = "block comment",
+  ["cr"] = "coerce",
+  ["cx"] = "exchange",
+}
+
+local objects = {
+  ["m"] = "treehopper",
+}
+
+wk.register(maps, { mode = "n" })
+wk.register(operators, { mode = "n" })
+wk.register(objects, { mode = "o" })
