@@ -10,27 +10,30 @@ gitsigns.setup {
       vim.keymap.set(mode, l, r, opts)
     end
 
+    -- navigation
     map('n', ']h', function()
       if vim.wo.diff then return ']c' end
       vim.schedule(function() gs.next_hunk() end)
       return '<Ignore>'
     end, { desc = 'next hunk', expr = true })
-
     map('n', '[h', function()
       if vim.wo.diff then return '[c' end
       vim.schedule(function() gs.prev_hunk() end)
       return '<Ignore>'
     end, { desc = 'previous hunk', expr = true })
-
+    -- line operations
+    map('n', '<Leader>gl', function() gs.blame_line{full = true} end, { desc = 'blame line' })
+    -- hunk operations
     map({'n', 'v'}, '<Leader>ghs', ':Gitsigns stage_hunk<CR>', { desc = 'stage hunk' })
     map({'n', 'v'}, '<Leader>ghr', ':Gitsigns reset_hunk<CR>', { desc = 'reset hunk' })
-    map('n', '<Leader>ghS', gs.stage_buffer, { desc = 'stage buffer' })
     map('n', '<Leader>ghu', gs.undo_stage_hunk, { desc = 'undo stage hunk' })
-    map('n', '<Leader>ghR', gs.reset_buffer, { desc = 'reset buffer' })
     map('n', '<Leader>ghp', gs.preview_hunk, { desc = 'preview hunk' })
-    map('n', '<Leader>ghd', gs.diffthis, { desc = 'diffthis' })
-    map('n', '<Leader>ghD', function() gs.diffthis('~') end, { desc = 'diffthis' })
-    map('n', '<Leader>gb', function() gs.blame_line{full = true} end, { desc = 'blame line' })
+    -- buffer operations
+    map('n', '<Leader>gbd', gs.diffthis, { desc = 'diff against index' })
+    map('n', '<Leader>gbD', function() gs.diffthis('~') end, { desc = 'diff against parent' })
+    map('n', '<Leader>gbs', gs.stage_buffer, { desc = 'stage buffer' })
+    map('n', '<Leader>gbr', gs.reset_buffer, { desc = 'reset buffer' })
+    -- UI stuff
     map('n', '<Leader>gub', gs.toggle_current_line_blame, { desc = 'toggle line blame overlay' })
     map('n', '<Leader>gud', gs.toggle_deleted, { desc = 'toggle deleted lines' })
   end

@@ -32,21 +32,56 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 )
 
 function setup_lsp_mappings(client, bufnr)
-  local make_map = function(k, v, desc)
+  local make_map = function(mode, k, v, desc)
     local map_opts = { noremap = true, silent = true, desc = desc }
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', k, v, map_opts)
+    vim.api.nvim_buf_set_keymap(bufnr, mode, k, v, map_opts)
   end
-  -- TODO: https://raygervais.dev/articles/2021/3/neovim-lsp/
   -- TODO: https://github.com/CosmicNvim/CosmicNvim/blob/main/lua/cosmic/lsp/mappings.lua
   -- TODO: https://github.com/crivotz/nv-ide/blob/master/lua/settings/keymap.lua
-  make_map('<Leader>ld', '<cmd>lua vim.diagnostic.open_float()<CR>', 'open float diagnostic')
-  make_map('K', '<cmd>lua vim.lsp.buf.hover()<CR>', 'hover')
-  make_map('<Leader>lr', '<cmd>lua vim.lsp.buf.rename()<CR>', 'rename')
-  make_map('<Leader>la', '<cmd>lua vim.lsp.buf.code_action()<CR>', 'code action')
-  make_map('[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', 'previous LSP diagnostic')
-  make_map(']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', 'next LSP diagnostic')
-  make_map('<Leader>lx', '<cmd>LspStop<CR>', 'stop LSP')
-  make_map('<Leader>lX', '<cmd>LspRestart<CR>', 'restart LSP')
+  -- actions at a cursor position
+  make_map('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', 'hover')
+  make_map('n', '<Leader>lf', '<cmd>lua vim.diagnostic.open_float()<CR>', 'open float diagnostic')
+  make_map('n', '<Leader>la', '<cmd>lua vim.lsp.buf.code_action()<CR>', 'code action')
+  make_map('v', '<Leader>la', '<cmd>lua vim.lsp.buf.range_code_action()<CR>', 'range code action')
+  make_map('n', '<Leader>ls', '<Cmd>lua vim.lsp.buf.signature_help()<CR>', 'signature help')
+  make_map('n', '<Leader>lr', '<cmd>lua vim.lsp.buf.rename()<CR>', 'rename')
+  -- queries on a symbol
+  make_map('n', '<Leader>lgr', '<cmd>lua vim.lsp.buf.references()<CR>', 'references')
+  make_map('n', '<Leader>lgd', '<cmd>lua vim.lsp.buf.definition()<CR>', 'goto definition')
+  make_map('n', '<Leader>lgD', '<cmd>lua vim.lsp.buf.declaration()<CR>', 'goto declaration')
+  make_map('n', '<Leader>lgt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', 'goto type definition')
+  make_map('n', '<Leader>lgi', '<cmd>lua vim.lsp.buf.implementation()<CR>', 'goto implementation')
+  make_map('n', '<Leader>ltgr', '<cmd>lua require("telescope.builtin").lsp_references()<CR>', 'list references')
+  make_map('n', '<Leader>ltgd', '<cmd>lua require("telescope.builtin").lsp_definitions()<CR>', 'list definitions')
+  make_map('n', '<Leader>ltgt', '<cmd>lua require("telescope.builtin").lsp_type_definitions()<CR>', 'list type definitions')
+  make_map('n', '<Leader>ltgi', '<cmd>lua require("telescope.builtin").lsp_implementations()<CR>', 'list implementations')
+  -- document
+  make_map('n', '<Leader>lds', '<cmd>lua vim.lsp.buf.document_symbol()<CR>', 'query document symbols')
+  make_map('n', '<Leader>ltds', '<cmd>lua require("telescope.builtin").lsp_document_symbols()<CR>', 'query document symbols')
+  if client.resolved_capabilities.document_formatting then
+    make_map('n', '<Leader>ldf', '<cmd>lua vim.lsp.buf.formatting_sync()<CR>', 'format buffer')
+  end
+  if client.resolved_capabilities.document_range_formatting then
+    make_map('v', '<Leader>ldf', '<cmd>lua vim.lsp.buf.range_formatting()<CR>', 'format range')
+  end
+  -- workspace
+  make_map('n', '<Leader>lws', '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>', 'query workspace symbols')
+  make_map('n', '<Leader>ltws', '<cmd>lua require("telescope.builtin").lsp_workspace_symbols()<CR>', 'query workspace symbols')
+  make_map('n', '<Leader>lwfl', '<cmd>lua print(vim.lsp.buf.list_workspace_folders())<CR>', 'list workspace folders')
+  make_map('n', '<Leader>lwfa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', 'add workspace folder')
+  make_map('n', '<Leader>lwfr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', 'remove workspace folder')
+  -- call hierarchy
+  make_map('n', '<Leader>lci', '<cmd>lua vim.lsp.buf.incoming_calls()<CR>', 'incoming calls')
+  make_map('n', '<Leader>lco', '<cmd>lua vim.lsp.buf.outgoing_calls()<CR>', 'outgoing calls')
+  -- convert diagnostics
+  make_map('n', '<Leader>lql', '<cmd>lua vim.diagnostic.setloclist()<CR>', 'set loclist')
+  make_map('n', '<Leader>lqq', '<cmd>lua vim.diagnostic.setqflist()<CR>', 'set quickfix')
+  -- navigation
+  make_map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', 'previous LSP diagnostic')
+  make_map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', 'next LSP diagnostic')
+  make_map('n', '<Leader>lls', '<cmd>LspStop<CR>', 'stop LSP')
+  make_map('n', '<Leader>llr', '<cmd>LspRestart<CR>', 'restart LSP')
+  -- TODO: check correctness
 end
 
 local on_attach = function(client, bufnr)
