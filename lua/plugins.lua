@@ -41,7 +41,6 @@ local function setup_plugins(use)
   use {                          -- File operations
     'tpope/vim-eunuch',
     cmd = { 'Remove', 'Unlink', 'Delete', 'Copy', 'Duplicate', 'Move', 'Rename', 'Chmod', 'Mkdir', 'Cfind', 'Lfind', 'Clocate', 'Llocate', 'SudoEdit', 'SudoWrite', 'Wall', 'W' },
-    enable = false,
   }
   use 'tpope/vim-abolish'        -- Smart substitution, spelling correction, etc.
   use 'lambdalisue/vim-protocol' -- edit remote files without netrw
