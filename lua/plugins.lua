@@ -75,6 +75,7 @@ local function setup_plugins(use)
   use {
     'nvim-treesitter/nvim-treesitter', -- tree-sitter-based highlighting/indentation/etc.
     requires = {
+      'lewis6991/spellsitter.nvim',
       'JoosepAlviste/nvim-ts-context-commentstring',
       'mfussenegger/nvim-treehopper',
     },
