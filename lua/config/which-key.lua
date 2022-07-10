@@ -1,5 +1,11 @@
 local wk = require('which-key')
 
+wk.setup {
+  plugins = {
+    registers = false,  -- breaks <C-r> in command line during macros
+  },
+}
+
 local maps = {
   ["<leader>"] = {
     ["g"] = {
