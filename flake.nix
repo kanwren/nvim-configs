@@ -58,7 +58,7 @@
           (with pkgs.nodePackages; [
             typescript-language-server
           ])
-          (with pkgs.python39Packages; [
+          (with pkgs.python310Packages; [
             python-lsp-server
             python-lsp-black
             pylsp-mypy
