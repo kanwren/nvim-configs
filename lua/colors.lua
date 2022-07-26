@@ -4,6 +4,7 @@ if not ok then
   return
 end
 
+vim.g.catppuccin_flavour = 'mocha'
 catppuccin.setup {
   integrations = {
     nvimtree = {
@@ -13,5 +14,4 @@ catppuccin.setup {
   },
 }
 
-vim.g.catppuccin_flavor = 'mocha'
 vim.api.nvim_command('colorscheme catppuccin')
