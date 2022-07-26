@@ -13,7 +13,23 @@ telescope.setup {
 telescope.load_extension('ui-select')
 telescope.load_extension('packer')
 
-vim.keymap.set('n', '<Leader>ff', '<cmd>Telescope find_files<CR>', { desc = 'files', noremap = true })
-vim.keymap.set('n', '<Leader>fg', '<cmd>Telescope git_files<CR>', { desc = 'git files', noremap = true })
-vim.keymap.set('n', '<Leader>fr', '<cmd>Telescope live_grep<CR>', { desc = 'live grep', noremap = true })
-vim.keymap.set('n', '<Leader>fb', '<cmd>Telescope buffers<CR>', { desc = 'buffers', noremap = true })
+local function map_picker(mapping, picker, desc)
+  vim.keymap.set('n', '<Leader>f' .. mapping, '<cmd>Telescope ' .. picker .. '<CR>', { desc = desc, noremap = true})
+end
+
+map_picker('f', 'find_files', 'files')
+map_picker('g', 'git_files', 'git files')
+map_picker('r', 'live_grep', 'live grep')
+map_picker('b', 'buffers', 'buffers')
+map_picker('h', 'help_tags', 'help tags')
+map_picker('s', 'treesitter', 'treesitter')
+map_picker('l', 'resume', 'resume last picker')
+map_picker('t', 'tags', 'tags')
+map_picker('m', 'marks', 'marks')
+map_picker('o', 'oldfiles', 'recent files')
+map_picker('c', 'commands', 'commands')
+map_picker('v', 'vim_options', 'vim options')
+map_picker('k', 'keymaps', 'keymaps')
+map_picker('F', 'filetypes', 'filetypes')
+map_picker('j', 'jumplist', 'jumplist')
+

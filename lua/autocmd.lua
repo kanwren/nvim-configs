@@ -31,7 +31,7 @@ autocmd({ 'InsertEnter' }, {
   desc = 'Highlight trailing whitespace in insert mode, except at end of line',
 })
 
-local highlight_group = vim.api.nvim_create_augroup('highlight_group', { clear = true })
+local highlight_group = augroup('highlight_group', { clear = true })
 
 autocmd({ 'ColorScheme' }, {
   command = 'highlight ExtraWhitespace guibg=DarkGray',

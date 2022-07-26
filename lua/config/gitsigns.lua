@@ -34,8 +34,8 @@ gitsigns.setup {
     map('n', '<Leader>gbs', gs.stage_buffer, { desc = 'stage buffer' })
     map('n', '<Leader>gbr', gs.reset_buffer, { desc = 'reset buffer' })
     -- UI stuff
-    map('n', '<Leader>gub', gs.toggle_current_line_blame, { desc = 'toggle line blame overlay' })
-    map('n', '<Leader>gud', gs.toggle_deleted, { desc = 'toggle deleted lines' })
+    map('n', '<Leader>gtb', gs.toggle_current_line_blame, { desc = 'toggle line blame overlay' })
+    map('n', '<Leader>gtd', gs.toggle_deleted, { desc = 'toggle deleted lines' })
   end
 }
 

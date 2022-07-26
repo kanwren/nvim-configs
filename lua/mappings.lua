@@ -1,19 +1,4 @@
--- Note: leader mappings fall into the following groups:
--- * <Leader>o - option changes; indentation, etc.
--- * <Leader>u - enabling/disabling UI settings
--- * <Leader>g - git
--- * <Leader>f - finding with telescope
--- * <Leader>l - LSP
--- with the following special top-level mappings for common operations:
--- * <Leader>r - register-to-register copy
--- * <Leader><Tab> - retab and remove trailing whitespace
-
 local keymap = vim.keymap
-
--- Utility commands {{{
-  -- Make unlisted scratch buffer
-  vim.cmd([[command! Scratch new | setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile]])
--- }}}
 
 -- Leader configuration {{{
   vim.g.mapleader = ' '
@@ -35,8 +20,15 @@ local keymap = vim.keymap
   -- Search word underneath cursor/selection but don't jump
   keymap.set('n', '*', '<cmd>let wv=winsaveview()<CR>*<cmd>call winrestview(wv)<CR>', { desc = 'search word forwards', noremap = true, silent = true })
   keymap.set('n', '#', '<cmd>let wv=winsaveview()<CR>#<cmd>call winrestview(wv)<CR>', { desc = 'search word backwards', noremap = true, silent = true })
+-- }}}
 
-  keymap.set('n', '<Leader>w', '<cmd>w<CR>', { desc = 'write buffer', noremap = true })
+-- Buffers {{{
+  keymap.set('n', '<Leader>bd', '<cmd>bd<CR>', { desc = 'delete buffer', noremap = true })
+  keymap.set('n', '<Leader>bX', '<cmd>bd!<CR>', { desc = 'kill buffer', noremap = true })
+  keymap.set('n', '<Leader>br', '<cmd>setlocal readonly!<CR>', { desc = 'toggle readonly', noremap = true })
+  -- Make unlisted scratch buffer
+  vim.cmd([[command! Scratch new | setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile]])
+  keymap.set('n', '<Leader>bs', '<cmd>Scratch<CR>', { desc = 'open scratch buffer', noremap = true })
 -- }}}
 
 -- Editing {{{
@@ -82,31 +74,60 @@ local keymap = vim.keymap
   end
 -- }}}
 
--- Quick settings changes {{{
-  -- Change indent level on the fly
-  function change_indent()
-      local indent_level = tonumber(vim.fn.input('ts=sts=sw='))
-      if indent_level then
-        vim.bo.tabstop = indent_level
-        vim.bo.softtabstop = indent_level
-        vim.bo.shiftwidth = indent_level
-      else
-        return
-      end
-      vim.api.nvim_command('redraw')
-      print('ts=' .. vim.bo.tabstop .. ', sts=' .. vim.bo.softtabstop .. ', sw='  .. vim.bo.shiftwidth .. ', et='  .. (vim.bo.expandtab and 1 or 0))
-  end
-  keymap.set('n', '<Leader>oi', '<cmd>call v:lua.change_indent()<CR>', { desc = 'set indentation', noremap = true })
--- }}}
-
 -- UI toggles {{{
-  keymap.set('n', '<Leader>uw', '<cmd>setlocal wrap!<CR>', { desc = 'toggle line wrapping', noremap = true })
-  keymap.set('n', '<Leader>unn', '<cmd>setlocal number!<CR>', { desc = 'toggle line numbers', noremap = true })
-  keymap.set('n', '<Leader>unr', '<cmd>setlocal relativenumber!<CR>', { desc = 'toggle relative line numbers', noremap = true })
-  keymap.set('n', '<Leader>usl', "':setlocal laststatus=' . (&laststatus == 0 ? '2' : '0') . '<CR>'", { desc = 'toggle statusline', noremap = true, expr = true })
-  keymap.set('n', '<Leader>usc', "':setlocal signcolumn=' . (&signcolumn == 'no' ? 'yes' : 'no') . '<CR>'", { desc = 'toggle sign column', noremap = true, expr = true })
-  keymap.set('n', '<Leader>ufc', "':setlocal foldcolumn=' . (&foldcolumn == 0 ? 1 : 0) . '<CR>'", { desc = 'toggle fold column', noremap = true, expr = true })
-  keymap.set('n', '<Leader>ul', '<cmd>setlocal list!<CR>', { desc = 'toggle listchars', noremap = true })
+  keymap.set('n', '<Leader>tw', '<cmd>setlocal wrap!<CR>', { desc = 'toggle line wrapping', noremap = true })
+  keymap.set('n', '<Leader>tna', '<cmd>setlocal number norelativenumber<CR>', { desc = 'absolute line numbers', noremap = true })
+  keymap.set('n', '<Leader>tnr', '<cmd>setlocal number relativenumber<CR>', { desc = 'relative line numbers', noremap = true })
+  keymap.set('n', '<Leader>tnd', '<cmd>setlocal nonumber norelativenumber<CR>', { desc = 'disable line numbers', noremap = true })
+  keymap.set('n', '<Leader>tb', "':setlocal laststatus=' . (&laststatus == 0 ? '2' : '0') . '<CR>'", { desc = 'toggle statusline', noremap = true, expr = true })
+  keymap.set('n', '<Leader>ts', "':setlocal signcolumn=' . (&signcolumn == 'no' ? 'yes' : 'no') . '<CR>'", { desc = 'toggle sign column', noremap = true, expr = true })
+  keymap.set('n', '<Leader>tf', "':setlocal foldcolumn=' . (&foldcolumn == 0 ? 1 : 0) . '<CR>'", { desc = 'toggle fold column', noremap = true, expr = true })
+  keymap.set('n', '<Leader>tl', '<cmd>setlocal list!<CR>', { desc = 'toggle listchars', noremap = true })
+
+  -- indentation
+  local function trim_str(s)
+    return s:match('^%s*(.-)%s*$')
+  end
+
+  local function set_indent_to(indent_level, opts)
+    local use_tabs = false
+    if opts then
+      use_tabs = opts.tabs or false
+    end
+    if use_tabs then
+      vim.bo.expandtab = false
+      vim.bo.tabstop = indent_level
+      vim.bo.softtabstop = 0
+      vim.bo.shiftwidth = indent_level
+    else
+      vim.bo.expandtab = true
+      vim.bo.tabstop = indent_level
+      vim.bo.softtabstop = indent_level
+      vim.bo.shiftwidth = indent_level
+    end
+    vim.api.nvim_command('redraw')
+    print('ts=' .. vim.bo.tabstop .. ', sts=' .. vim.bo.softtabstop .. ', sw=' .. vim.bo.shiftwidth .. ', et=' .. (vim.bo.expandtab and 1 or 0))
+  end
+
+  keymap.set('n', '<Leader>ti=', function()
+    local input = trim_str(vim.fn.input('ts=sts=sw='))
+    local indent_level = tonumber(input)
+    if indent_level then
+      set_indent_to(indent_level)
+    else
+      print('invalid indent: ' .. input)
+    end
+  end, { desc = 'set indentation', noremap = true })
+  keymap.set('n', '<Leader>ti2', function() set_indent_to(2) end, { desc = 'indent 4 spaces', noremap = true })
+  keymap.set('n', '<Leader>ti4', function() set_indent_to(4) end, { desc = 'indent 2 spaces', noremap = true })
+  keymap.set('n', '<Leader>ti<Tab>', function() set_indent_to(4, { tabs = true }) end, { desc = 'indent with tabs', noremap = true })
+
+  -- colorcolumn
+  keymap.set('n', '<Leader>tcd', '<cmd>setlocal colorcolumn=<CR>', { desc = 'disable colorcolumn', noremap = true })
+  keymap.set('n', '<Leader>tc1', '<cmd>setlocal colorcolumn=+1<CR>', { desc = 'colorcolumn at textwidth + 1', noremap = true })
+  keymap.set('n', '<Leader>tc=', function()
+    vim.bo.colorcolumn = trim_str(vim.fn.input('colorcolumn='))
+  end, { desc = 'set colorcolumn', noremap = true })
 -- }}}
 
 -- Abbreviations {{{

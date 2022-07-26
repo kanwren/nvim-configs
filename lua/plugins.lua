@@ -63,6 +63,7 @@ local function setup_plugins(use)
   use {                           -- :NR command for narrowing a region
     'chrisbra/NrrwRgn',
     setup = function() require('setup.NrrwRgn') end,
+    config = function() require('config.NrrwRgn') end,
   }
 
   -- LSP

@@ -21,6 +21,11 @@ treesitter_configs.setup {
   -- gnn for initial selection, grn/grm to expand/contract
   incremental_selection = {
     enable = true,
+    -- TODO: these mess with the usual gn and gr mappings
+    init_selection = "gnn",
+    node_incremental = "grn",
+    scope_incremental = "grc",
+    node_decremental = "grm",
   },
   -- nvim-ts-context-commentstring
   context_commentstring = {

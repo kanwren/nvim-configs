@@ -73,6 +73,8 @@ function setup_lsp_mappings(client, bufnr)
   -- call hierarchy
   make_map('n', '<Leader>lci', '<cmd>lua vim.lsp.buf.incoming_calls()<CR>', 'incoming calls')
   make_map('n', '<Leader>lco', '<cmd>lua vim.lsp.buf.outgoing_calls()<CR>', 'outgoing calls')
+  make_map('n', '<Leader>ltci', '<cmd>lua require("telescope.builtin").lsp_incoming_calls()<CR>', 'incoming calls')
+  make_map('n', '<Leader>ltco', '<cmd>lua require("telescope.builtin").lsp_outgoing_calls()<CR>', 'outgoing calls')
   -- convert diagnostics
   make_map('n', '<Leader>lql', '<cmd>lua vim.diagnostic.setloclist()<CR>', 'set loclist')
   make_map('n', '<Leader>lqq', '<cmd>lua vim.diagnostic.setqflist()<CR>', 'set quickfix')

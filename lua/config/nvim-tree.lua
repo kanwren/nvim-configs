@@ -1,10 +1,11 @@
-vim.keymap.set('n', '<Leader>d', '<cmd>NvimTreeToggle<CR>', { desc = 'toggle file tree', noremap = true })
+local nvim_tree = require('nvim-tree')
 
-require('nvim-tree').setup {
+vim.keymap.set('n', '<Leader>ad', '<cmd>NvimTreeFindFileToggle<CR>', { desc = 'toggle file tree', noremap = true })
+
+nvim_tree.setup {
   disable_netrw = true,
   hijack_netrw = true,
-  -- update_cwd = true, -- TODO: decide if I like this or not
-  -- respect_buf_cwd = false,
+  update_cwd = true,
 
   view = {
     adaptive_size = false,
