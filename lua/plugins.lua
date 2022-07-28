@@ -36,6 +36,8 @@ local function setup_plugins(use)
   use 'wbthomason/packer.nvim'   -- plugin manager
   use 'lewis6991/impatient.nvim' -- speed up loading lua modules
 
+  use 'vimwiki/vimwiki'
+
   -- Functionality
   use 'kana/vim-repeat'          -- repeat more things with .
   use {                          -- File operations
