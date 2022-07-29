@@ -7,7 +7,9 @@ end
 local packer_bootstrapped = false
 if not path_exists(packer_path) then
   local function install_packer()
-    local output = vim.fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', packer_path })
+    local output = vim.fn.system({
+      'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', packer_path
+    })
     local success = vim.v.shell_error == 0
     return success, output
   end
@@ -33,7 +35,7 @@ local packer_config = {
 local function setup_plugins(use)
   -- TODO: write a modified 'use' that works with nix-pinned plugins
 
-  use 'wbthomason/packer.nvim'   -- plugin manager
+  use 'wbthomason/packer.nvim' -- plugin manager
   use 'lewis6991/impatient.nvim' -- speed up loading lua modules
 
   use {
@@ -43,38 +45,41 @@ local function setup_plugins(use)
   }
 
   -- Functionality
-  use 'kana/vim-repeat'          -- repeat more things with .
-  use {                          -- File operations
+  use 'kana/vim-repeat' -- repeat more things with .
+  use { -- File operations
     'tpope/vim-eunuch',
-    cmd = { 'Remove', 'Unlink', 'Delete', 'Copy', 'Duplicate', 'Move', 'Rename', 'Chmod', 'Mkdir', 'Cfind', 'Lfind', 'Clocate', 'Llocate', 'SudoEdit', 'SudoWrite', 'Wall', 'W' },
+    cmd = {
+      'Remove', 'Unlink', 'Delete', 'Copy', 'Duplicate', 'Move', 'Rename', 'Chmod', 'Mkdir', 'Cfind', 'Lfind', 'Clocate',
+      'Llocate', 'SudoEdit', 'SudoWrite', 'Wall', 'W'
+    },
   }
-  use 'tpope/vim-abolish'        -- Smart substitution, spelling correction, etc.
+  use 'tpope/vim-abolish' -- Smart substitution, spelling correction, etc.
   use 'lambdalisue/vim-protocol' -- edit remote files without netrw
 
   -- Settings
   use 'editorconfig/editorconfig-vim'
 
   -- Editing
-  use 'tpope/vim-surround'        -- inserting/changing/deleting delimiters
-  use {                           -- multiple cursors
+  use 'tpope/vim-surround' -- inserting/changing/deleting delimiters
+  use { -- multiple cursors
     'mg979/vim-visual-multi',
     config = function() require('config.vim-visual-multi') end,
   }
-  use 'tommcdo/vim-exchange'      -- exchanging two regions
-  use {                           -- easy commenting
+  use 'tommcdo/vim-exchange' -- exchanging two regions
+  use { -- easy commenting
     'numToStr/Comment.nvim',
     config = function() require('Comment').setup() end,
   }
   use 'AndrewRadev/splitjoin.vim' -- switch between single-line and multiline constructs
-  use {                           -- :NR command for narrowing a region
+  use { -- :NR command for narrowing a region
     'chrisbra/NrrwRgn',
     setup = function() require('setup.NrrwRgn') end,
     config = function() require('config.NrrwRgn') end,
   }
 
   -- LSP
-  use 'neovim/nvim-lspconfig'          -- common LSP configurations
-  use {                                -- LSP status indicator
+  use 'neovim/nvim-lspconfig' -- common LSP configurations
+  use { -- LSP status indicator
     'j-hui/fidget.nvim',
     config = function() require('fidget').setup() end,
   }
@@ -99,27 +104,27 @@ local function setup_plugins(use)
     'hrsh7th/nvim-cmp',
     requires = {
       -- sources
-      'hrsh7th/cmp-nvim-lsp',                                          -- from LSP
-      { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' },                    -- from buffer
-      { 'saadparwaiz1/cmp_luasnip', after = 'nvim-cmp' },              -- from luasnip for snippets
-      { 'hrsh7th/cmp-cmdline', after = 'nvim-cmp' },                   -- from cmdline
-      { 'hrsh7th/cmp-path', after = 'nvim-cmp' },                      -- from path
-      { 'hrsh7th/cmp-nvim-lua', after = 'nvim-cmp' },                  -- from lua api
-      { 'hrsh7th/cmp-nvim-lsp-document-symbol', after = 'nvim-cmp' },  -- from textDocument/documentSymbol
-      { 'hrsh7th/cmp-calc', after = 'nvim-cmp' },                      -- from math
-      { 'quangnguyen30192/cmp-nvim-tags', after = 'nvim-cmp' },        -- from tags
+      'hrsh7th/cmp-nvim-lsp', -- from LSP
+      { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' }, -- from buffer
+      { 'saadparwaiz1/cmp_luasnip', after = 'nvim-cmp' }, -- from luasnip for snippets
+      { 'hrsh7th/cmp-cmdline', after = 'nvim-cmp' }, -- from cmdline
+      { 'hrsh7th/cmp-path', after = 'nvim-cmp' }, -- from path
+      { 'hrsh7th/cmp-nvim-lua', after = 'nvim-cmp' }, -- from lua api
+      { 'hrsh7th/cmp-nvim-lsp-document-symbol', after = 'nvim-cmp' }, -- from textDocument/documentSymbol
+      { 'hrsh7th/cmp-calc', after = 'nvim-cmp' }, -- from math
+      { 'quangnguyen30192/cmp-nvim-tags', after = 'nvim-cmp' }, -- from tags
 
       -- UI
-      'hrsh7th/cmp-nvim-lsp-signature-help',                           -- highlight current arg in function signature
-      'onsails/lspkind-nvim',                                          -- icons in completion menu
-      'lukas-reineke/cmp-under-comparator',                            -- sort leading underscores to end of list
+      'hrsh7th/cmp-nvim-lsp-signature-help', -- highlight current arg in function signature
+      'onsails/lspkind-nvim', -- icons in completion menu
+      'lukas-reineke/cmp-under-comparator', -- sort leading underscores to end of list
     },
     after = { 'LuaSnip', 'nvim-treesitter' },
     config = function() require('config.completion') end,
   }
 
   -- UI
-  use {                          -- search
+  use { -- search
     'nvim-telescope/telescope.nvim',
     requires = {
       'nvim-lua/popup.nvim',
@@ -130,47 +135,47 @@ local function setup_plugins(use)
     },
     config = function() require('config.telescope') end,
   }
-  use {                          -- file browser
+  use { -- file browser
     'kyazdani42/nvim-tree.lua',
     requires = { 'kyazdani42/nvim-web-devicons', opt = true },
     config = function() require('config.nvim-tree') end,
   }
-  use {                          -- undo tree
+  use { -- undo tree
     'sanfusu/neovim-undotree',
     config = function() require('config.undotree') end,
   }
-  use {                          -- statusline
+  use { -- statusline
     'nvim-lualine/lualine.nvim',
     requires = { 'kyazdani42/nvim-web-devicons', opt = true },
     config = function() require('config.statusline') end,
   }
-  use {                          -- keybindings popup
+  use { -- keybindings popup
     'folke/which-key.nvim',
     config = function() require('config.which-key') end,
   }
-  use {                          -- code minimap
+  use { -- code minimap
     'wfxr/minimap.vim',
     config = function() require('config.minimap') end,
   }
-  use {                          -- show indent levels
+  use { -- show indent levels
     'lukas-reineke/indent-blankline.nvim',
     config = function() require('config.indent-line') end,
   }
-  use {                          -- add temporary highlights
+  use { -- add temporary highlights
     'Pocco81/HighStr.nvim',
     config = function() require('config.highstr') end,
   }
-  use {                          -- show hex codes as colors
+  use { -- show hex codes as colors
     'norcalli/nvim-colorizer.lua',
     ft = { 'css', 'javascript', 'typescript', 'html', 'vim', 'lua' },
     config = function() require('colorizer').setup { 'css', 'javascript', 'typescript', 'html', 'vim', 'lua' } end,
   }
-  use 'tpope/vim-characterize'   -- see more character metadata in the 'ga' output
+  use 'tpope/vim-characterize' -- see more character metadata in the 'ga' output
 
   -- VCS
-  use 'rhysd/committia.vim'      -- better commit message editing
+  use 'rhysd/committia.vim' -- better commit message editing
   -- TODO: decide if this is needed, what with gitsigns <Leader>gb
-  use 'rhysd/git-messenger.vim'  -- see commit message of last commit under cursor (<Leader>gm)
+  use 'rhysd/git-messenger.vim' -- see commit message of last commit under cursor (<Leader>gm)
   use {
     'lewis6991/gitsigns.nvim',
     config = function() require('config.gitsigns') end,

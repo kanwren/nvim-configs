@@ -2,7 +2,7 @@ local wk = require('which-key')
 
 wk.setup {
   plugins = {
-    registers = false,  -- breaks <C-r> in command line during macros
+    registers = false, -- breaks <C-r> in command line during macros
   },
   operators = {
     ["gc"] = "line comment",
@@ -156,4 +156,3 @@ wk.register({
 wk.register({
   ["m"] = "treehopper",
 }, { mode = "o" })
-

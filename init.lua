@@ -32,4 +32,3 @@ end
 
 require('lsp-config')
 require('colors')
-

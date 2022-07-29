@@ -1,45 +1,96 @@
-local keymap = vim.keymap
+-- vim.keymap.set, but defaults to { noremap = true }
+local function map(mode, k, v, opts)
+  if not (opts and opts.noremap) then
+    opts.noremap = true
+  end
+  vim.keymap.set(mode, k, v, opts)
+end
 
 -- Leader configuration {{{
+do
   vim.g.mapleader = ' '
-  keymap.set({'n', 'v', 'o'}, '<Space>', '<nop>', {})
-  keymap.set({'n', 'v', 'o'}, '<S-Space>', '<Space>', {})
+  map({ 'n', 'v', 'o' }, '<Space>', '<nop>', { noremap = false })
+  map({ 'n', 'v', 'o' }, '<S-Space>', '<Space>', { noremap = false })
+end
 -- }}}
 
 -- Essential {{{
+do
   -- Work by visual line without a count, but normal when used with one
-  keymap.set({'n', 'v', 'o'}, 'j', "(v:count == -1 ? 'gj' : 'j')", { noremap = true, silent = true, expr = true })
-  keymap.set({'n', 'v', 'o'}, 'k', "(v:count == -1 ? 'gk' : 'k')", { noremap = true, silent = true, expr = true })
+  map({ 'n', 'v', 'o' }, 'j', "(v:count == -1 ? 'gj' : 'j')", {
+    silent = true,
+    expr = true,
+  })
+  map({ 'n', 'v', 'o' }, 'k', "(v:count == -1 ? 'gk' : 'k')", {
+    silent = true,
+    expr = true,
+  })
   -- Makes temporary macros faster
-  keymap.set('n', 'Q', '@q', { desc = 'run @q', noremap = true })
+  map('n', 'Q', '@q', {
+    desc = 'run @q',
+  })
   -- Repeat macros/commands across visual selections
-  keymap.set('x', 'Q', ':normal @q<CR>', { desc = 'linewise @q', noremap = true, silent = true })
-  keymap.set('x', '.', ':normal .<CR>', { desc = 'linewise .', noremap = true, silent = true })
+  map('x', 'Q', ':normal @q<CR>', {
+    desc = 'linewise @q',
+    silent = true,
+  })
+  map('x', '.', ':normal .<CR>', {
+    desc = 'linewise .',
+    silent = true,
+  })
   -- Redraw page and clear highlights
-  keymap.set({'n', 'v', 'o'}, '<C-l>', '<cmd>nohlsearch<CR><C-l>', { desc = 'redraw', noremap = true, silent = true })
+  map({ 'n', 'v', 'o' }, '<C-l>', '<cmd>nohlsearch<CR><C-l>', {
+    desc = 'redraw',
+    silent = true,
+  })
   -- Search word underneath cursor/selection but don't jump
-  keymap.set('n', '*', '<cmd>let wv=winsaveview()<CR>*<cmd>call winrestview(wv)<CR>', { desc = 'search word forwards', noremap = true, silent = true })
-  keymap.set('n', '#', '<cmd>let wv=winsaveview()<CR>#<cmd>call winrestview(wv)<CR>', { desc = 'search word backwards', noremap = true, silent = true })
+  map('n', '*', '<cmd>let wv=winsaveview()<CR>*<cmd>call winrestview(wv)<CR>', {
+    desc = 'search word forwards',
+    silent = true,
+  })
+  map('n', '#', '<cmd>let wv=winsaveview()<CR>#<cmd>call winrestview(wv)<CR>', {
+    desc = 'search word backwards',
+    silent = true,
+  })
+end
 -- }}}
 
 -- Buffers {{{
-  keymap.set('n', '<Leader>bd', '<cmd>bd<CR>', { desc = 'delete buffer', noremap = true })
-  keymap.set('n', '<Leader>bX', '<cmd>bd!<CR>', { desc = 'kill buffer', noremap = true })
-  keymap.set('n', '<Leader>br', '<cmd>setlocal readonly!<CR>', { desc = 'toggle readonly', noremap = true })
+do
+  map('n', '<Leader>s', '<cmd>w<CR>', {
+    desc = 'save file',
+  })
+  map('n', '<Leader>bd', '<cmd>bd<CR>', {
+    desc = 'delete buffer',
+  })
+  map('n', '<Leader>bX', '<cmd>bd!<CR>', {
+    desc = 'kill buffer',
+  })
+  map('n', '<Leader>br', '<cmd>setlocal readonly!<CR>', {
+    desc = 'toggle readonly',
+  })
   -- Make unlisted scratch buffer
   vim.cmd([[command! Scratch new | setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile]])
-  keymap.set('n', '<Leader>bs', '<cmd>Scratch<CR>', { desc = 'open scratch buffer', noremap = true })
+  map('n', '<Leader>bs', '<cmd>Scratch<CR>', {
+    desc = 'open scratch buffer',
+  })
+end
 -- }}}
 
 -- Editing {{{
+do
   -- Split current line by provided regex (\zs or \ze to preserve separators)
-  keymap.set('n', 'gs', ':s//\\r/g<Left><Left><Left><Left><Left>', { desc = 'regex split line', noremap = true })
+  map('n', 'gs', ':s//\\r/g<Left><Left><Left><Left><Left>', {
+    desc = 'regex split line',
+  })
 
   -- Start a visual substitute
-  keymap.set('x', 'gs', ':s/\\%V', { desc = 'visual substitute', noremap = true })
+  map('x', 'gs', ':s/\\%V', {
+    desc = 'visual substitute',
+  })
 
   -- Delete trailing whitespace and retab
-  keymap.set('n', '<Leader><Tab>', function()
+  map('n', '<Leader><Tab>', function()
     local wv = vim.fn.winsaveview()
     vim.cmd([[
       keeppatterns %s/\s\+\ze\r\=$//e
@@ -47,40 +98,77 @@ local keymap = vim.keymap
       retab
     ]])
     vim.fn.winrestview(wv)
-  end, { desc = 'clean whitespace', noremap = true, silent = true })
+  end, {
+    desc = 'clean whitespace',
+    silent = true,
+  })
+end
 -- }}}
 
 -- Registers {{{
+do
   -- Copy contents of register to another (provides ' as an alias for ")
-  keymap.set('n', '<Leader>r', function()
+  map('n', '<Leader>r', function()
     local r1 = (vim.fn.nr2char(vim.fn.getchar())):gsub("'", '"')
     local r2 = (vim.fn.nr2char(vim.fn.getchar())):gsub("'", '"')
     vim.api.nvim_command('let @' .. r2 .. '=@' .. r1)
     vim.notify('Copied @' .. r1 .. ' to @' .. r2, vim.log.levels.INFO)
-  end, { desc = 'register copy', noremap = true, silent = true })
+  end, {
+    desc = 'register copy',
+    silent = true,
+  })
+end
 -- }}}
 
 -- Matching navigation commands (like in unimpaired) {{{
-  for lowerkey, cmd_desc in pairs({ b = { 'b', 'buffer' }, t = { 't', 'tab' }, q = { 'c', 'quickfix item' }, l = { 'l', 'loclist item' } }) do
+do
+  for lowerkey, cmd_desc in pairs({ b = { 'b', 'buffer' }, t = { 't', 'tab' }, q = { 'c', 'quickfix item' },
+    l = { 'l', 'loclist item' } }) do
     local upperkey = lowerkey:upper()
     local cmd = cmd_desc[1]
     local desc = cmd_desc[2]
-    keymap.set('n', "]" .. lowerkey, "<cmd>" .. cmd .. "next<CR>",     { desc = 'next ' .. desc, noremap = true })
-    keymap.set('n', "[" .. lowerkey, "<cmd>" .. cmd .. "previous<CR>", { desc = 'previous ' .. desc, noremap = true })
-    keymap.set('n', "]" .. upperkey, "<cmd>" .. cmd .. "last<CR>",     { desc = 'last ' .. desc, noremap = true })
-    keymap.set('n', "[" .. upperkey, "<cmd>" .. cmd .. "first<CR>",    { desc = 'first ' .. desc, noremap = true })
+    map('n', "]" .. lowerkey, "<cmd>" .. cmd .. "next<CR>", {
+      desc = 'next ' .. desc,
+    })
+    map('n', "[" .. lowerkey, "<cmd>" .. cmd .. "previous<CR>", {
+      desc = 'previous ' .. desc,
+    })
+    map('n', "]" .. upperkey, "<cmd>" .. cmd .. "last<CR>", {
+      desc = 'last ' .. desc,
+    })
+    map('n', "[" .. upperkey, "<cmd>" .. cmd .. "first<CR>", {
+      desc = 'first ' .. desc,
+    })
   end
+end
 -- }}}
 
--- UI toggles {{{
-  keymap.set('n', '<Leader>tw', '<cmd>setlocal wrap!<CR>', { desc = 'toggle line wrapping', noremap = true })
-  keymap.set('n', '<Leader>tna', '<cmd>setlocal number norelativenumber<CR>', { desc = 'absolute line numbers', noremap = true })
-  keymap.set('n', '<Leader>tnr', '<cmd>setlocal number relativenumber<CR>', { desc = 'relative line numbers', noremap = true })
-  keymap.set('n', '<Leader>tnd', '<cmd>setlocal nonumber norelativenumber<CR>', { desc = 'disable line numbers', noremap = true })
-  keymap.set('n', '<Leader>tb', "':setlocal laststatus=' . (&laststatus == 0 ? '2' : '0') . '<CR>'", { desc = 'toggle statusline', noremap = true, expr = true })
-  keymap.set('n', '<Leader>ts', "':setlocal signcolumn=' . (&signcolumn == 'no' ? 'yes' : 'no') . '<CR>'", { desc = 'toggle sign column', noremap = true, expr = true })
-  keymap.set('n', '<Leader>tf', "':setlocal foldcolumn=' . (&foldcolumn == 0 ? 1 : 0) . '<CR>'", { desc = 'toggle fold column', noremap = true, expr = true })
-  keymap.set('n', '<Leader>tl', '<cmd>setlocal list!<CR>', { desc = 'toggle listchars', noremap = true })
+-- Toggles {{{
+do
+  map('n', '<Leader>tw', '<cmd>setlocal wrap!<CR>', {
+    desc = 'toggle line wrapping',
+  })
+  map('n', '<Leader>tna', '<cmd>setlocal number norelativenumber<CR>', {
+    desc = 'absolute line numbers',
+  })
+  map('n', '<Leader>tnr', '<cmd>setlocal number relativenumber<CR>', {
+    desc = 'relative line numbers',
+  })
+  map('n', '<Leader>tnd', '<cmd>setlocal nonumber norelativenumber<CR>', {
+    desc = 'disable line numbers',
+  })
+  map('n', '<Leader>tb', function() vim.opt.laststatus = vim.opt.laststatus:get() == 0 and 2 or 0 end, {
+    desc = 'toggle statusline',
+  })
+  map('n', '<Leader>ts', function() vim.opt.signcolumn = vim.opt.signcolumn:get() == 'no' and 'yes' or 'no' end, {
+    desc = 'toggle sign column',
+  })
+  map('n', '<Leader>tf', function() vim.opt.foldcolumn = vim.opt.foldcolumn:get() == 0 and 1 or 0 end, {
+    desc = 'toggle fold column',
+  })
+  map('n', '<Leader>tl', '<cmd>setlocal list!<CR>', {
+    desc = 'toggle listchars',
+  })
 
   -- indentation
   local function trim_str(s)
@@ -104,10 +192,15 @@ local keymap = vim.keymap
       vim.bo.shiftwidth = indent_level
     end
     vim.api.nvim_command('redraw')
-    print('ts=' .. vim.bo.tabstop .. ', sts=' .. vim.bo.softtabstop .. ', sw=' .. vim.bo.shiftwidth .. ', et=' .. (vim.bo.expandtab and 1 or 0))
+    local msg = ''
+    msg = msg .. 'ts=' .. vim.bo.tabstop
+    msg = msg .. ', sts=' .. vim.bo.softtabstop
+    msg = msg .. ', sw=' .. vim.bo.shiftwidth
+    msg = msg .. ', et=' .. (vim.bo.expandtab and 1 or 0)
+    print(msg)
   end
 
-  keymap.set('n', '<Leader>ti=', function()
+  map('n', '<Leader>ti=', function()
     local input = trim_str(vim.fn.input('ts=sts=sw='))
     local indent_level = tonumber(input)
     if indent_level then
@@ -115,31 +208,47 @@ local keymap = vim.keymap
     else
       print('invalid indent: ' .. input)
     end
-  end, { desc = 'set indentation', noremap = true })
-  keymap.set('n', '<Leader>ti2', function() set_indent_to(2) end, { desc = 'indent 4 spaces', noremap = true })
-  keymap.set('n', '<Leader>ti4', function() set_indent_to(4) end, { desc = 'indent 2 spaces', noremap = true })
-  keymap.set('n', '<Leader>ti<Tab>', function() set_indent_to(4, { tabs = true }) end, { desc = 'indent with tabs', noremap = true })
+  end, {
+    desc = 'set indentation',
+  })
+  map('n', '<Leader>ti2', function() set_indent_to(2) end, {
+    desc = 'indent 4 spaces',
+  })
+  map('n', '<Leader>ti4', function() set_indent_to(4) end, {
+    desc = 'indent 2 spaces',
+  })
+  map('n', '<Leader>ti<Tab>', function() set_indent_to(4, { tabs = true }) end, {
+    desc = 'indent with tabs',
+  })
 
   -- colorcolumn
-  keymap.set('n', '<Leader>tcd', '<cmd>setlocal colorcolumn=<CR>', { desc = 'disable colorcolumn', noremap = true })
-  keymap.set('n', '<Leader>tc1', '<cmd>setlocal colorcolumn=+1<CR>', { desc = 'colorcolumn at textwidth + 1', noremap = true })
-  keymap.set('n', '<Leader>tc=', function()
-    vim.bo.colorcolumn = trim_str(vim.fn.input('colorcolumn='))
-  end, { desc = 'set colorcolumn', noremap = true })
+  map('n', '<Leader>tcd', '<cmd>setlocal colorcolumn=<CR>', {
+    desc = 'disable colorcolumn',
+  })
+  map('n', '<Leader>tc1', '<cmd>setlocal colorcolumn=+1<CR>', {
+    desc = 'colorcolumn at textwidth + 1',
+  })
+  map('n', '<Leader>tc=', function() vim.bo.colorcolumn = trim_str(vim.fn.input('colorcolumn=')) end, {
+    desc = 'set colorcolumn',
+  })
+end
 -- }}}
 
 -- Abbreviations {{{
-local function iabbrev(k, v, opts)
-  local optstr = ''
-  if opts.expr then
-    optstr = optstr .. '<expr> '
+do
+  local function iabbrev(k, v, opts)
+    local optstr = ''
+    if opts.expr then
+      optstr = optstr .. '<expr> '
+    end
+    vim.api.nvim_command('iabbrev ' .. optstr .. k .. ' ' .. v)
   end
-  vim.api.nvim_command('iabbrev ' .. optstr .. k .. ' ' .. v)
-end
 
--- Common sequences
-iabbrev('xaz', "<C-r>='abcdefghijklmnopqrstuvwxyz'<CR>", {})
-iabbrev('xAZ', "<C-r>='ABCDEFGHIJKLMNOPQRSTUVWXYZ'<CR>", {})
-iabbrev('x09', "<C-r>='0123456789'<CR>", {})
+  -- Common sequences
+  iabbrev('xaz', "<C-r>='abcdefghijklmnopqrstuvwxyz'<CR>", {})
+  iabbrev('xAZ', "<C-r>='ABCDEFGHIJKLMNOPQRSTUVWXYZ'<CR>", {})
+  iabbrev('x09', "<C-r>='0123456789'<CR>", {})
+end
+-- }}}
 
 -- vim:foldmethod=marker

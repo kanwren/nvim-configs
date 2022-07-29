@@ -14,7 +14,7 @@ telescope.load_extension('ui-select')
 telescope.load_extension('packer')
 
 local function map_picker(mapping, picker, desc)
-  vim.keymap.set('n', '<Leader>f' .. mapping, '<cmd>Telescope ' .. picker .. '<CR>', { desc = desc, noremap = true})
+  vim.keymap.set('n', '<Leader>f' .. mapping, '<cmd>Telescope ' .. picker .. '<CR>', { desc = desc, noremap = true })
 end
 
 map_picker('f', 'find_files', 'files')
@@ -32,4 +32,3 @@ map_picker('v', 'vim_options', 'vim options')
 map_picker('k', 'keymaps', 'keymaps')
 map_picker('F', 'filetypes', 'filetypes')
 map_picker('j', 'jumplist', 'jumplist')
-
