@@ -33,8 +33,8 @@ wk.register({
     ["l"] = {
       name = "lsp",
       ["g"] = { name = "goto/query symbol" },
-      ["t"] = {
-        name = "telescope",
+      ["q"] = {
+        name = "quickfix",
         ["g"] = { name = "goto/query symbol" },
         ["w"] = { name = "workspace" },
         ["d"] = { name = "document" },
@@ -46,7 +46,7 @@ wk.register({
         ["f"] = { name = "folders" },
       },
       ["d"] = { name = "document" },
-      ["q"] = { name = "convert diagnostics" },
+      ["D"] = { name = "dump diagnostics" },
       ["l"] = { name = "server op" },
     },
     ["h"] = { name = "highlight" },
