@@ -31,10 +31,12 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   }
 )
 
+local format_group = vim.api.nvim_create_augroup("LspFormatting", {})
+
 function setup_lsp_mappings(client, bufnr)
   local make_map = function(mode, k, v, desc)
-    local map_opts = { noremap = true, silent = true, desc = desc }
-    vim.api.nvim_buf_set_keymap(bufnr, mode, k, v, map_opts)
+    local map_opts = { noremap = true, silent = true, desc = desc, buffer = bufnr }
+    vim.keymap.set(mode, k, v, map_opts)
   end
   -- TODO: https://github.com/CosmicNvim/CosmicNvim/blob/main/lua/cosmic/lsp/mappings.lua
   -- TODO: https://github.com/crivotz/nv-ide/blob/master/lua/settings/keymap.lua
@@ -66,6 +68,22 @@ function setup_lsp_mappings(client, bufnr)
   make_map('n', '<Leader>lds', '<cmd>lua require("telescope.builtin").lsp_document_symbols()<CR>', 'query document symbols')
   if client.resolved_capabilities.document_formatting then
     make_map('n', '<Leader>ldf', '<cmd>lua vim.lsp.buf.formatting_sync()<CR>', 'format buffer')
+
+    -- toggle format on save for the current buffer
+    local autocmd_id = nil
+    local function toggle_format_on_save()
+      if autocmd_id then
+        vim.api.nvim_clear_autocmds({ group = format_group, buffer = bufnr })
+        autocmd_id = nil
+      else
+        autocmd_id = vim.api.nvim_create_autocmd('BufWritePre', {
+          group = format_group,
+          buffer = bufnr,
+          callback = function() vim.lsp.buf.formatting_sync() end,
+        })
+      end
+    end
+    make_map('n', '<Leader>ltf', toggle_format_on_save, 'toggle format on save')
   end
   if client.resolved_capabilities.document_range_formatting then
     make_map('v', '<Leader>ldf', '<cmd>lua vim.lsp.buf.range_formatting()<CR>', 'format range')
