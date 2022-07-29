@@ -38,6 +38,7 @@ local function setup_plugins(use)
 
   use {
     'vimwiki/vimwiki',
+    branch = 'dev',
     config = function() require('config.vimwiki') end,
   }
 
