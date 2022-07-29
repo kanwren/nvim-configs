@@ -8,7 +8,7 @@ local lspkind = require('lspkind')
 local luasnip = require('luasnip')
 local cmp_under_comparator = require('cmp-under-comparator')
 
-function next_item(fallback)
+local function next_item(fallback)
   if cmp.visible() then
     cmp.select_next_item()
   elseif luasnip.expand_or_jumpable() then
@@ -18,7 +18,7 @@ function next_item(fallback)
   end
 end
 
-function prev_item(fallback)
+local function prev_item(fallback)
   if cmp.visible() then
     cmp.select_prev_item()
   elseif luasnip.jumpable(-1) then

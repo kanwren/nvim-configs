@@ -54,6 +54,7 @@
             clang-tools
             haskell-language-server
             rust-analyzer
+            sumneko-lua-language-server
           ])
           (with pkgs.nodePackages; [
             typescript-language-server

@@ -7,7 +7,6 @@ end
 local results = {}
 local lspconfig = load('lspconfig', results)
 local cmp_nvim_lsp = load('cmp_nvim_lsp', results)
-local lspkind = load('lspkind', results)
 
 for _, ok in pairs(results) do
   if not ok then
@@ -33,7 +32,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 
 local format_group = vim.api.nvim_create_augroup("LspFormatting", {})
 
-function setup_lsp_mappings(client, bufnr)
+local function setup_lsp_mappings(client, bufnr)
   local make_map = function(mode, k, v, desc)
     local map_opts = { noremap = true, silent = true, desc = desc, buffer = bufnr }
     vim.keymap.set(mode, k, v, map_opts)
@@ -143,7 +142,7 @@ lspconfig.pylsp.setup {
   }
 }
 
-lspconfig.rust_analyzer.setup({
+lspconfig.rust_analyzer.setup {
   on_attach = on_attach,
   capabilities = capabilities,
   settings = {
@@ -160,7 +159,28 @@ lspconfig.rust_analyzer.setup({
       },
     }
   }
-})
+}
+
+lspconfig.sumneko_lua.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  settings = {
+    Lua = {
+      runtime = {
+        version = 'LuaJIT',
+      },
+      diagnostics = {
+        globals = {'vim'},
+      },
+      workspace = {
+        library = vim.api.nvim_get_runtime_file("", true),
+      },
+      telemetry = {
+        enable = false,
+      },
+    },
+  }
+}
 
 lspconfig.rnix.setup {
   on_attach = on_attach,

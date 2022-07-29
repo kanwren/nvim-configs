@@ -39,7 +39,7 @@ local keymap = vim.keymap
   keymap.set('x', 'gs', ':s/\\%V', { desc = 'visual substitute', noremap = true })
 
   -- Delete trailing whitespace and retab
-  function clean_whitespace()
+  keymap.set('n', '<Leader><Tab>', function()
     local wv = vim.fn.winsaveview()
     vim.cmd([[
       keeppatterns %s/\s\+\ze\r\=$//e
@@ -47,19 +47,17 @@ local keymap = vim.keymap
       retab
     ]])
     vim.fn.winrestview(wv)
-  end
-  keymap.set('n', '<Leader><Tab>', '<cmd>call v:lua.clean_whitespace()<CR>', { desc = 'clean whitespace', noremap = true, silent = true })
+  end, { desc = 'clean whitespace', noremap = true, silent = true })
 -- }}}
 
 -- Registers {{{
   -- Copy contents of register to another (provides ' as an alias for ")
-  function reg_move()
+  keymap.set('n', '<Leader>r', function()
     local r1 = (vim.fn.nr2char(vim.fn.getchar())):gsub("'", '"')
     local r2 = (vim.fn.nr2char(vim.fn.getchar())):gsub("'", '"')
     vim.api.nvim_command('let @' .. r2 .. '=@' .. r1)
     vim.notify('Copied @' .. r1 .. ' to @' .. r2, vim.log.levels.INFO)
-  end
-  keymap.set('n', '<Leader>r', '<cmd>call v:lua.reg_move()<CR>', { desc = 'register copy', noremap = true, silent = true })
+  end, { desc = 'register copy', noremap = true, silent = true })
 -- }}}
 
 -- Matching navigation commands (like in unimpaired) {{{
