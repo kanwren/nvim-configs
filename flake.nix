@@ -55,6 +55,7 @@
             haskell-language-server
             rust-analyzer
             sumneko-lua-language-server
+            gopls
           ])
           (with pkgs.nodePackages; [
             typescript-language-server

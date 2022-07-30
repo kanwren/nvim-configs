@@ -48,7 +48,7 @@ local function setup_lsp_mappings(client, bufnr)
   map('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', 'hover')
   map('n', '<Leader>lf', '<cmd>lua vim.diagnostic.open_float()<CR>', 'open float diagnostic')
   map('n', '<Leader>la', '<cmd>lua vim.lsp.buf.code_action()<CR>', 'code action')
-  map('v', '<Leader>la', '<cmd>lua vim.lsp.buf.range_code_action()<CR>', 'range code action')
+  map('v', '<Leader>la', ':lua vim.lsp.buf.range_code_action()<CR>', 'range code action')
   map('n', '<Leader>ls', '<Cmd>lua vim.lsp.buf.signature_help()<CR>', 'signature help')
   map('n', '<Leader>lr', '<cmd>lua vim.lsp.buf.rename()<CR>', 'rename')
   -- queries on a symbol
@@ -85,13 +85,13 @@ local function setup_lsp_mappings(client, bufnr)
     map('n', '<Leader>ltf', toggle_format_on_save, 'toggle format on save')
   end
   if client.resolved_capabilities.document_range_formatting then
-    map('v', '<Leader>ldf', '<cmd>lua vim.lsp.buf.range_formatting()<CR>', 'format range')
+    map('v', '<Leader>ldf', ':lua vim.lsp.buf.range_formatting()<CR>', 'format range')
   end
   -- workspace
   map('n', '<Leader>lqws', '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>', 'query workspace symbols')
   map('n', '<Leader>lws', '<cmd>lua require("telescope.builtin").lsp_workspace_symbols()<CR>',
     'query workspace symbols')
-  map('n', '<Leader>lwfl', '<cmd>lua print(vim.lsp.buf.list_workspace_folders())<CR>', 'list workspace folders')
+  map('n', '<Leader>lwfl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', 'list workspace folders')
   map('n', '<Leader>lwfa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', 'add workspace folder')
   map('n', '<Leader>lwfr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', 'remove workspace folder')
   -- call hierarchy
@@ -182,6 +182,21 @@ lspconfig.sumneko_lua.setup {
       },
     },
   }
+}
+
+lspconfig.gopls.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  settings = {
+    gopls = {
+      experimentalPostfixCompletions = true,
+      analyses = {
+        unusedparams = true,
+        shadow = true,
+        nilness = true,
+      },
+    },
+  },
 }
 
 lspconfig.rnix.setup {
