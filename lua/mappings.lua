@@ -1,6 +1,7 @@
 -- vim.keymap.set, but defaults to { noremap = true }
 local function map(mode, k, v, opts)
-  if not (opts and opts.noremap) then
+  opts = opts or {}
+  if opts.noremap == nil then
     opts.noremap = true
   end
   vim.keymap.set(mode, k, v, opts)
