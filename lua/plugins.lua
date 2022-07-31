@@ -172,6 +172,10 @@ local function setup_plugins(use)
     'Pocco81/HighStr.nvim',
     config = function() require('config.highstr') end,
   }
+  use {
+    'folke/twilight.nvim',
+    config = function() require('config.twilight') end,
+  }
   use { -- show hex codes as colors
     'norcalli/nvim-colorizer.lua',
     ft = { 'css', 'javascript', 'typescript', 'html', 'vim', 'lua' },
@@ -181,7 +185,6 @@ local function setup_plugins(use)
 
   -- VCS
   use 'rhysd/committia.vim' -- better commit message editing
-  -- TODO: decide if this is needed, what with gitsigns <Leader>gb
   use 'rhysd/git-messenger.vim' -- see commit message of last commit under cursor (<Leader>gm)
   use {
     'lewis6991/gitsigns.nvim',
@@ -228,3 +231,13 @@ else
 end
 
 return true, plugins
+
+-- Other plugins that look cool:
+--
+-- jose-elias-alvarez/null-ls.nvim
+-- folke/trouble.nvim
+-- rafcamlet/nvim-luapad
+-- p00f/nvim-ts-rainbow
+-- windwp/nvim-autopairs
+-- jubnzv/virtual-types.nvim
+-- stevearc/aerial.nvim
