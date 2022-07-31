@@ -3,15 +3,19 @@ local telescope_themes = require('telescope.themes')
 
 telescope.setup {
   extensions = {
-    ["ui-select"] = {
+    ['ui-select'] = {
       telescope_themes.get_dropdown {},
     },
     packer = {},
+    aerial = {
+      show_nesting = true,
+    },
   },
 }
 
 telescope.load_extension('ui-select')
 telescope.load_extension('packer')
+telescope.load_extension('aerial')
 
 local function map_picker(mapping, picker, desc)
   vim.keymap.set('n', '<Leader>f' .. mapping, '<cmd>Telescope ' .. picker .. '<CR>', { desc = desc, noremap = true })
@@ -36,3 +40,4 @@ map_picker('q', 'quickfix', 'quickfix')
 map_picker('l', 'loclist', 'loclist')
 map_picker('z', 'current_buffer_fuzzy_find skip_empty_lines=true', 'fuzzy find in buf')
 map_picker('p', 'builtin include_extensions=true', 'pickers')
+map_picker('a', 'aerial', 'aerial symbols')

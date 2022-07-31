@@ -151,6 +151,10 @@ local function setup_plugins(use)
     'sanfusu/neovim-undotree',
     config = function() require('config.undotree') end,
   }
+  use {
+    'stevearc/aerial.nvim',
+    config = function() require('config.aerial') end,
+  }
   use { -- statusline
     'nvim-lualine/lualine.nvim',
     requires = { 'kyazdani42/nvim-web-devicons', opt = true },
@@ -240,4 +244,3 @@ return true, plugins
 -- p00f/nvim-ts-rainbow
 -- windwp/nvim-autopairs
 -- jubnzv/virtual-types.nvim
--- stevearc/aerial.nvim

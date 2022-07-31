@@ -7,6 +7,7 @@ end
 local results = {}
 local lspconfig = load('lspconfig', results)
 local cmp_nvim_lsp = load('cmp_nvim_lsp', results)
+local aerial = load('aerial', results)
 
 for _, ok in pairs(results) do
   if not ok then
@@ -113,7 +114,7 @@ end
 
 local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-  -- lsp_status.on_attach(client, bufnr)
+  aerial.on_attach(client, bufnr)
   setup_lsp_mappings(client, bufnr)
 end
 
