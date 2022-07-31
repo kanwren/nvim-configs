@@ -48,7 +48,7 @@ wk.register({
       ["d"] = { name = "document" },
       ["t"] = { name = "toggle" },
       ["D"] = { name = "dump diagnostics" },
-      ["l"] = { name = "server op" },
+      ["x"] = { name = "server" },
     },
     ["h"] = { name = "highlight" },
     ["b"] = { name = "buffer" },

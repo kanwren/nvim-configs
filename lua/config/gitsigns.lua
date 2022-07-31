@@ -40,3 +40,4 @@ gitsigns.setup {
 }
 
 -- TODO: add to statusline
+-- TODO: add to null-ls

@@ -8,3 +8,5 @@ lualine.setup {
     'nvim-tree',
   },
 }
+
+-- TODO: global statusline

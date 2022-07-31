@@ -25,10 +25,9 @@ require('autocmd')
 
 do
   local ok, _ = require('plugins')
-  if not ok then
-    return
+  if ok then
+    require('lsp-config')
   end
 end
 
-require('lsp-config')
 require('colors')

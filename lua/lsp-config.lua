@@ -99,15 +99,16 @@ local function setup_lsp_mappings(client, bufnr)
   map('n', '<Leader>lqco', '<cmd>lua vim.lsp.buf.outgoing_calls()<CR>', 'outgoing calls')
   map('n', '<Leader>lci', '<cmd>lua require("telescope.builtin").lsp_incoming_calls()<CR>', 'incoming calls')
   map('n', '<Leader>lco', '<cmd>lua require("telescope.builtin").lsp_outgoing_calls()<CR>', 'outgoing calls')
-  -- convert diagnostics
-  map('n', '<Leader>lDl', '<cmd>lua vim.diagnostic.setloclist()<CR>', 'dump to loclist')
-  map('n', '<Leader>lDq', '<cmd>lua vim.diagnostic.setqflist()<CR>', 'dump to quickfix')
   -- navigation
   map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', 'previous LSP diagnostic')
   map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', 'next LSP diagnostic')
-  map('n', '<Leader>lls', '<cmd>LspStop<CR>', 'stop LSP')
-  map('n', '<Leader>llr', '<cmd>LspRestart<CR>', 'restart LSP')
-  -- TODO: check correctness
+  map('n', '<Leader>lxs', '<cmd>LspStop<CR>', 'stop LSP')
+  map('n', '<Leader>lxr', '<cmd>LspRestart<CR>', 'restart LSP')
+  -- diagnostics (TODO: add variants for severity levels, see `:h telescope.builtins.diagnostics()`)
+  map('n', '<Leader>lDl', '<cmd>lua vim.diagnostic.setloclist()<CR>', 'dump to loclist')
+  map('n', '<Leader>lDq', '<cmd>lua vim.diagnostic.setqflist()<CR>', 'dump to quickfix')
+  map('n', '<Leader>ldd', '<cmd>lua require("telescope.builtin").diagnostics({ bufnr = 0 })<CR>', 'document diagnostics')
+  map('n', '<Leader>lwd', '<cmd>lua require("telescope.builtin").diagnostics({})<CR>', 'workspace diagnostics')
 end
 
 local on_attach = function(client, bufnr)
