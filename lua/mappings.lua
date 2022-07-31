@@ -158,8 +158,11 @@ do
   map('n', '<Leader>tb', function() vim.opt.laststatus = vim.opt.laststatus:get() == 0 and 2 or 0 end, {
     desc = 'toggle statusline',
   })
-  map('n', '<Leader>ts', function() vim.opt.signcolumn = vim.opt.signcolumn:get() == 'no' and 'yes' or 'no' end, {
+  map('n', '<Leader>t!', function() vim.opt.signcolumn = vim.opt.signcolumn:get() == 'no' and 'yes' or 'no' end, {
     desc = 'toggle sign column',
+  })
+  map('n', '<Leader>ts', '<cmd>setlocal spell!<CR>', {
+    desc = 'toggle spelling',
   })
   map('n', '<Leader>tf', function() vim.opt.foldcolumn = vim.opt.foldcolumn:get() == 0 and 1 or 0 end, {
     desc = 'toggle fold column',
