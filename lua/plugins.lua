@@ -38,12 +38,6 @@ local function setup_plugins(use)
   use 'wbthomason/packer.nvim' -- plugin manager
   use 'lewis6991/impatient.nvim' -- speed up loading lua modules
 
-  use {
-    'vimwiki/vimwiki',
-    branch = 'dev',
-    config = function() require('config.vimwiki') end,
-  }
-
   -- Functionality
   use 'kana/vim-repeat' -- repeat more things with .
   use { -- File operations
@@ -54,7 +48,20 @@ local function setup_plugins(use)
     },
   }
   use 'tpope/vim-abolish' -- Smart substitution, spelling correction, etc.
-  use 'lambdalisue/vim-protocol' -- edit remote files without netrw
+  use 'lambdalisue/vim-protocol' -- edit remote files without netrww
+  use {
+    'Shatur/neovim-session-manager',
+    requires = {
+      'nvim-lua/plenary.nvim',
+    },
+    config = function() require('config.sessions') end
+  }
+
+  use {
+    'vimwiki/vimwiki',
+    branch = 'dev',
+    config = function() require('config.vimwiki') end,
+  }
 
   -- Settings
   use 'editorconfig/editorconfig-vim'

@@ -58,9 +58,6 @@ end
 
 -- Buffers {{{
 do
-  map('n', '<Leader>s', '<cmd>w<CR>', {
-    desc = 'save file',
-  })
   map('n', '<Leader>bd', '<cmd>bd<CR>', {
     desc = 'delete buffer',
   })
