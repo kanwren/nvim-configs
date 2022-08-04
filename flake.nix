@@ -44,6 +44,7 @@
 
             # for plugins
             stdenv.cc
+            nodejs_latest
             yarn
             fzf
             code-minimap

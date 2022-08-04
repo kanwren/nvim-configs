@@ -199,7 +199,7 @@ local function setup_plugins(use)
   use {
     'iamcco/markdown-preview.nvim',
     run = 'cd app && yarn install',
-    ft = { 'md' },
+    ft = { 'markdown' },
     config = function() require('config.markdown-preview') end,
   }
 
