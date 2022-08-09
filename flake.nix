@@ -43,7 +43,7 @@
             git
 
             # for plugins
-            stdenv.cc
+            gcc
             nodejs_latest
             yarn
             fzf
