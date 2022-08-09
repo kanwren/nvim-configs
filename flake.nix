@@ -53,7 +53,6 @@
             rnix-lsp
             texlab
             clang-tools
-            haskell-language-server
             rust-analyzer
             sumneko-lua-language-server
             gopls
