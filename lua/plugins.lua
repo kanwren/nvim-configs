@@ -67,7 +67,10 @@ local function setup_plugins(use)
   use 'editorconfig/editorconfig-vim'
 
   -- Editing
-  use 'tpope/vim-surround' -- inserting/changing/deleting delimiters
+  use { -- inserting/changing/deleting delimiters
+    'kylechui/nvim-surround',
+    config = function() require('nvim-surround').setup() end,
+  }
   use { -- multiple cursors
     'mg979/vim-visual-multi',
     config = function() require('config.vim-visual-multi') end,
