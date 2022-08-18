@@ -57,12 +57,6 @@ local function setup_plugins(use)
     config = function() require('config.sessions') end
   }
 
-  use {
-    'vimwiki/vimwiki',
-    branch = 'dev',
-    config = function() require('config.vimwiki') end,
-  }
-
   -- Settings
   use 'editorconfig/editorconfig-vim'
 
