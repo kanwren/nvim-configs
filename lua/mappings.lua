@@ -235,6 +235,22 @@ do
 end
 -- }}}
 
+-- Wiki {{{
+do
+  map('n', '<Leader>wo', "<cmd>edit ~/wiki/index.md<CR>", {
+    desc = "open the wiki",
+  })
+  map('n', '<Leader>wt', "'<cmd>edit ~/wiki/thoughts/' . strftime('%Y-%m-%d') . '.md<CR>'", {
+    desc = "open today's thoughts page",
+    expr = true,
+  })
+  map('n', '<Leader>wd', "'<cmd>edit ~/wiki/diary/' . strftime('%Y-%m-%d') . '.md<CR>'", {
+    desc = "open today's diary page",
+    expr = true,
+  })
+end
+-- }}}
+
 -- Abbreviations {{{
 do
   local function iabbrev(k, v, opts)

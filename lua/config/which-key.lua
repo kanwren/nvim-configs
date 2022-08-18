@@ -57,6 +57,7 @@ wk.register({
       name = "narrow",
       ["s"] = { name = "sync" },
     },
+    ["w"] = { name = "wiki" },
   },
   ["g"] = {
     ["a"] = "character info",
