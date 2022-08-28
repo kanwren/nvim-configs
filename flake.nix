@@ -36,35 +36,29 @@
               }
             '';
           });
-        deps = lib.concatLists [
-          (with pkgs; [
-            # core
-            xxd
-            git
+        deps = with pkgs; [
+          # core
+          xxd
+          git
 
-            # for plugins
-            gcc
-            nodejs_latest
-            yarn
-            fzf
-            code-minimap
+          # for plugins
+          gcc
+          nodejs_latest
+          yarn
+          fzf
+          code-minimap
 
-            # LSP
-            rnix-lsp
-            texlab
-            clang-tools
-            rust-analyzer
-            sumneko-lua-language-server
-            gopls
-          ])
-          (with pkgs.nodePackages; [
-            typescript-language-server
-          ])
-          (with pkgs.python310Packages; [
-            python-lsp-server
-            python-lsp-black
-            pylsp-mypy
-          ])
+          # LSP
+          rnix-lsp
+          texlab
+          clang-tools
+          rust-analyzer
+          sumneko-lua-language-server
+          gopls
+          nodePackages.vscode-langservers-extracted
+          python310Packages.python-lsp-server
+          python310Packages.python-lsp-black
+          python310Packages.pylsp-mypy
         ];
       in
       {

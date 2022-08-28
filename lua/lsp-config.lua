@@ -192,7 +192,6 @@ local server_configs = {
     },
   },
   rnix = {},
-  tsserver = {},
   clangd = {},
   texlab = {},
   html = {},
