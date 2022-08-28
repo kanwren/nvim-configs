@@ -16,9 +16,6 @@ for _, ok in pairs(results) do
   end
 end
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
-
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
   virtual_text = {
     spacing = 5,
@@ -92,7 +89,8 @@ local function setup_lsp_mappings(client, bufnr)
   map('n', '<Leader>lqws', '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>', 'query workspace symbols')
   map('n', '<Leader>lws', '<cmd>lua require("telescope.builtin").lsp_workspace_symbols()<CR>',
     'query workspace symbols')
-  map('n', '<Leader>lwfl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', 'list workspace folders')
+  map('n', '<Leader>lwfl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>',
+    'list workspace folders')
   map('n', '<Leader>lwfa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', 'add workspace folder')
   map('n', '<Leader>lwfr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', 'remove workspace folder')
   -- call hierarchy
@@ -112,111 +110,98 @@ local function setup_lsp_mappings(client, bufnr)
   map('n', '<Leader>lwd', '<cmd>lua require("telescope.builtin").diagnostics({})<CR>', 'workspace diagnostics')
 end
 
-local on_attach = function(client, bufnr)
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-  aerial.on_attach(client, bufnr)
-  setup_lsp_mappings(client, bufnr)
-end
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
 
-lspconfig.hls.setup {
-  on_attach = on_attach,
-  capabilities = capabilities,
-  root_dir = function(fname)
-    return lspconfig.util.root_pattern('hie.yaml', '*.cabal', 'cabal.project', 'package.yaml', 'stack.yaml', '.git')(fname)
-        or '.'
+local global_server_config = {
+  on_attach = function(client, bufnr)
+    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+    aerial.on_attach(client, bufnr)
+    setup_lsp_mappings(client, bufnr)
   end,
-  settings = {},
+  capabilities = capabilities,
 }
 
-lspconfig.pylsp.setup {
-  on_attach = on_attach,
-  capabilities = capabilities,
-  settings = {
-    pyls = {
-      plugins = {
-        pydocstyle = {
-          enabled = false,
-        },
-        pycodestyle = {
-          enable = true,
-          ignore = { "E111", "E501", "E302", "W391" },
+local server_configs = {
+  hls = {
+    root_dir = function(fname)
+      return lspconfig.util.root_pattern('hie.yaml', '*.cabal', 'cabal.project', 'package.yaml', 'stack.yaml', '.git')(fname)
+          or '.'
+    end,
+    settings = {},
+  },
+  pylsp = {
+    settings = {
+      pyls = {
+        plugins = {
+          pydocstyle = {
+            enabled = false,
+          },
+          pycodestyle = {
+            enable = true,
+            ignore = { "E111", "E501", "E302", "W391" },
+          }
         }
       }
     }
-  }
-}
-
-lspconfig.rust_analyzer.setup {
-  on_attach = on_attach,
-  capabilities = capabilities,
-  settings = {
-    ["rust-analyzer"] = {
-      assist = {
-        importMergeBehavior = "last",
-        importPrefix = "by_self",
-      },
-      cargo = {
-        loadOutDirsFromCheck = true,
-      },
-      procMacro = {
-        enable = true,
+  },
+  rust_analyzer = {
+    settings = {
+      ["rust-analyzer"] = {
+        assist = {
+          importMergeBehavior = "last",
+          importPrefix = "by_self",
+        },
+        cargo = {
+          loadOutDirsFromCheck = true,
+        },
+        procMacro = {
+          enable = true,
+        },
+      }
+    }
+  },
+  sumneko_lua = {
+    settings = {
+      Lua = {
+        runtime = {
+          version = 'LuaJIT',
+        },
+        diagnostics = {
+          globals = { 'vim' },
+        },
+        workspace = {
+          library = vim.api.nvim_get_runtime_file("", true),
+        },
+        telemetry = {
+          enable = false,
+        },
       },
     }
-  }
-}
-
-lspconfig.sumneko_lua.setup {
-  on_attach = on_attach,
-  capabilities = capabilities,
-  settings = {
-    Lua = {
-      runtime = {
-        version = 'LuaJIT',
-      },
-      diagnostics = {
-        globals = { 'vim' },
-      },
-      workspace = {
-        library = vim.api.nvim_get_runtime_file("", true),
-      },
-      telemetry = {
-        enable = false,
-      },
-    },
-  }
-}
-
-lspconfig.gopls.setup {
-  on_attach = on_attach,
-  capabilities = capabilities,
-  settings = {
-    gopls = {
-      experimentalPostfixCompletions = true,
-      analyses = {
-        unusedparams = true,
-        shadow = true,
-        nilness = true,
+  },
+  gopls = {
+    settings = {
+      gopls = {
+        experimentalPostfixCompletions = true,
+        analyses = {
+          unusedparams = true,
+          shadow = true,
+          nilness = true,
+        },
       },
     },
   },
+  rnix = {},
+  tsserver = {},
+  clangd = {},
+  texlab = {},
+  html = {},
+  cssls = {},
 }
 
-lspconfig.rnix.setup {
-  on_attach = on_attach,
-  capabilities = capabilities,
-}
-
-lspconfig.tsserver.setup {
-  on_attach = on_attach,
-  capabilities = capabilities,
-}
-
-lspconfig.clangd.setup {
-  on_attach = on_attach,
-  capabilities = capabilities,
-}
-
-lspconfig.texlab.setup {
-  on_attach = on_attach,
-  capabilities = capabilities,
-}
+for server, server_config in pairs(server_configs) do
+  for k, v in pairs(global_server_config) do
+    server_config[k] = v
+  end
+  lspconfig[server].setup(server_config)
+end
