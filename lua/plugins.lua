@@ -58,7 +58,7 @@ local function setup_plugins(use)
   }
 
   -- Settings
-  use 'editorconfig/editorconfig-vim'
+  use 'gpanders/editorconfig.nvim'
 
   -- Editing
   use { -- inserting/changing/deleting delimiters
