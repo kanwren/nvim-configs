@@ -20,7 +20,10 @@ wk.register({
       name = "git",
       ["t"] = { name = "toggle" },
       ["h"] = { name = "hunk" },
-      ["b"] = { name = "buffer" },
+      ["b"] = {
+        name = "buffer",
+        ["d"] = { name = "diff" },
+      },
       ["m"] = "line commit message",
     },
     ["t"] = {

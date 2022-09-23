@@ -29,8 +29,9 @@ gitsigns.setup {
     map('n', '<Leader>ghu', gs.undo_stage_hunk, { desc = 'undo stage hunk' })
     map('n', '<Leader>ghp', gs.preview_hunk, { desc = 'preview hunk' })
     -- buffer operations
-    map('n', '<Leader>gbd', gs.diffthis, { desc = 'diff against index' })
-    map('n', '<Leader>gbD', function() gs.diffthis('~') end, { desc = 'diff against parent' })
+    map('n', '<Leader>gbdi', gs.diffthis, { desc = 'diff against index' })
+    map('n', '<Leader>gbdp', function() gs.diffthis('~') end, { desc = 'diff against parent' })
+    map('n', '<Leader>gbdd', function() gs.diffthis(vim.fn.input('ref: '):match('^%s*(.-)%s*$')) end, { desc = 'custom diff' })
     map('n', '<Leader>gbs', gs.stage_buffer, { desc = 'stage buffer' })
     map('n', '<Leader>gbr', gs.reset_buffer, { desc = 'reset buffer' })
     -- UI stuff
