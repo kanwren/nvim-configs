@@ -2,7 +2,6 @@ local aerial = require('aerial')
 
 aerial.setup {
   backends = { 'lsp', 'treesitter', 'markdown' },
-  close_behavior = 'auto',
   default_direction = 'prefer_right',
 }
 
