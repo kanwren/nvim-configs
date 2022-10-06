@@ -18,11 +18,11 @@ end
 -- Essential {{{
 do
   -- Work by visual line without a count, but normal when used with one
-  map({ 'n', 'v', 'o' }, 'j', "(v:count == -1 ? 'gj' : 'j')", {
+  map({ 'n', 'v', 'o' }, 'j', "(v:count == 0 ? 'gj' : 'j')", {
     silent = true,
     expr = true,
   })
-  map({ 'n', 'v', 'o' }, 'k', "(v:count == -1 ? 'gk' : 'k')", {
+  map({ 'n', 'v', 'o' }, 'k', "(v:count == 0 ? 'gk' : 'k')", {
     silent = true,
     expr = true,
   })
@@ -240,14 +240,12 @@ do
   map('n', '<Leader>wo', "<cmd>edit ~/wiki/index.md<CR>", {
     desc = "open the wiki",
   })
-  map('n', '<Leader>wt', "'<cmd>edit ~/wiki/thoughts/' . strftime('%Y-%m-%d') . '.md<CR>'", {
-    desc = "open today's thoughts page",
-    expr = true,
-  })
-  map('n', '<Leader>wd', "'<cmd>edit ~/wiki/diary/' . strftime('%Y-%m-%d') . '.md<CR>'", {
-    desc = "open today's diary page",
-    expr = true,
-  })
+  map('n', '<Leader>wt', function()
+    vim.cmd('edit ~/wiki/thoughts/' .. os.date('%Y-%m-%d') .. '.md')
+  end, { desc = "open today's thoughts page" })
+  map('n', '<Leader>wd', function()
+    vim.cmd('edit ~/wiki/diary/' .. os.date('%Y-%m-%d') .. '.md')
+  end, { desc = "open today's diary page" })
 end
 -- }}}
 
