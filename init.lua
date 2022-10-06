@@ -6,8 +6,8 @@ if nix_nvim_config_path then
   vim.opt_global.runtimepath:prepend(nix_nvim_config_path)
 end
 
-if vim.fn.has('nvim-0.7') == 0 then
-  vim.notify('configuration requires neovim v0.7+', vim.log.levels.ERROR)
+if vim.fn.has('nvim-0.8') == 0 then
+  vim.notify('configuration requires neovim v0.8+', vim.log.levels.ERROR)
   return
 end
 

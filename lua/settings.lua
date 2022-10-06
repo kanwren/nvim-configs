@@ -9,15 +9,15 @@ end
 
 -- Backups {{{
 do
-  local data_path = vim.fn.stdpath('data')
+  local state_path = vim.fn.stdpath('state')
   vim.o.swapfile = true
-  vim.o.directory = data_path .. '/swap//'
+  vim.o.directory = state_path .. '/swap//'
   vim.o.backup = true
   vim.o.writebackup = true
   vim.o.backupcopy = 'auto'
-  vim.o.backupdir = data_path .. '/backup//'
+  vim.o.backupdir = state_path .. '/backup//'
   vim.o.undofile = true
-  vim.o.undodir = data_path .. '/undo//'
+  vim.o.undodir = state_path .. '/undo//'
   for _, path in ipairs({ vim.o.directory, vim.o.backupdir, vim.o.undodir }) do
     if vim.fn.isdirectory(path) then
       vim.fn.mkdir(path, 'p')
@@ -51,6 +51,8 @@ end
 -- Navigation {{{
 do
   vim.o.mouse = 'nv'
+  -- TODO: can this be hooked into LSP?
+  -- vim.o.mousemodel = 'popup_setpos'
   vim.o.scrolloff = 0
 end
 -- }}}

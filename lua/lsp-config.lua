@@ -62,8 +62,8 @@ local function setup_lsp_mappings(client, bufnr)
   -- document
   map('n', '<Leader>lqds', '<cmd>lua vim.lsp.buf.document_symbol()<CR>', 'query document symbols')
   map('n', '<Leader>lds', '<cmd>lua require("telescope.builtin").lsp_document_symbols()<CR>', 'query document symbols')
-  if client.resolved_capabilities.document_formatting then
-    map('n', '<Leader>ldf', '<cmd>lua vim.lsp.buf.formatting_sync()<CR>', 'format buffer')
+  if client.server_capabilities.documentFormattingProvider then
+    map('n', '<Leader>ldf', '<cmd>lua vim.lsp.buf.format()<CR>', 'format buffer')
 
     -- toggle format on save for the current buffer
     local autocmd_id = nil
@@ -75,14 +75,14 @@ local function setup_lsp_mappings(client, bufnr)
         autocmd_id = vim.api.nvim_create_autocmd('BufWritePre', {
           group = format_group,
           buffer = bufnr,
-          callback = function() vim.lsp.buf.formatting_sync() end,
+          callback = function() vim.lsp.buf.format() end,
         })
       end
     end
 
     map('n', '<Leader>ltf', toggle_format_on_save, 'toggle format on save')
   end
-  if client.resolved_capabilities.document_range_formatting then
+  if client.server_capabilities.documentRangeFormattingProvider then
     map('v', '<Leader>ldf', ':lua vim.lsp.buf.range_formatting()<CR>', 'format range')
   end
   -- workspace
