@@ -191,6 +191,7 @@ local server_configs = {
       },
     },
   },
+  terraformls = {},
   rnix = {},
   clangd = {},
   texlab = {},

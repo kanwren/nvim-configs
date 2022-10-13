@@ -55,6 +55,7 @@
           rust-analyzer
           sumneko-lua-language-server
           gopls
+          terraform-ls
           nodePackages.vscode-langservers-extracted
           python310Packages.python-lsp-server
           python310Packages.python-lsp-black
