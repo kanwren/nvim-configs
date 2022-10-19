@@ -1,5 +1,4 @@
 local treesitter_configs = require('nvim-treesitter.configs')
-local spellsitter = require('spellsitter')
 
 treesitter_configs.setup {
   -- List of parsers to ignore installing
@@ -37,4 +36,3 @@ treesitter_configs.setup {
 vim.keymap.set('o', 'm', ":<C-U>lua require('tsht').nodes()<CR>", { silent = true })
 vim.keymap.set('v', 'm', ":lua require('tsht').nodes()<CR>", { noremap = true, silent = true })
 
-spellsitter.setup {}
