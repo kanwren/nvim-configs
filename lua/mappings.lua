@@ -241,11 +241,8 @@ do
     desc = "open the wiki",
   })
   map('n', '<Leader>wt', function()
-    vim.cmd('edit ~/wiki/thoughts/' .. os.date('%Y-%m-%d') .. '.md')
-  end, { desc = "open today's thoughts page" })
-  map('n', '<Leader>wy', function()
-    vim.cmd('edit ~/wiki/thoughts/' .. os.date('%Y-%m-%d', os.time() - (24 * 60 * 60)) .. '.md')
-  end, { desc = "open yesterday's thoughts page" })
+    vim.cmd('edit ~/wiki/thoughts/' .. os.date('%Y-%W') .. '.md')
+  end, { desc = "open this week's thoughts page" })
   map('n', '<Leader>wd', function()
     vim.cmd('edit ~/wiki/diary/' .. os.date('%Y-%m-%d') .. '.md')
   end, { desc = "open today's diary page" })
