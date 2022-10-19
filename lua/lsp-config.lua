@@ -110,8 +110,7 @@ local function setup_lsp_mappings(client, bufnr)
   map('n', '<Leader>lwd', '<cmd>lua require("telescope.builtin").diagnostics({})<CR>', 'workspace diagnostics')
 end
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
+local capabilities = cmp_nvim_lsp.default_capabilities()
 
 local global_server_config = {
   on_attach = function(client, bufnr)
