@@ -115,7 +115,6 @@ local capabilities = cmp_nvim_lsp.default_capabilities()
 local global_server_config = {
   on_attach = function(client, bufnr)
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-    aerial.on_attach(client, bufnr)
     setup_lsp_mappings(client, bufnr)
   end,
   capabilities = capabilities,

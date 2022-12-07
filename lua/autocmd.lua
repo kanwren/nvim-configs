@@ -20,6 +20,9 @@ autocmd({ 'BufReadPost' }, {
   desc = 'Return to last edit position when opening files',
 })
 
+local function foo()
+end
+
 autocmd({ 'BufRead', 'BufWinEnter', 'InsertLeave' }, {
   group = general_group,
   command = [[match ExtraWhitespace /\s\+$/]],
@@ -29,6 +32,12 @@ autocmd({ 'InsertEnter' }, {
   group = general_group,
   command = [[match ExtraWhitespace /\s\+\%#\@<!$/]],
   desc = 'Highlight trailing whitespace in insert mode, except at end of line',
+})
+autocmd({ 'FileType' }, {
+  group = general_group,
+  pattern = 'aerial',
+  command = [[highlight clear ExtraWhitespace]],
+  desc = 'Remove trailing whitespace highlights for plugin filetypes',
 })
 
 local highlight_group = augroup('highlight_group', { clear = true })
