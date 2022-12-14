@@ -87,7 +87,7 @@ local function setup_lsp_mappings(client, bufnr)
   end
   -- workspace
   map('n', '<Leader>lqws', '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>', 'query workspace symbols')
-  map('n', '<Leader>lws', '<cmd>lua require("telescope.builtin").lsp_workspace_symbols()<CR>',
+  map('n', '<Leader>lws', '<cmd>lua require("telescope.builtin").lsp_dynamic_workspace_symbols()<CR>',
     'query workspace symbols')
   map('n', '<Leader>lwfl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>',
     'list workspace folders')
