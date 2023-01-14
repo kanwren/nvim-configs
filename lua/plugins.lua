@@ -1,234 +1,225 @@
-local packer_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
-
-local function path_exists(path)
-  return vim.fn.empty(vim.fn.glob(path)) == 0
-end
-
-local packer_bootstrapped = false
-if not path_exists(packer_path) then
-  local function install_packer()
+local lazy_path = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazy_path) then
+  local function install_lazy()
     local output = vim.fn.system({
-      'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', packer_path
+      "git",
+      "clone",
+      "--filter=blob:none",
+      "https://github.com/folke/lazy.nvim.git",
+      "--branch=stable", -- latest stable release
+      lazy_path,
     })
     local success = vim.v.shell_error == 0
     return success, output
   end
 
-  vim.notify('packer.nvim not found, installing...', vim.log.levels.WARN)
-  local success, output = install_packer()
+  vim.notify('lazy.nvim not found, installing...', vim.log.levels.WARN)
+  local success, output = install_lazy()
   if not success then
-    vim.notify('packer.nvim installation failed: ' .. output, vim.log.levels.ERROR)
+    vim.notify('lazy.nvim installation failed: ' .. output, vim.log.levels.ERROR)
     return false, nil
   else
-    vim.api.nvim_command('packadd packer.nvim')
-    vim.notify('packer.nvim installation finished', vim.log.levels.INFO)
-    packer_bootstrapped = true
+    vim.notify('lazy.nvim installation finished', vim.log.levels.INFO)
   end
 end
 
-local packer_compile_path = vim.fn.stdpath('data') .. '/site/lua/packer_compiled.lua'
-local packer_config = {
-  -- NOTE: this has to be in &runtimepath
-  compile_path = packer_compile_path
-}
+vim.opt.rtp:prepend(lazy_path)
 
-local function setup_plugins(use)
-  -- TODO: write a modified 'use' that works with nix-pinned plugins
-
-  use 'wbthomason/packer.nvim' -- plugin manager
-  use 'lewis6991/impatient.nvim' -- speed up loading lua modules
-
+local plugin_configs = {
   -- Functionality
-  use 'kana/vim-repeat' -- repeat more things with .
-  use { -- File operations
+  -- repeat more things with .
+  'kana/vim-repeat',
+  -- File operations
+  {
     'tpope/vim-eunuch',
     cmd = {
       'Remove', 'Unlink', 'Delete', 'Copy', 'Duplicate', 'Move', 'Rename', 'Chmod', 'Mkdir', 'Cfind', 'Lfind', 'Clocate',
       'Llocate', 'SudoEdit', 'SudoWrite', 'Wall', 'W'
     },
-  }
-  use 'tpope/vim-abolish' -- Smart substitution, spelling correction, etc.
-  use 'lambdalisue/vim-protocol' -- edit remote files without netrww
-  use {
+  },
+  -- Smart substitution, spelling correction, etc.
+  'tpope/vim-abolish',
+  -- edit remote files without netrww
+  'lambdalisue/vim-protocol',
+  {
     'Shatur/neovim-session-manager',
-    requires = {
+    dependencies = {
       'nvim-lua/plenary.nvim',
     },
     config = function() require('config.sessions') end
-  }
+  },
 
   -- Settings
-  use 'gpanders/editorconfig.nvim'
+  'gpanders/editorconfig.nvim',
 
   -- Editing
-  use { -- inserting/changing/deleting delimiters
+  -- inserting/changing/deleting delimiters
+  {
     'kylechui/nvim-surround',
     config = function() require('nvim-surround').setup() end,
-  }
-  use { -- multiple cursors
+  },
+  -- multiple cursors
+  {
     'mg979/vim-visual-multi',
     config = function() require('config.vim-visual-multi') end,
-  }
-  use 'tommcdo/vim-exchange' -- exchanging two regions
-  use { -- easy commenting
+  },
+  -- exchanging two regions
+  'tommcdo/vim-exchange',
+  -- easy commenting
+  {
     'numToStr/Comment.nvim',
     config = function() require('Comment').setup() end,
-  }
-  use 'AndrewRadev/splitjoin.vim' -- switch between single-line and multiline constructs
-  use { -- :NR command for narrowing a region
+  },
+  -- switch between single-line and multiline constructs
+  'AndrewRadev/splitjoin.vim',
+  -- :NR command for narrowing a region
+  {
     'chrisbra/NrrwRgn',
     setup = function() require('setup.NrrwRgn') end,
     config = function() require('config.NrrwRgn') end,
-  }
+  },
 
   -- LSP
-  use 'neovim/nvim-lspconfig' -- common LSP configurations
-  use { -- LSP status indicator
+  -- common LSP configurations
+  'neovim/nvim-lspconfig',
+  -- LSP status indicator
+  {
     'j-hui/fidget.nvim',
     config = function() require('fidget').setup() end,
-  }
+  },
   -- highlighting
-  use {
-    'nvim-treesitter/nvim-treesitter', -- tree-sitter-based highlighting/indentation/etc.
-    requires = {
+  -- tree-sitter-based highlighting/indentation/etc.
+  {
+    'nvim-treesitter/nvim-treesitter',
+    dependencies = {
       'JoosepAlviste/nvim-ts-context-commentstring',
       'mfussenegger/nvim-treehopper',
     },
     config = function() require('config.treesitter') end,
-  }
+  },
   -- snippets
-  use {
+  {
     'L3MON4D3/LuaSnip',
-    requires = { 'rafamadriz/friendly-snippets' },
+    dependencies = { 'rafamadriz/friendly-snippets' },
     config = function() require('config.snippets') end,
-  }
+  },
   -- completion
-  use {
+  {
     'hrsh7th/nvim-cmp',
-    requires = {
+    dependencies = {
       -- sources
       'hrsh7th/cmp-nvim-lsp', -- from LSP
-      { 'hrsh7th/cmp-buffer', after = 'nvim-cmp' }, -- from buffer
-      { 'saadparwaiz1/cmp_luasnip', after = 'nvim-cmp' }, -- from luasnip for snippets
-      { 'hrsh7th/cmp-cmdline', after = 'nvim-cmp' }, -- from cmdline
-      { 'hrsh7th/cmp-path', after = 'nvim-cmp' }, -- from path
-      { 'hrsh7th/cmp-nvim-lua', after = 'nvim-cmp' }, -- from lua api
-      { 'hrsh7th/cmp-nvim-lsp-document-symbol', after = 'nvim-cmp' }, -- from textDocument/documentSymbol
-      { 'hrsh7th/cmp-calc', after = 'nvim-cmp' }, -- from math
-      { 'quangnguyen30192/cmp-nvim-tags', after = 'nvim-cmp' }, -- from tags
-
+      'hrsh7th/cmp-buffer', -- from buffer
+      'saadparwaiz1/cmp_luasnip', -- from luasnip for snippets
+      'hrsh7th/cmp-cmdline', -- from cmdline
+      'hrsh7th/cmp-path', -- from path
+      'hrsh7th/cmp-nvim-lua', -- from lua api
+      'hrsh7th/cmp-nvim-lsp-document-symbol', -- from textDocument/documentSymbol
+      'hrsh7th/cmp-calc', -- from math
+      'quangnguyen30192/cmp-nvim-tags', -- from tags
       -- UI
       'hrsh7th/cmp-nvim-lsp-signature-help', -- highlight current arg in function signature
       'onsails/lspkind-nvim', -- icons in completion menu
       'lukas-reineke/cmp-under-comparator', -- sort leading underscores to end of list
     },
-    after = { 'LuaSnip', 'nvim-treesitter' },
     config = function() require('config.completion') end,
-  }
+  },
 
   -- UI
-  use { -- search
+  { -- search
     'nvim-telescope/telescope.nvim',
-    requires = {
+    dependencies = {
       'nvim-lua/popup.nvim',
       'nvim-lua/plenary.nvim',
       -- Extensions
       'nvim-telescope/telescope-ui-select.nvim',
-      'nvim-telescope/telescope-packer.nvim',
     },
     config = function() require('config.telescope') end,
-  }
-  use { -- file browser
+  },
+  -- file browser
+  {
     'kyazdani42/nvim-tree.lua',
-    requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+    dependencies = { 'kyazdani42/nvim-web-devicons', opt = true },
     config = function() require('config.nvim-tree') end,
-  }
-  use { -- undo tree
+  },
+  -- undo tree
+  {
     'sanfusu/neovim-undotree',
     config = function() require('config.undotree') end,
-  }
-  use {
+  },
+  -- symbol tree
+  {
     'stevearc/aerial.nvim',
     config = function() require('config.aerial') end,
-  }
-  use { -- statusline
+  },
+  -- statusline
+  {
     'nvim-lualine/lualine.nvim',
-    requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+    dependencies = { 'kyazdani42/nvim-web-devicons', opt = true },
     config = function() require('config.statusline') end,
-  }
-  use { -- keybindings popup
+  },
+  -- keybindings popup
+  {
     'folke/which-key.nvim',
     config = function() require('config.which-key') end,
-  }
-  use { -- code minimap
+  },
+  -- code minimap
+  {
     'wfxr/minimap.vim',
     config = function() require('config.minimap') end,
-  }
-  use { -- show indent levels
+  },
+  -- show indent levels
+  {
     'lukas-reineke/indent-blankline.nvim',
     config = function() require('config.indent-line') end,
-  }
-  use { -- add temporary highlights
+  },
+  -- add temporary highlights
+  {
     'Pocco81/HighStr.nvim',
     config = function() require('config.highstr') end,
-  }
-  use {
+  },
+  {
     'folke/twilight.nvim',
     config = function() require('config.twilight') end,
-  }
-  use { -- show hex codes as colors
+  },
+  -- show hex codes as colors
+  {
     'norcalli/nvim-colorizer.lua',
     ft = { 'css', 'javascript', 'typescript', 'html', 'vim', 'lua' },
     config = function() require('colorizer').setup { 'css', 'javascript', 'typescript', 'html', 'vim', 'lua' } end,
-  }
-  use 'tpope/vim-characterize' -- see more character metadata in the 'ga' output
+  },
+  -- see more character metadata in the 'ga', output
+  'tpope/vim-characterize',
 
   -- VCS
-  use 'rhysd/committia.vim' -- better commit message editing
-  use 'rhysd/git-messenger.vim' -- see commit message of last commit under cursor (<Leader>gm)
-  use {
+  -- better commit message editing
+  'rhysd/committia.vim',
+  -- see commit message of last commit under cursor (<Leader>gm)
+  'rhysd/git-messenger.vim',
+  {
     'lewis6991/gitsigns.nvim',
     config = function() require('config.gitsigns') end,
-  }
+  },
 
   -- Tools
-  use {
+  {
     'iamcco/markdown-preview.nvim',
-    run = 'cd app && yarn install',
+    build = 'cd app && yarn install',
     ft = { 'markdown' },
     config = function() require('config.markdown-preview') end,
-  }
+  },
 
   -- Colors
-  use { 'catppuccin/nvim', as = 'catppuccin' }
+  { 'catppuccin/nvim', as = 'catppuccin' },
 
   -- Language-specific
-  use {
+  {
     'PotatoesMaster/i3-vim-syntax',
     ft = { 'i3' },
-  }
-  -- use {
-  --   'unisonweb/unison',
-  --   branch = 'trunk',
-  --   rtp = 'editor-support/vim',
-  --   ft = { 'u' },
-  -- }
+  },
+}
 
-  if packer_bootstrapped then
-    require('packer').sync()
-  end
-end
-
-local plugins = require('packer').startup({
-  setup_plugins,
-  config = packer_config
-})
-
-if path_exists(packer_compile_path) then
-  require('packer_compiled')
-else
-  vim.notify('packer not compiled, lazy-loading not initialized', vim.log.levels.WARNING)
-end
+local plugins = require('lazy').setup(plugin_configs)
 
 return true, plugins
 

@@ -6,7 +6,6 @@ telescope.setup {
     ['ui-select'] = {
       telescope_themes.get_dropdown {},
     },
-    packer = {},
     aerial = {
       show_nesting = true,
     },
@@ -14,7 +13,6 @@ telescope.setup {
 }
 
 telescope.load_extension('ui-select')
-telescope.load_extension('packer')
 telescope.load_extension('aerial')
 
 local function map_picker(mapping, picker, desc)
