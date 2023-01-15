@@ -1,4 +1,7 @@
 return {
+  -- nicer ui elements
+  'stevearc/dressing.nvim',
+
   'gpanders/editorconfig.nvim',
 
   -- edit remote files without netrw
