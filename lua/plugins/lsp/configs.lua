@@ -35,8 +35,7 @@ return {
       -- actions at a cursor position
       map('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', 'hover')
       map('n', '<Leader>lf', '<cmd>lua vim.diagnostic.open_float()<CR>', 'open float diagnostic')
-      map('n', '<Leader>la', '<cmd>lua vim.lsp.buf.code_action()<CR>', 'code action')
-      map('v', '<Leader>la', ':lua vim.lsp.buf.range_code_action()<CR>', 'range code action')
+      map({ 'n', 'v' }, '<Leader>la', ':lua vim.lsp.buf.code_action()<CR>', 'code action')
       map('n', '<Leader>ls', '<Cmd>lua vim.lsp.buf.signature_help()<CR>', 'signature help')
       map('n', '<Leader>lr', '<cmd>lua vim.lsp.buf.rename()<CR>', 'rename')
       -- queries on a symbol
