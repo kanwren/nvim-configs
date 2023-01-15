@@ -1,6 +1,7 @@
 return {
   'folke/which-key.nvim',
-  config = function() 
+
+  config = function()
     local wk = require('which-key')
 
     wk.setup {
@@ -145,5 +146,5 @@ return {
     wk.register({
       ["m"] = "treehopper",
     }, { mode = "o" })
- end,
+  end,
 }

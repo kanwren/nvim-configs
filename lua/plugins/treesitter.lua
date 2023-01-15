@@ -1,13 +1,16 @@
 return {
   'nvim-treesitter/nvim-treesitter',
+
   dependencies = {
     'JoosepAlviste/nvim-ts-context-commentstring',
     'mfussenegger/nvim-treehopper',
   },
+
   build = function()
     vim.api.nvim_command('TSUpdate')
   end,
-  config = function() 
+
+  config = function()
     local treesitter_configs = require('nvim-treesitter.configs')
 
     treesitter_configs.setup {
@@ -45,5 +48,5 @@ return {
     -- nvim-ts-hint-textobject
     vim.keymap.set('o', 'm', ":<C-U>lua require('tsht').nodes()<CR>", { silent = true })
     vim.keymap.set('v', 'm', ":lua require('tsht').nodes()<CR>", { noremap = true, silent = true })
- end,
+  end,
 }

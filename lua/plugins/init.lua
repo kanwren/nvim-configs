@@ -1,4 +1,9 @@
 return {
+  'gpanders/editorconfig.nvim',
+
+  -- edit remote files without netrw
+  'lambdalisue/vim-protocol',
+
   -- repeat more things with .
   'kana/vim-repeat',
 
@@ -14,13 +19,8 @@ return {
   -- smart substitution, spelling correction, etc.
   'tpope/vim-abolish',
 
-  -- edit remote files without netrw
-  'lambdalisue/vim-protocol',
-
   -- see more character metadata in the 'ga', output
   'tpope/vim-characterize',
-
-  'gpanders/editorconfig.nvim',
 
   -- inserting/changing/deleting delimiters
   { 'kylechui/nvim-surround', config = true },

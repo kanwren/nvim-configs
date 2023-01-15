@@ -2,7 +2,8 @@
 
 return {
   'lukas-reineke/indent-blankline.nvim',
-  config = function() 
+
+  config = function()
     local indent_blankline = require('indent_blankline')
 
     indent_blankline.setup {
@@ -12,5 +13,5 @@ return {
     }
 
     vim.keymap.set('n', '<Leader>t<Tab>', ':IndentBlanklineToggle<CR>', { desc = 'toggle indent guides', noremap = true })
- end,
+  end,
 }

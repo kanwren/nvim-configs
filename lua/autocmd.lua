@@ -20,9 +20,6 @@ autocmd({ 'BufReadPost' }, {
   desc = 'Return to last edit position when opening files',
 })
 
-local function foo()
-end
-
 autocmd({ 'BufRead', 'BufWinEnter', 'InsertLeave' }, {
   group = general_group,
   command = [[match ExtraWhitespace /\s\+$/]],

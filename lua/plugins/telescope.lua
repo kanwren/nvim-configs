@@ -1,12 +1,14 @@
 return {
   'nvim-telescope/telescope.nvim',
+
   dependencies = {
     'nvim-lua/popup.nvim',
     'nvim-lua/plenary.nvim',
     -- Extensions
     'nvim-telescope/telescope-ui-select.nvim',
   },
-  config = function() 
+
+  config = function()
     local telescope = require('telescope')
     local telescope_themes = require('telescope.themes')
 
@@ -48,5 +50,5 @@ return {
     map_picker('z', 'current_buffer_fuzzy_find skip_empty_lines=true', 'fuzzy find in buf')
     map_picker('p', 'builtin include_extensions=true', 'pickers')
     map_picker('a', 'aerial', 'aerial symbols')
- end,
+  end,
 }

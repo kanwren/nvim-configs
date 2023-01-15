@@ -2,11 +2,13 @@
 
 return {
   'chrisbra/NrrwRgn',
+
   init = function()
     vim.g.nrrw_rgn_nomap_nr = 1
     vim.g.nrrw_rgn_nomap_Nr = 1
   end,
-  config = function() 
+
+  config = function()
     local keymap = vim.keymap
 
     vim.g.nrrw_topbot_leftright = 'botright'
