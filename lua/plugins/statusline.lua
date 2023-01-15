@@ -10,12 +10,13 @@ return {
     lualine.setup {
       options = {
         theme = 'catppuccin',
+        globalstatus = true,
       },
       extensions = {
         'nvim-tree',
       },
     }
 
-    -- TODO: global statusline
+    vim.o.winbar = '[%n] %f'
   end,
 }
