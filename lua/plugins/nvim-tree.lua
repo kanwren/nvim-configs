@@ -1,3 +1,8 @@
+  -- file browser
+  return {
+    'kyazdani42/nvim-tree.lua',
+    dependencies = { 'kyazdani42/nvim-web-devicons' },
+    config = function()
 local nvim_tree = require('nvim-tree')
 
 vim.keymap.set('n', '<Leader>ad', '<cmd>NvimTreeFindFileToggle<CR>', { desc = 'toggle file tree', noremap = true })
@@ -16,3 +21,5 @@ nvim_tree.setup {
     signcolumn = 'yes',
   },
 }
+    end,
+  }

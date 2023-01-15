@@ -1,3 +1,23 @@
+-- completion
+return {
+  'hrsh7th/nvim-cmp',
+  dependencies = {
+    -- sources
+    'hrsh7th/cmp-nvim-lsp', -- from LSP
+    'hrsh7th/cmp-buffer', -- from buffer
+    'saadparwaiz1/cmp_luasnip', -- from luasnip for snippets
+    'hrsh7th/cmp-cmdline', -- from cmdline
+    'hrsh7th/cmp-path', -- from path
+    'hrsh7th/cmp-nvim-lua', -- from lua api
+    'hrsh7th/cmp-nvim-lsp-document-symbol', -- from textDocument/documentSymbol
+    'hrsh7th/cmp-calc', -- from math
+    'quangnguyen30192/cmp-nvim-tags', -- from tags
+    -- UI
+    'hrsh7th/cmp-nvim-lsp-signature-help', -- highlight current arg in function signature
+    'onsails/lspkind-nvim', -- icons in completion menu
+    'lukas-reineke/cmp-under-comparator', -- sort leading underscores to end of list
+  },
+  config = function()
 vim.o.completeopt = 'menuone,noinsert,noselect'
 vim.g.completion_enable_fuzzy_match = 1
 vim.g.completion_confirm_key = ''
@@ -110,3 +130,5 @@ cmp.setup.cmdline(':', {
     { name = 'cmdline' }
   })
 })
+  end,
+}
