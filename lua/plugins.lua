@@ -75,7 +75,7 @@ local plugin_configs = {
   -- :NR command for narrowing a region
   {
     'chrisbra/NrrwRgn',
-    setup = function() require('setup.NrrwRgn') end,
+    init = function() require('init.NrrwRgn') end,
     config = function() require('config.NrrwRgn') end,
   },
 
@@ -139,7 +139,7 @@ local plugin_configs = {
   -- file browser
   {
     'kyazdani42/nvim-tree.lua',
-    dependencies = { 'kyazdani42/nvim-web-devicons', opt = true },
+    dependencies = { 'kyazdani42/nvim-web-devicons' },
     config = function() require('config.nvim-tree') end,
   },
   -- undo tree
@@ -155,7 +155,7 @@ local plugin_configs = {
   -- statusline
   {
     'nvim-lualine/lualine.nvim',
-    dependencies = { 'kyazdani42/nvim-web-devicons', opt = true },
+    dependencies = { 'kyazdani42/nvim-web-devicons' },
     config = function() require('config.statusline') end,
   },
   -- keybindings popup
@@ -210,7 +210,10 @@ local plugin_configs = {
   },
 
   -- Colors
-  { 'catppuccin/nvim', as = 'catppuccin' },
+  {
+    'catppuccin/nvim',
+    name = 'catppuccin',
+  },
 
   -- Language-specific
   {
