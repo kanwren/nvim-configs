@@ -95,6 +95,7 @@ local plugin_configs = {
       'JoosepAlviste/nvim-ts-context-commentstring',
       'mfussenegger/nvim-treehopper',
     },
+    build = function() vim.api.nvim_command('TSUpdate') end,
     config = function() require('config.treesitter') end,
   },
   -- snippets
