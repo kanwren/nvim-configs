@@ -34,17 +34,12 @@ return {
   -- switch between single-line and multiline constructs
   'AndrewRadev/splitjoin.vim',
 
-  -- common LSP configurations
-  'neovim/nvim-lspconfig',
-
-  -- LSP status indicator
-  { 'j-hui/fidget.nvim', config = true },
-
   {
     'PotatoesMaster/i3-vim-syntax',
     ft = { 'i3' },
   },
 }
+
 
 -- Other plugins that look cool:
 --
