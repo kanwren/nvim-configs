@@ -7,8 +7,6 @@ return {
   config = function()
     local nvim_tree = require('nvim-tree')
 
-    vim.keymap.set('n', '<Leader>ad', '<cmd>NvimTreeFindFileToggle<CR>', { desc = 'toggle file tree', noremap = true })
-
     nvim_tree.setup {
       disable_netrw = true,
       hijack_netrw = true,
@@ -24,4 +22,14 @@ return {
       },
     }
   end,
+
+  keys = {
+    {
+      '<Leader>ad',
+      '<cmd>NvimTreeFindFileToggle<CR>',
+      mode = 'n',
+      noremap = true,
+      desc = 'toggle file tree',
+    },
+  },
 }

@@ -1,25 +1,36 @@
 -- add temporary highlights
 
+local keys = {
+  {
+    '<Leader>hr',
+    ':<c-u>HSRmHighlight<CR>',
+    mode = { 'n', 'v' },
+    noremap = true,
+    silent = true,
+    desc = 'remove highlight',
+  },
+  {
+    '<Leader>hc',
+    ':<c-u>HSRmHighlight rm_all<CR>',
+    mode = 'n',
+    noremap = true,
+    silent = true,
+    desc = 'clear all highlights',
+  },
+}
+
+for i = 0, 9 do
+  keys[#keys + 1] = {
+    '<Leader>h' .. i,
+    ':<c-u>HSHighlight ' .. i .. '<CR>',
+    mode = 'v',
+    noremap = true,
+    silent = true,
+    desc = 'highlight ' .. i,
+  }
+end
+
 return {
   'Pocco81/HighStr.nvim',
-
-  config = function()
-    for i = 0, 9 do
-      vim.keymap.set('v', '<Leader>h' .. i, ':<c-u>HSHighlight ' .. i .. '<CR>', {
-        desc = 'highlight ' .. i,
-        noremap = true,
-        silent = true,
-      })
-    end
-    vim.keymap.set({ 'n', 'v' }, '<Leader>hr', ':<c-u>HSRmHighlight<CR>', {
-      desc = 'remove highlight',
-      noremap = true,
-      silent = true,
-    })
-    vim.keymap.set('n', '<Leader>hc', ':<c-u>HSRmHighlight rm_all<CR>', {
-      desc = 'clear all highlights',
-      noremap = true,
-      silent = true,
-    })
-  end,
+  keys = keys,
 }

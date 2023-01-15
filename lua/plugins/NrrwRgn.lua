@@ -9,17 +9,65 @@ return {
   end,
 
   config = function()
-    local keymap = vim.keymap
-
     vim.g.nrrw_topbot_leftright = 'botright'
-
-    keymap.set('v', '<Leader>nr', ':NarrowRegion<CR>', { desc = 'narrow selected region', noremap = true })
-    keymap.set('n', '<Leader>nl', '<cmd>NRV<CR>', { desc = 'narrow last selected region', noremap = true })
-    keymap.set('n', '<Leader>nv', '<cmd>NarrowWindow<CR>', { desc = 'narrow visual region', noremap = true })
-    keymap.set('n', '<Leader>na', '<cmd>NRL<CR>', { desc = 'reselect last narrowed region', noremap = true })
-    keymap.set('n', '<Leader>nw', '<cmd>WidenRegion<CR>', { desc = 'sync narrowed changes', noremap = true })
-    keymap.set('n', '<Leader>nW', '<cmd>WidenRegion!<CR>', { desc = 'sync narrowed changes and close', noremap = true })
-    keymap.set('n', '<Leader>nse', '<cmd>NRSyncOnWrite<CR>', { desc = 'enable sync', noremap = true })
-    keymap.set('n', '<Leader>nsd', '<cmd>NRNoSyncOnWrite<CR>', { desc = 'disable sync', noremap = true })
   end,
+
+  keys = {
+    {
+      '<Leader>nr',
+      ':NarrowRegion<CR>',
+      mode = 'v',
+      noremap = true,
+      desc = 'narrow selected region',
+    },
+    {
+      '<Leader>nl',
+      '<cmd>NRV<CR>',
+      mode = 'n',
+      noremap = true,
+      desc = 'narrow last selected region',
+    },
+    {
+      '<Leader>nv',
+      '<cmd>NarrowWindow<CR>',
+      mode = 'n',
+      noremap = true,
+      desc = 'narrow visual region',
+    },
+    {
+      '<Leader>na',
+      '<cmd>NRL<CR>',
+      mode = 'n',
+      noremap = true,
+      desc = 'reselect last narrowed region',
+    },
+    {
+      '<Leader>nw',
+      '<cmd>WidenRegion<CR>',
+      mode = 'n',
+      noremap = true,
+      desc = 'sync narrowed changes',
+    },
+    {
+      '<Leader>nW',
+      '<cmd>WidenRegion!<CR>',
+      mode = 'n',
+      noremap = true,
+      desc = 'sync narrowed changes and close',
+    },
+    {
+      '<Leader>nse',
+      '<cmd>NRSyncOnWrite<CR>',
+      mode = 'n',
+      noremap = true,
+      desc = 'enable sync',
+    },
+    {
+      '<Leader>nsd',
+      '<cmd>NRNoSyncOnWrite<CR>',
+      mode = 'n',
+      noremap = true,
+      desc = 'disable sync',
+    },
+  },
 }

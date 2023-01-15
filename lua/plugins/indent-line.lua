@@ -11,7 +11,15 @@ return {
       char = '│',
       defaultGroup = 'IndentLine',
     }
-
-    vim.keymap.set('n', '<Leader>t<Tab>', ':IndentBlanklineToggle<CR>', { desc = 'toggle indent guides', noremap = true })
   end,
+
+  keys = {
+    {
+      '<Leader>t<Tab>',
+      ':IndentBlanklineToggle<CR>',
+      mode = 'n',
+      noremap = true,
+      desc = 'toggle indent guides',
+    },
+  },
 }

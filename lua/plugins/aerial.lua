@@ -12,10 +12,15 @@ return {
         default_direction = 'prefer_right',
       },
     }
-
-    vim.keymap.set('n', '<Leader>as', '<cmd>AerialToggle!<CR>', {
-      desc = 'toggle symbol tree',
-      noremap = true,
-    })
   end,
+
+  keys = {
+    {
+      '<Leader>as',
+      '<cmd>AerialToggle!<CR>',
+      mode = 'n',
+      noremap = true,
+      desc = 'toggle symbol tree',
+    },
+  },
 }

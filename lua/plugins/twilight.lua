@@ -3,10 +3,15 @@ return {
 
   config = function()
     require('twilight').setup()
-
-    vim.keymap.set('n', '<Leader>td', '<cmd>Twilight<CR>', {
-      desc = 'toggle dim',
-      noremap = true,
-    })
   end,
+
+  keys = {
+    {
+      '<Leader>td',
+      '<cmd>Twilight<CR>',
+      mode = 'n',
+      noremap = true,
+      desc = 'toggle dim',
+    },
+  },
 }

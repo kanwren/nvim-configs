@@ -3,10 +3,13 @@
 return {
   'wfxr/minimap.vim',
 
-  config = function()
-    vim.keymap.set('n', '<Leader>am', '<cmd>MinimapToggle<CR>', {
-      desc = 'toggle minimap',
+  keys = {
+    {
+      '<Leader>am',
+      '<cmd>MinimapToggle<CR>',
+      mode = 'n',
       noremap = true,
-    })
-  end,
+      desc = 'toggle minimap',
+    }
+  },
 }
