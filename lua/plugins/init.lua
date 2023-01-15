@@ -52,3 +52,4 @@ return {
 -- p00f/nvim-ts-rainbow
 -- windwp/nvim-autopairs
 -- jubnzv/virtual-types.nvim
+-- kosayoda/nvim-lightbulb
