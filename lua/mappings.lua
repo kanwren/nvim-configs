@@ -53,15 +53,22 @@ do
     desc = 'search word backwards',
     silent = true,
   })
+  -- saving
+  map('n', '<Leader>s', '<cmd>write<CR>', {
+    desc = 'save buffer',
+  })
+  map('n', '<Leader>S', '<cmd>wall<CR>', {
+    desc = 'save all',
+  })
 end
 -- }}}
 
 -- Buffers {{{
 do
-  map('n', '<Leader>bd', '<cmd>bd<CR>', {
+  map('n', '<Leader>bd', '<cmd>bdelete<CR>', {
     desc = 'delete buffer',
   })
-  map('n', '<Leader>bX', '<cmd>bd!<CR>', {
+  map('n', '<Leader>bX', '<cmd>bdelete!<CR>', {
     desc = 'kill buffer',
   })
   map('n', '<Leader>br', '<cmd>setlocal readonly!<CR>', {

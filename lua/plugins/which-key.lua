@@ -59,7 +59,6 @@ return {
         },
         ["h"] = { name = "highlight" },
         ["b"] = { name = "buffer" },
-        ["s"] = { name = "session" },
         ["n"] = {
           name = "narrow",
           ["s"] = { name = "sync" },
