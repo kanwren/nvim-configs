@@ -241,7 +241,7 @@ do
     desc = "open the wiki",
   })
   map('n', '<Leader>wt', function()
-    vim.cmd('edit ~/wiki/thoughts/' .. os.date('%Y-%W') .. '.md')
+    vim.cmd('edit ~/wiki/notes/thoughts/' .. os.date('%Y-%W') .. '.md')
   end, { desc = "open this week's thoughts page" })
   map('n', '<Leader>wd', function()
     vim.cmd('edit ~/wiki/diary/' .. os.date('%Y-%m-%d') .. '.md')
@@ -263,6 +263,8 @@ do
   iabbrev('xaz', "<C-r>='abcdefghijklmnopqrstuvwxyz'<CR>", {})
   iabbrev('xAZ', "<C-r>='ABCDEFGHIJKLMNOPQRSTUVWXYZ'<CR>", {})
   iabbrev('x09', "<C-r>='0123456789'<CR>", {})
+  iabbrev('xymd', "<C-r>=strftime('%Y-%m-%d')<CR>", {})
+  iabbrev('xdate', "<C-r>=strftime('%a %d %b %Y')<CR>", {})
 end
 -- }}}
 
