@@ -1,11 +1,13 @@
 return {
   'neovim/nvim-lspconfig',
-
-  dependencies = { 'hrsh7th/cmp-nvim-lsp' },
-
+  dependencies = {
+    'hrsh7th/cmp-nvim-lsp',
+    'lukas-reineke/lsp-format.nvim',
+  },
   config = function()
     local lspconfig = require('lspconfig')
     local cmp_nvim_lsp = require('cmp_nvim_lsp')
+    local lsp_format = require('lsp-format')
 
     vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
       virtual_text = {
@@ -17,7 +19,6 @@ return {
       underline = true,
     })
 
-    local format_group = vim.api.nvim_create_augroup("LspFormatting", {})
     local function setup_lsp_mappings(client, bufnr)
       local function map(mode, k, v, desc)
         local map_opts = { noremap = true, silent = true, desc = desc, buffer = bufnr }
@@ -53,29 +54,14 @@ return {
       map('n', '<Leader>lqds', '<cmd>lua vim.lsp.buf.document_symbol()<CR>', 'query document symbols')
       map('n', '<Leader>lds', '<cmd>lua require("telescope.builtin").lsp_document_symbols()<CR>',
         'query document symbols')
+      -- formatting
       if client.server_capabilities.documentFormattingProvider then
         map('n', '<Leader>ldf', '<cmd>lua vim.lsp.buf.format()<CR>', 'format buffer')
-
-        -- toggle format on save for the current buffer
-        local autocmd_id = nil
-        local function toggle_format_on_save()
-          if autocmd_id then
-            vim.api.nvim_clear_autocmds({ group = format_group, buffer = bufnr })
-            autocmd_id = nil
-          else
-            autocmd_id = vim.api.nvim_create_autocmd('BufWritePre', {
-              group = format_group,
-              buffer = bufnr,
-              callback = function() vim.lsp.buf.format() end,
-            })
-          end
-        end
-
-        map('n', '<Leader>ltf', toggle_format_on_save, 'toggle format on save')
       end
       if client.server_capabilities.documentRangeFormattingProvider then
         map('x', '<Leader>ldf', ':lua vim.lsp.buf.range_formatting()<CR>', 'format range')
       end
+      map('n', '<Leader>ltf', function() lsp_format.toggle({ args = "" }) end, 'toggle format on save')
       -- workspace
       map('n', '<Leader>lqws', '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>', 'query workspace symbols')
       map('n', '<Leader>lws', '<cmd>lua require("telescope.builtin").lsp_dynamic_workspace_symbols()<CR>',
@@ -105,6 +91,7 @@ return {
     local default_server_configs = {
       on_attach = function(client, bufnr)
         vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+        lsp_format.on_attach(client)
         setup_lsp_mappings(client, bufnr)
       end,
       capabilities = cmp_nvim_lsp.default_capabilities(),
@@ -122,9 +109,15 @@ return {
     configure_servers({
       hls = {
         root_dir = function(fname)
-          return lspconfig.util.root_pattern('hie.yaml', '*.cabal', 'cabal.project', 'package.yaml', 'stack.yaml',
-          '.git')(fname)
-          or '.'
+          local patterns = {
+            'hie.yaml',
+            '*.cabal',
+            'cabal.project',
+            'package.yaml',
+            'stack.yaml',
+            '.git',
+          }
+          return lspconfig.util.root_pattern(unpack(patterns))(fname) or '.'
         end,
         settings = {},
       },
