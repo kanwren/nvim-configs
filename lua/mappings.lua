@@ -10,19 +10,19 @@ end
 -- Leader configuration {{{
 do
   vim.g.mapleader = ' '
-  map({ 'n', 'v', 'o' }, '<Space>', '<nop>', { noremap = false })
-  map({ 'n', 'v', 'o' }, '<S-Space>', '<Space>', { noremap = false })
+  map({ 'n', 'x', 'o' }, '<Space>', '<nop>', { noremap = false })
+  map({ 'n', 'x', 'o' }, '<S-Space>', '<Space>', { noremap = false })
 end
 -- }}}
 
 -- Essential {{{
 do
   -- Work by visual line without a count, but normal when used with one
-  map({ 'n', 'v', 'o' }, 'j', "(v:count == 0 ? 'gj' : 'j')", {
+  map({ 'n', 'x', 'o' }, 'j', "(v:count == 0 ? 'gj' : 'j')", {
     silent = true,
     expr = true,
   })
-  map({ 'n', 'v', 'o' }, 'k', "(v:count == 0 ? 'gk' : 'k')", {
+  map({ 'n', 'x', 'o' }, 'k', "(v:count == 0 ? 'gk' : 'k')", {
     silent = true,
     expr = true,
   })

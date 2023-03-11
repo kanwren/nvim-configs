@@ -140,7 +140,7 @@ return {
         ["m"] = "shrink",
         ["c"] = "scope",
       },
-    }, { mode = "v" })
+    }, { mode = "x" })
 
     wk.register({
       ["m"] = "treehopper",

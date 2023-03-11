@@ -35,8 +35,8 @@ return {
           -- line operations
           map('n', '<Leader>gl', function() gs.blame_line { full = true } end, { desc = 'blame line' })
           -- hunk operations
-          map({ 'n', 'v' }, '<Leader>ghs', ':Gitsigns stage_hunk<CR>', { desc = 'stage hunk' })
-          map({ 'n', 'v' }, '<Leader>ghr', ':Gitsigns reset_hunk<CR>', { desc = 'reset hunk' })
+          map({ 'n', 'x' }, '<Leader>ghs', ':Gitsigns stage_hunk<CR>', { desc = 'stage hunk' })
+          map({ 'n', 'x' }, '<Leader>ghr', ':Gitsigns reset_hunk<CR>', { desc = 'reset hunk' })
           map('n', '<Leader>ghu', gs.undo_stage_hunk, { desc = 'undo stage hunk' })
           map('n', '<Leader>ghp', gs.preview_hunk, { desc = 'preview hunk' })
           -- buffer operations

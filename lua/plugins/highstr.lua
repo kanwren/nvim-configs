@@ -4,7 +4,7 @@ local keys = {
   {
     '<Leader>hr',
     ':<c-u>HSRmHighlight<CR>',
-    mode = { 'n', 'v' },
+    mode = { 'n', 'x' },
     noremap = true,
     silent = true,
     desc = 'remove highlight',
@@ -23,7 +23,7 @@ for i = 0, 9 do
   keys[#keys + 1] = {
     '<Leader>h' .. i,
     ':<c-u>HSHighlight ' .. i .. '<CR>',
-    mode = 'v',
+    mode = 'x',
     noremap = true,
     silent = true,
     desc = 'highlight ' .. i,

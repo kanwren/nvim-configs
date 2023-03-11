@@ -35,7 +35,7 @@ return {
       -- actions at a cursor position
       map('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', 'hover')
       map('n', '<Leader>lf', '<cmd>lua vim.diagnostic.open_float()<CR>', 'open float diagnostic')
-      map({ 'n', 'v' }, '<Leader>la', ':lua vim.lsp.buf.code_action()<CR>', 'code action')
+      map({ 'n', 'x' }, '<Leader>la', ':lua vim.lsp.buf.code_action()<CR>', 'code action')
       map('n', '<Leader>ls', '<Cmd>lua vim.lsp.buf.signature_help()<CR>', 'signature help')
       map('n', '<Leader>lr', '<cmd>lua vim.lsp.buf.rename()<CR>', 'rename')
       -- queries on a symbol
@@ -74,7 +74,7 @@ return {
         map('n', '<Leader>ltf', toggle_format_on_save, 'toggle format on save')
       end
       if client.server_capabilities.documentRangeFormattingProvider then
-        map('v', '<Leader>ldf', ':lua vim.lsp.buf.range_formatting()<CR>', 'format range')
+        map('x', '<Leader>ldf', ':lua vim.lsp.buf.range_formatting()<CR>', 'format range')
       end
       -- workspace
       map('n', '<Leader>lqws', '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>', 'query workspace symbols')

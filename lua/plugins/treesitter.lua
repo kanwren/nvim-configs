@@ -47,6 +47,6 @@ return {
 
     -- nvim-ts-hint-textobject
     vim.keymap.set('o', 'm', ":<C-U>lua require('tsht').nodes()<CR>", { silent = true })
-    vim.keymap.set('v', 'm', ":lua require('tsht').nodes()<CR>", { noremap = true, silent = true })
+    vim.keymap.set('x', 'm', ":lua require('tsht').nodes()<CR>", { noremap = true, silent = true })
   end,
 }
