@@ -71,7 +71,6 @@ return {
         ["J"] = "join construct",
         ["+"] = "later text state",
         ["-"] = "earlier text state",
-        ["nn"] = "init incremental select",
       },
       ["cr"] = {
         name = "coerce",
@@ -134,12 +133,6 @@ return {
       ["gc"] = "line comment",
       ["gb"] = "block comment",
       ["gS"] = "virtual surround (suppress indent)",
-      ["gr"] = {
-        name = "incremental select",
-        ["n"] = "widen",
-        ["m"] = "shrink",
-        ["c"] = "scope",
-      },
     }, { mode = "x" })
 
     wk.register({

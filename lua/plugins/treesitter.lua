@@ -30,14 +30,14 @@ return {
       indent = {
         enable = false,
       },
-      -- gnn for initial selection, grn/grm to expand/contract
       incremental_selection = {
         enable = true,
-        -- TODO: these mess with the usual gn and gr mappings
-        init_selection = "gnn",
-        node_incremental = "grn",
-        scope_incremental = "grc",
-        node_decremental = "grm",
+        keymaps = {
+          init_selection = "<CR>",
+          node_incremental = "<CR>",
+          scope_incremental = "<Tab>",
+          node_decremental = "<S-CR>",
+        },
       },
       -- nvim-ts-context-commentstring
       context_commentstring = {
