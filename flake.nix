@@ -51,7 +51,7 @@
           texlab
           clang-tools
           rust-analyzer
-          sumneko-lua-language-server
+          lua-language-server
           gopls
           terraform-ls
           emmet-ls
