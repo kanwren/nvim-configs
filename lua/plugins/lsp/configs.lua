@@ -195,6 +195,7 @@ return {
       texlab = {},
       html = {},
       cssls = {},
+      emmet_ls = {},
     })
   end,
 }
