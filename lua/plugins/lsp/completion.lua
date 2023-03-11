@@ -63,15 +63,12 @@ return {
       mapping = {
         ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
         ['<C-y>'] = cmp.mapping.confirm({ select = true }),
-        ['<CR>'] = cmp.mapping.confirm({ select = false }),
         ['<C-e>'] = cmp.mapping({
           i = cmp.mapping.abort(),
           c = cmp.mapping.close(),
         }),
         ['<C-n>'] = cmp.mapping(next_item, { 'i', 's' }),
         ['<C-p>'] = cmp.mapping(prev_item, { 'i', 's' }),
-        ['<Tab>'] = cmp.mapping(next_item, { 'i', 's' }),
-        ['<S-Tab>'] = cmp.mapping(prev_item, { 'i', 's' }),
       },
       sources = cmp.config.sources({
         { name = 'nvim_lsp' },
