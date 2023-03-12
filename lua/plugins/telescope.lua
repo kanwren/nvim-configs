@@ -58,6 +58,6 @@ return {
     map_picker('z', 'current_buffer_fuzzy_find skip_empty_lines=true', 'fuzzy find in buf'),
     map_picker('p', 'builtin include_extensions=true', 'pickers'),
     map_picker('a', 'aerial', 'aerial symbols'),
-    map_picker('n', 'notifications', 'notifications'),
+    map_picker('n', 'notify', 'notifications'),
   },
 }
