@@ -24,12 +24,7 @@
             };
           in
           nvim.overrideAttrs (old: {
-            buildCommand = (old.buildCommand or "") + ''
-              # Wrap neovim to add an environment variable that will tell
-              # init.lua where the copy of the configs are in the nix store;
-              # this will be added to &runtimepath
-              wrapProgram $out/bin/nvim --prefix PATH : ${lib.makeBinPath deps}
-            '';
+            buildCommand = (old.buildCommand or "") + "wrapProgram $out/bin/nvim --prefix PATH : ${lib.makeBinPath deps}";
           });
 
         emmet-ls = nixpkgs-emmet-ls.legacyPackages.${system}.nodePackages.emmet-ls;

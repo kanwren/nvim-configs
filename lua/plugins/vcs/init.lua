@@ -51,9 +51,6 @@ return {
           map('n', '<Leader>gtd', gs.toggle_deleted, { desc = 'toggle deleted lines' })
         end
       }
-
-      -- TODO: add to statusline
-      -- TODO: add to null-ls
     end,
   },
 }

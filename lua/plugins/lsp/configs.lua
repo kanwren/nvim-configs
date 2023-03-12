@@ -99,6 +99,8 @@ return {
     null_ls.setup({
       on_attach = default_on_attach,
       sources = {
+        -- NOTE: can disable diagnostics on change with
+        -- .with({ method = null_ls.methods.DIAGNOSTICS_ON_SAVE })
         null_ls.builtins.formatting.prettier.with({
           filetypes = { 'html', 'javascript', 'css' },
         }),
