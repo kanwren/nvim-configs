@@ -10,16 +10,14 @@ end
 
 return {
   'nvim-telescope/telescope.nvim',
-
   lazy = false,
-
   dependencies = {
     'nvim-lua/popup.nvim',
     'nvim-lua/plenary.nvim',
     -- extensions
     'nvim-telescope/telescope-ui-select.nvim',
+    'rcarriga/nvim-notify',
   },
-
   config = function()
     local telescope = require('telescope')
     local telescope_themes = require('telescope.themes')
@@ -37,8 +35,8 @@ return {
 
     telescope.load_extension('ui-select')
     telescope.load_extension('aerial')
+    telescope.load_extension('notify')
   end,
-
   keys = {
     map_picker('f', 'find_files', 'files'),
     map_picker('g', 'git_files', 'git files'),
@@ -60,5 +58,6 @@ return {
     map_picker('z', 'current_buffer_fuzzy_find skip_empty_lines=true', 'fuzzy find in buf'),
     map_picker('p', 'builtin include_extensions=true', 'pickers'),
     map_picker('a', 'aerial', 'aerial symbols'),
+    map_picker('n', 'notifications', 'notifications'),
   },
 }
