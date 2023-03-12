@@ -3,11 +3,13 @@ return {
   dependencies = {
     'hrsh7th/cmp-nvim-lsp',
     'lukas-reineke/lsp-format.nvim',
+    'jose-elias-alvarez/null-ls.nvim',
   },
   config = function()
     local lspconfig = require('lspconfig')
     local cmp_nvim_lsp = require('cmp_nvim_lsp')
     local lsp_format = require('lsp-format')
+    local null_ls = require('null-ls')
 
     vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
       virtual_text = {
@@ -55,12 +57,7 @@ return {
       map('n', '<Leader>lds', '<cmd>lua require("telescope.builtin").lsp_document_symbols()<CR>',
         'query document symbols')
       -- formatting
-      if client.server_capabilities.documentFormattingProvider then
-        map('n', '<Leader>ldf', '<cmd>lua vim.lsp.buf.format()<CR>', 'format buffer')
-      end
-      if client.server_capabilities.documentRangeFormattingProvider then
-        map('x', '<Leader>ldf', ':lua vim.lsp.buf.range_formatting()<CR>', 'format range')
-      end
+      map('n', '<Leader>ldf', '<cmd>lua vim.lsp.buf.format()<CR>', 'format buffer')
       map('n', '<Leader>ltf', function() lsp_format.toggle({ args = "" }) end, 'toggle format on save')
       -- workspace
       map('n', '<Leader>lqws', '<cmd>lua vim.lsp.buf.workspace_symbol()<CR>', 'query workspace symbols')
@@ -88,25 +85,29 @@ return {
       map('n', '<Leader>lwd', '<cmd>lua require("telescope.builtin").diagnostics({})<CR>', 'workspace diagnostics')
     end
 
-    local default_server_configs = {
-      on_attach = function(client, bufnr)
-        vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-        lsp_format.on_attach(client)
-        setup_lsp_mappings(client, bufnr)
-      end,
-      capabilities = cmp_nvim_lsp.default_capabilities(),
-    }
-
-    local function configure_servers(server_config_overrides)
-      for server, server_config in pairs(server_config_overrides) do
-        for k, v in pairs(default_server_configs) do
-          server_config[k] = v
-        end
-        lspconfig[server].setup(server_config)
-      end
+    local default_on_attach = function(client, bufnr)
+      vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+      lsp_format.on_attach(client)
+      setup_lsp_mappings(client, bufnr)
+    end
+    local default_capabilities = cmp_nvim_lsp.default_capabilities()
+    local default_on_attach_no_format = function(client, bufnr)
+      default_on_attach(client, bufnr)
+      client.server_capabilities.document_formatting = false
     end
 
-    configure_servers({
+    null_ls.setup({
+      on_attach = default_on_attach,
+      sources = {
+        null_ls.builtins.formatting.prettier.with({
+          filetypes = {
+            'html', 'javascript', 'css'
+          },
+        })
+      },
+    })
+
+    local server_configs = {
       hls = {
         root_dir = function(fname)
           local patterns = {
@@ -187,9 +188,15 @@ return {
       rnix = {},
       clangd = {},
       texlab = {},
-      html = {},
-      cssls = {},
+      html = { on_attach = default_on_attach_no_format },
+      cssls = { on_attach = default_on_attach_no_format },
       emmet_ls = {},
-    })
+    }
+
+    for server, server_config in pairs(server_configs) do
+      server_config.on_attach = server_config.on_attach or default_on_attach
+      server_config.capabilities = server_config.capabilities or default_capabilities
+      lspconfig[server].setup(server_config)
+    end
   end,
 }

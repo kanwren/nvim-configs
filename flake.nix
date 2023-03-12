@@ -56,6 +56,7 @@
           terraform-ls
           emmet-ls
           nodePackages.vscode-langservers-extracted
+          nodePackages.prettier
           python310Packages.python-lsp-server
           python310Packages.python-lsp-black
           python310Packages.pylsp-mypy
