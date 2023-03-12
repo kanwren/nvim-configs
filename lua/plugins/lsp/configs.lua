@@ -100,10 +100,9 @@ return {
       on_attach = default_on_attach,
       sources = {
         null_ls.builtins.formatting.prettier.with({
-          filetypes = {
-            'html', 'javascript', 'css'
-          },
-        })
+          filetypes = { 'html', 'javascript', 'css' },
+        }),
+        null_ls.builtins.diagnostics.shellcheck,
       },
     })
 
@@ -191,6 +190,7 @@ return {
       html = { on_attach = default_on_attach_no_format },
       cssls = { on_attach = default_on_attach_no_format },
       emmet_ls = {},
+      bashls = {},
     }
 
     for server, server_config in pairs(server_configs) do

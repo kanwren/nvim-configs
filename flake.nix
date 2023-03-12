@@ -46,7 +46,7 @@
           fzf
           code-minimap
 
-          # LSP
+          # language servers (+ associated tools)
           rnix-lsp
           texlab
           clang-tools
@@ -56,10 +56,16 @@
           terraform-ls
           emmet-ls
           nodePackages.vscode-langservers-extracted
-          nodePackages.prettier
+          nodePackages.bash-language-server
           python310Packages.python-lsp-server
           python310Packages.python-lsp-black
           python310Packages.pylsp-mypy
+
+          # formatters
+          nodePackages.prettier
+
+          # linters
+          shellcheck
         ];
       in
       {
