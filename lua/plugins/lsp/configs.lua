@@ -193,6 +193,7 @@ return {
       cssls = { on_attach = default_on_attach_no_format },
       emmet_ls = {},
       bashls = {},
+      tsserver = {},
     }
 
     for server, server_config in pairs(server_configs) do
