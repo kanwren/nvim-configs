@@ -270,8 +270,6 @@ do
   iabbrev('xaz', "<C-r>='abcdefghijklmnopqrstuvwxyz'<CR>", {})
   iabbrev('xAZ', "<C-r>='ABCDEFGHIJKLMNOPQRSTUVWXYZ'<CR>", {})
   iabbrev('x09', "<C-r>='0123456789'<CR>", {})
-  iabbrev('xymd', "<C-r>=strftime('%Y-%m-%d')<CR>", {})
-  iabbrev('xdate', "<C-r>=strftime('%a %d %b %Y')<CR>", {})
 end
 -- }}}
 
