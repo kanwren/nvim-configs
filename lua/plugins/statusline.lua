@@ -1,9 +1,7 @@
 -- statusline
 return {
   'nvim-lualine/lualine.nvim',
-
   dependencies = { 'nvim-tree/nvim-web-devicons' },
-
   config = function()
     local lualine = require('lualine')
 
@@ -15,8 +13,14 @@ return {
       extensions = {
         'nvim-tree',
       },
+      sections = {
+        lualine_c = {
+          -- show relative filepath in filename
+          { 'filename', path = 1, }
+        },
+      },
+      winbar = { lualine_c = { 'filename' } },
+      inactive_winbar = { lualine_c = { 'filename' } },
     }
-
-    vim.o.winbar = '[%n] %f'
   end,
 }
