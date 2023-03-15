@@ -20,29 +20,9 @@ autocmd({ 'BufReadPost' }, {
   desc = 'Return to last edit position when opening files',
 })
 
-autocmd({ 'BufRead', 'BufWinEnter', 'InsertLeave' }, {
-  group = general_group,
-  command = [[match ExtraWhitespace /\s\+$/]],
-  desc = 'Highlight trailing whitespace',
-})
-autocmd({ 'InsertEnter' }, {
-  group = general_group,
-  command = [[match ExtraWhitespace /\s\+\%#\@<!$/]],
-  desc = 'Highlight trailing whitespace in insert mode, except at end of line',
-})
-autocmd({ 'FileType' }, {
-  group = general_group,
-  pattern = 'aerial',
-  command = [[highlight clear ExtraWhitespace]],
-  desc = 'Remove trailing whitespace highlights for plugin filetypes',
-})
+-- Highlighting
 
 local highlight_group = augroup('highlight_group', { clear = true })
-
-autocmd({ 'ColorScheme' }, {
-  command = 'highlight ExtraWhitespace guibg=DarkGray',
-  desc = 'Highlight trailing whitespace',
-})
 
 autocmd({ 'ColorScheme' }, {
   group = highlight_group,
@@ -57,4 +37,42 @@ autocmd({ 'ColorScheme' }, {
 autocmd({ 'ColorScheme' }, {
   group = highlight_group,
   command = 'highlight Whitespace guifg=LightBlue',
+})
+
+-- Highlight trailing whitespace
+
+local trailspace_group_name = 'ExtraWhitespace'
+
+local function trailspace_unhighlight()
+  for _, match in ipairs(vim.fn.getmatches()) do
+    if match.group == trailspace_group_name then
+      pcall(vim.fn.matchdelete, match.id)
+      return
+    end
+  end
+end
+
+autocmd({ 'BufRead', 'BufWinEnter', 'InsertLeave' }, {
+  group = general_group,
+  callback = function()
+    trailspace_unhighlight()
+    if vim.api.nvim_buf_get_option(0, 'buftype') == '' then
+      vim.fn.matchadd(trailspace_group_name, [[\s\+$]])
+    end
+  end,
+  desc = 'Highlight trailing whitespace',
+})
+autocmd({ 'InsertEnter' }, {
+  group = general_group,
+  callback = function()
+    trailspace_unhighlight()
+    if vim.api.nvim_buf_get_option(0, 'buftype') == '' then
+      vim.fn.matchadd(trailspace_group_name, [[\s\+\%#\@<!$]])
+    end
+  end,
+  desc = 'Highlight trailing whitespace in insert mode, except at end of line',
+})
+autocmd({ 'ColorScheme' }, {
+  command = 'highlight ' .. trailspace_group_name .. ' guibg=DarkGray',
+  desc = 'Highlight trailing whitespace',
 })
