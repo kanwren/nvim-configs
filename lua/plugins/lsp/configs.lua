@@ -83,6 +83,23 @@ return {
       map('n', '<Leader>ldd', '<cmd>lua require("telescope.builtin").diagnostics({ bufnr = 0 })<CR>',
         'document diagnostics')
       map('n', '<Leader>lwd', '<cmd>lua require("telescope.builtin").diagnostics({})<CR>', 'workspace diagnostics')
+
+      local function preview_location(method)
+        return vim.lsp.buf_request(
+          0,
+          method,
+          vim.lsp.util.make_position_params(),
+          function(_, result, meta)
+            if result == nil or vim.tbl_isempty(result) then
+              vim.notify('No location found', vim.log.levels.DEBUG, { title = meta.method })
+              return
+            end
+            result = result[1] or result
+            vim.lsp.util.preview_location(result)
+          end
+        )
+      end
+      map('n', '<Leader>lpd', function() preview_location('textDocument/definition') end, 'preview definition')
     end
 
     local default_on_attach = function(client, bufnr)

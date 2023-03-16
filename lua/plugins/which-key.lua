@@ -1,6 +1,5 @@
 return {
   'folke/which-key.nvim',
-
   config = function()
     local wk = require('which-key')
 
@@ -40,6 +39,7 @@ return {
         ["l"] = {
           name = "lsp",
           ["g"] = { name = "goto/query symbol" },
+          ["p"] = { name = "preview" },
           ["q"] = {
             name = "quickfix",
             ["g"] = { name = "goto/query symbol" },
