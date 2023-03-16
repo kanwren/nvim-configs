@@ -24,13 +24,3 @@ return {
     ft = { 'i3' },
   },
 }
-
-
--- Other plugins that look cool:
---
--- folke/trouble.nvim
--- rafcamlet/nvim-luapad
--- p00f/nvim-ts-rainbow
--- windwp/nvim-autopairs
--- jubnzv/virtual-types.nvim
--- kosayoda/nvim-lightbulb
