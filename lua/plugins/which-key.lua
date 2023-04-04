@@ -59,10 +59,6 @@ return {
         },
         ["h"] = { name = "highlight" },
         ["b"] = { name = "buffer" },
-        ["n"] = {
-          name = "narrow",
-          ["s"] = { name = "sync" },
-        },
         ["w"] = { name = "wiki" },
       },
       ["g"] = {
@@ -127,7 +123,6 @@ return {
           ["h"] = { name = "hunk" },
         },
         ["h"] = { name = "highlight" },
-        ["n"] = { name = "narrow" },
       },
       ["S"] = "surround",
       ["gc"] = "line comment",
