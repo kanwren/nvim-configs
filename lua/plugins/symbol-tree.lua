@@ -2,7 +2,6 @@
 
 return {
   'stevearc/aerial.nvim',
-
   config = function()
     local aerial = require('aerial')
 
@@ -13,10 +12,9 @@ return {
       },
     }
   end,
-
   keys = {
     {
-      '<Leader>as',
+      '<Leader>ts',
       '<cmd>AerialToggle!<CR>',
       mode = 'n',
       noremap = true,

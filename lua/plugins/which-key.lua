@@ -18,7 +18,6 @@ return {
 
     wk.register({
       ["<leader>"] = {
-        ["a"] = { name = "apps" },
         ["g"] = {
           name = "git",
           ["t"] = { name = "toggle" },

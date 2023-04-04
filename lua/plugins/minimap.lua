@@ -2,10 +2,9 @@
 
 return {
   'wfxr/minimap.vim',
-
   keys = {
     {
-      '<Leader>am',
+      '<Leader>tm',
       '<cmd>MinimapToggle<CR>',
       mode = 'n',
       noremap = true,

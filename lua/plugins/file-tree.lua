@@ -1,9 +1,7 @@
 -- file browser
 return {
   'nvim-tree/nvim-tree.lua',
-
   dependencies = { 'nvim-tree/nvim-web-devicons' },
-
   config = function()
     local nvim_tree = require('nvim-tree')
 
@@ -22,10 +20,9 @@ return {
       },
     }
   end,
-
   keys = {
     {
-      '<Leader>ad',
+      '<Leader>d',
       '<cmd>NvimTreeFindFileToggle<CR>',
       mode = 'n',
       noremap = true,

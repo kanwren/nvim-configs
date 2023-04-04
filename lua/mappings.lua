@@ -168,7 +168,7 @@ do
   map('n', '<Leader>t!', function() vim.opt.signcolumn = vim.opt.signcolumn:get() == 'no' and 'yes' or 'no' end, {
     desc = 'toggle sign column',
   })
-  map('n', '<Leader>ts', '<cmd>setlocal spell!<CR>', {
+  map('n', '<Leader>tz', '<cmd>setlocal spell!<CR>', {
     desc = 'toggle spelling',
   })
   map('n', '<Leader>tf', function() vim.opt.foldcolumn = vim.opt.foldcolumn:get() == 0 and 1 or 0 end, {
@@ -236,7 +236,7 @@ do
   map('n', '<Leader>tc1', '<cmd>setlocal colorcolumn=+1<CR>', {
     desc = 'colorcolumn at textwidth + 1',
   })
-  map('n', '<Leader>tc=', function() vim.bo.colorcolumn = trim_str(vim.fn.input('colorcolumn=')) end, {
+  map('n', '<Leader>tc=', function() vim.wo.colorcolumn = trim_str(vim.fn.input('colorcolumn=')) end, {
     desc = 'set colorcolumn',
   })
 end

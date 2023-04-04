@@ -1,9 +1,8 @@
 return {
   'sanfusu/neovim-undotree',
-
   keys = {
     {
-      '<Leader>au',
+      '<Leader>u',
       '<cmd>UndotreeToggle<CR>',
       mode = 'n',
       noremap = true,
