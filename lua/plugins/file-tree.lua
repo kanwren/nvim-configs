@@ -8,7 +8,7 @@ return {
     nvim_tree.setup {
       disable_netrw = true,
       hijack_netrw = true,
-      update_cwd = true,
+      respect_buf_cwd = true,
 
       view = {
         hide_root_folder = false,
@@ -17,6 +17,13 @@ return {
         number = true,
         relativenumber = true,
         signcolumn = 'yes',
+      },
+
+      actions = {
+        change_dir = {
+          enable = true,
+          global = true,
+        },
       },
     }
   end,
