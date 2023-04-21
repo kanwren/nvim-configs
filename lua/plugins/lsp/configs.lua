@@ -119,7 +119,7 @@ return {
         -- NOTE: can disable diagnostics on change with
         -- .with({ method = null_ls.methods.DIAGNOSTICS_ON_SAVE })
         null_ls.builtins.formatting.prettier.with({
-          filetypes = { 'html', 'javascript', 'css' },
+          filetypes = { 'html', 'css' },
         }),
         null_ls.builtins.diagnostics.shellcheck,
       },
