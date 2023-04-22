@@ -2,7 +2,7 @@ return {
   {
     'ahmedkhalf/project.nvim',
     name = 'project_nvim',
-    config = {
+    opts = {
       manual_mode = true,
       silent_chdir = false,
     },

@@ -1,16 +1,13 @@
 return {
   'nvim-treesitter/nvim-treesitter',
-
   dependencies = {
     'JoosepAlviste/nvim-ts-context-commentstring',
     'mfussenegger/nvim-treehopper',
   },
-
   build = function()
     vim.api.nvim_command('TSUpdate')
   end,
-
-  config = function()
+  opts = function()
     local treesitter_configs = require('nvim-treesitter.configs')
 
     treesitter_configs.setup {

@@ -12,9 +12,7 @@ local filetypes = {
 
 return {
   'norcalli/nvim-colorizer.lua',
-
   ft = filetypes,
-
   config = function()
     require('colorizer').setup(filetypes)
   end,

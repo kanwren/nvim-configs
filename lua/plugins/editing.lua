@@ -20,7 +20,7 @@ return {
     keys = {
       { 'gT', '<cmd>TSJToggle<CR>', mode = { 'n' }, noremap = true, desc = 'toggle node split' },
     },
-    config = {
+    opts = {
       use_default_keymaps = false,
     },
   },

@@ -1,10 +1,6 @@
 return {
   'folke/twilight.nvim',
-
-  config = function()
-    require('twilight').setup()
-  end,
-
+  config = true,
   keys = {
     {
       '<Leader>td',

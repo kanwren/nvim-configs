@@ -2,7 +2,7 @@ return {
   -- nicer vim.ui.input (e.g. renaming) and vim.ui.select (e.g. code actions)
   {
     'stevearc/dressing.nvim',
-    config = {
+    opts = {
       select = {
         enabled = false, -- use telescope-ui-select instead
       },
