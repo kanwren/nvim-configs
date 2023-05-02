@@ -44,7 +44,6 @@
           # language servers (+ associated tools)
           rnix-lsp
           texlab
-          clang-tools
           rust-analyzer
           lua-language-server
           gopls

@@ -204,7 +204,6 @@ return {
       },
       terraformls = {},
       rnix = {},
-      clangd = {},
       texlab = {},
       html = { on_attach = default_on_attach_no_format },
       cssls = { on_attach = default_on_attach_no_format },
