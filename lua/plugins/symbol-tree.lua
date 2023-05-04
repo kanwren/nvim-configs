@@ -10,6 +10,20 @@ return {
   },
   keys = {
     {
+      '[a',
+      '<cmd>AerialPrev<CR>',
+      mode = 'n',
+      noremap = true,
+      desc = 'previous aerial symbol',
+    },
+    {
+      ']a',
+      '<cmd>AerialNext<CR>',
+      mode = 'n',
+      noremap = true,
+      desc = 'next aerial symbol',
+    },
+    {
       '<Leader>ts',
       '<cmd>AerialToggle!<CR>',
       mode = 'n',
