@@ -60,6 +60,23 @@ do
   map('n', '<Leader>S', '<cmd>wall<CR>', {
     desc = 'save all',
   })
+  -- changing directories
+  map('n', '<Leader>cc', '<cmd>cd %:h<CR>', {
+    desc = 'cd to current buffer',
+  })
+  map('n', '<Leader>cl', '<cmd>lcd %:h<CR>', {
+    desc = 'lcd to current buffer',
+  })
+  map('n', '<Leader>cg', function()
+    local result = vim.fn.system({ 'git', 'rev-parse', '--show-toplevel' })
+    if vim.api.nvim_get_vvar('shell_error') ~= 0 then
+      vim.notify('failed to get git root: ' .. result, vim.log.levels.ERROR)
+      return
+    end
+    vim.cmd('cd ' .. result:gsub('\n$', ''))
+  end, {
+    desc = 'cd to git root',
+  })
 end
 -- }}}
 
