@@ -140,21 +140,6 @@ return {
         end,
         settings = {},
       },
-      pylsp = {
-        settings = {
-          pyls = {
-            plugins = {
-              pydocstyle = {
-                enabled = false,
-              },
-              pycodestyle = {
-                enable = true,
-                ignore = { "E111", "E501", "E302", "W391" },
-              }
-            }
-          }
-        }
-      },
       rust_analyzer = {
         settings = {
           ["rust-analyzer"] = {

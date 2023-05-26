@@ -51,9 +51,6 @@
           emmet-ls
           nodePackages.vscode-langservers-extracted
           nodePackages.bash-language-server
-          python310Packages.python-lsp-server
-          python310Packages.python-lsp-black
-          python310Packages.pylsp-mypy
 
           # formatters
           nodePackages.prettier
