@@ -259,23 +259,6 @@ do
 end
 -- }}}
 
--- Wiki {{{
-do
-  map('n', '<Leader>wo', "<cmd>edit ~/wiki/index.md<CR>", {
-    desc = "open the wiki",
-  })
-  map('n', '<Leader>wt', function()
-    vim.cmd('edit ~/wiki/notes/thoughts/' .. os.date('%Y-%W') .. '.md')
-  end, { desc = "open this week's thoughts page" })
-  map('n', '<Leader>wl', function()
-    vim.cmd('edit ~/wiki/notes/thoughts/' .. os.date('%Y') .. '-' .. (os.date('%W') - 1) .. '.md')
-  end, { desc = "open last week's thoughts page" })
-  map('n', '<Leader>wd', function()
-    vim.cmd('edit ~/wiki/diary/' .. os.date('%Y-%m-%d') .. '.md')
-  end, { desc = "open today's diary page" })
-end
--- }}}
-
 -- Abbreviations {{{
 do
   local function iabbrev(k, v, opts)
