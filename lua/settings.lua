@@ -119,6 +119,7 @@ do
   vim.opt.cpoptions:append({
     y = true -- let yank be repeated with . (primarily for repeating appending)
   })
+  vim.o.fixendofline = false
 end
 -- }}}
 
