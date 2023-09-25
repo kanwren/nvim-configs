@@ -109,8 +109,8 @@ return {
     end
     local default_capabilities = cmp_nvim_lsp.default_capabilities()
     local default_on_attach_no_format = function(client, bufnr)
-      default_on_attach(client, bufnr)
-      client.server_capabilities.document_formatting = false
+      vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+      setup_lsp_mappings(client, bufnr)
     end
 
     null_ls.setup({
@@ -192,7 +192,7 @@ return {
       texlab = {},
       html = { on_attach = default_on_attach_no_format },
       cssls = { on_attach = default_on_attach_no_format },
-      emmet_ls = {},
+      emmet_ls = { on_attach = default_on_attach_no_format },
       bashls = {},
       tsserver = {},
     }
