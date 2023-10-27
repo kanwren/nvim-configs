@@ -7,7 +7,7 @@ return {
       silent_chdir = false,
     },
     keys = {
-      { '<Leader>cp', '<cmd>ProjectRoot<CR>', mode = { 'n' }, noremap = true, desc = 'cd to project root' },
+      { '<Leader>mp', '<cmd>ProjectRoot<CR>', mode = { 'n' }, noremap = true, desc = 'cd to project root' },
     },
   },
 
