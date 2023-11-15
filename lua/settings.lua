@@ -34,10 +34,10 @@ end
 
 -- Buffers {{{
 do
-  vim.o.hidden = true -- allow working with buffers
+  vim.o.hidden = true   -- allow working with buffers
   vim.o.confirm = false -- fail, don't ask to save
   vim.o.modeline = true
-  vim.o.modelines = 1 -- use one line to tell vim how to read the buffer
+  vim.o.modelines = 1   -- use one line to tell vim how to read the buffer
 end
 -- }}}
 
@@ -61,8 +61,8 @@ end
 do
   vim.o.lazyredraw = true -- don't redraw until after command/macro
   vim.o.shortmess = vim.o.shortmess .. table.concat({
-    'I', -- disable Vim intro screen
-    'c', -- don't give ins-completion-menu messages
+    'I',                  -- disable Vim intro screen
+    'c',                  -- don't give ins-completion-menu messages
   })
 
   -- sensible split defaults
@@ -77,11 +77,11 @@ do
 
   vim.o.list = true
   vim.opt.listchars = {
-    tab = '>-',
+    tab = '␉·',
     eol = '¬',
     extends = '>',
     precedes = '<',
-    nbsp = '+',
+    nbsp = '⎵',
   }
 
   vim.o.statusline = '[%n] %f%< %m%y%h%w%r  %(0x%B %b%)%=%p%%  %(%l/%L%)%( | %c%V%)%( %)'
@@ -106,8 +106,8 @@ do
       vim.opt.clipboard:append({ 'unnamedplus' })
     end
   end
-  vim.o.virtualedit = 'all' -- allow editing past the ends of lines
-  vim.o.joinspaces = false -- never two spaces after sentence
+  vim.o.virtualedit = 'all'  -- allow editing past the ends of lines
+  vim.o.joinspaces = false   -- never two spaces after sentence
   vim.opt.whichwrap:append({ -- direction key wrapping
     ['<'] = true,
     ['>'] = true,
@@ -127,10 +127,10 @@ end
 do
   vim.o.autoindent = true
   vim.o.smarttab = true
-  vim.o.tabstop = 4 -- treat tabs as 4 spaces wide
+  vim.o.tabstop = 4     -- treat tabs as 4 spaces wide
   vim.o.expandtab = true
   vim.o.softtabstop = 4 -- expand tabs to 4 spaces
-  vim.o.shiftwidth = 4 -- use 4 spaces when using > or <
+  vim.o.shiftwidth = 4  -- use 4 spaces when using > or <
   vim.o.shiftround = false
   vim.o.cinoptions = vim.o.cinoptions .. table.concat({
     ':0', -- 'case' should be inline with 'switch'
