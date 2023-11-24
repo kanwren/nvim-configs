@@ -57,4 +57,15 @@ return {
       end
     },
   },
+
+  -- github permalinks
+  {
+    'ruifm/gitlinker.nvim',
+    config = function()
+      local gitlinker = require('gitlinker')
+      gitlinker.setup {
+        mappings = '<leader>gy'
+      }
+    end,
+  },
 }

@@ -22,6 +22,7 @@ return {
         ["m"] = { name = "change directory" },
         ["g"] = {
           name = "git",
+          ["y"] = { name = "copy permalink" },
           ["t"] = { name = "toggle" },
           ["h"] = { name = "hunk" },
           ["b"] = {
