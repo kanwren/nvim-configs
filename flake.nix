@@ -4,11 +4,9 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
-    # TODO(wrenn): https://github.com/NixOS/nixpkgs/pull/178737
-    nixpkgs-emmet-ls.url = "github:NixOS/nixpkgs?rev=177e8d2647a8eba1e03f4d50ee73597671145180";
   };
 
-  outputs = { self, nixpkgs, flake-utils, nixpkgs-emmet-ls }:
+  outputs = { self, nixpkgs, flake-utils }:
     flake-utils.lib.eachDefaultSystem (system:
       let
         inherit (nixpkgs) lib;
@@ -26,8 +24,6 @@
           nvim.overrideAttrs (old: {
             buildCommand = (old.buildCommand or "") + "wrapProgram $out/bin/nvim --prefix PATH : ${lib.makeBinPath deps}";
           });
-
-        emmet-ls = nixpkgs-emmet-ls.legacyPackages.${system}.nodePackages.emmet-ls;
 
         deps = with pkgs; [
           # core

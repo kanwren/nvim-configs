@@ -34,27 +34,10 @@
         "type": "github"
       }
     },
-    "nixpkgs-emmet-ls": {
-      "locked": {
-        "lastModified": 1655994961,
-        "narHash": "sha256-RRow2B8I05i2rfpcMqx16Ynxp0zctAULdQCYRfX6E/M=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "177e8d2647a8eba1e03f4d50ee73597671145180",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "177e8d2647a8eba1e03f4d50ee73597671145180",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "flake-utils": "flake-utils",
-        "nixpkgs": "nixpkgs",
-        "nixpkgs-emmet-ls": "nixpkgs-emmet-ls"
+        "nixpkgs": "nixpkgs"
       }
     },
     "systems": {
