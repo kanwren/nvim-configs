@@ -22,7 +22,9 @@
             };
           in
           nvim.overrideAttrs (old: {
-            buildCommand = (old.buildCommand or "") + "wrapProgram $out/bin/nvim --prefix PATH : ${lib.makeBinPath deps}";
+            installPhase = (old.installPhase or "") + ''
+              wrapProgram $out/bin/nvim --prefix PATH : ${lib.makeBinPath deps}
+            '';
           });
 
         deps = with pkgs; [
