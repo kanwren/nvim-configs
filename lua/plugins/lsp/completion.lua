@@ -4,19 +4,21 @@ return {
 
   dependencies = {
     -- sources
-    'hrsh7th/cmp-nvim-lsp', -- from LSP
-    'hrsh7th/cmp-buffer', -- from buffer
-    'saadparwaiz1/cmp_luasnip', -- from luasnip for snippets
-    'hrsh7th/cmp-cmdline', -- from cmdline
-    'hrsh7th/cmp-path', -- from path
-    'hrsh7th/cmp-nvim-lua', -- from lua api
+    'hrsh7th/cmp-nvim-lsp',                 -- from LSP
+    'hrsh7th/cmp-buffer',                   -- from buffer
+    'saadparwaiz1/cmp_luasnip',             -- from luasnip for snippets
+    'hrsh7th/cmp-cmdline',                  -- from cmdline
+    'hrsh7th/cmp-path',                     -- from path
+    'hrsh7th/cmp-nvim-lua',                 -- from lua api
     'hrsh7th/cmp-nvim-lsp-document-symbol', -- from textDocument/documentSymbol
-    'hrsh7th/cmp-calc', -- from math
-    'quangnguyen30192/cmp-nvim-tags', -- from tags
+    'hrsh7th/cmp-calc',                     -- from math
+    'quangnguyen30192/cmp-nvim-tags',       -- from tags
+    'zbirenbaum/copilot.lua',               -- GitHub Copilot
+    'zbirenbaum/copilot-cmp',               -- GitHub Copilot
     -- UI
-    'hrsh7th/cmp-nvim-lsp-signature-help', -- highlight current arg in function signature
-    'onsails/lspkind-nvim', -- icons in completion menu
-    'lukas-reineke/cmp-under-comparator', -- sort leading underscores to end of list
+    'hrsh7th/cmp-nvim-lsp-signature-help',  -- highlight current arg in function signature
+    'onsails/lspkind-nvim',                 -- icons in completion menu
+    'lukas-reineke/cmp-under-comparator',   -- sort leading underscores to end of list
   },
 
   config = function()
@@ -29,6 +31,15 @@ return {
     local lspkind = require('lspkind')
     local luasnip = require('luasnip')
     local cmp_under_comparator = require('cmp-under-comparator')
+
+    local copilot = require('copilot')
+    copilot.setup({
+      suggestion = { enabled = false },
+      panel = { enabled = false },
+    })
+    local copilot_cmp = require('copilot_cmp')
+    copilot_cmp.setup()
+    local copilot_cmp_comparators = require('copilot_cmp.comparators')
 
     local function next_item(fallback)
       if cmp.visible() then
@@ -71,6 +82,7 @@ return {
         ['<C-p>'] = cmp.mapping(prev_item, { 'i', 's' }),
       },
       sources = cmp.config.sources({
+        { name = 'copilot' },
         { name = 'nvim_lsp' },
         { name = 'treesitter' },
         { name = 'luasnip' },
@@ -102,9 +114,12 @@ return {
       },
       sorting = {
         comparators = {
+          copilot_cmp_comparators.prioritize,
           cmp.config.compare.offset,
           cmp.config.compare.exact,
           cmp.config.compare.score,
+          cmp.config.compare.recently_used,
+          cmp.config.compare.locality,
           cmp_under_comparator.under,
           cmp.config.compare.kind,
           cmp.config.compare.sort_text,
