@@ -31,4 +31,10 @@ require('disable')
 require('settings')
 require('mappings')
 require('autocmd')
-require('lazy').setup('plugins')
+require('lazy').setup('plugins', {
+  install = {
+    -- Don't install missing plugins on startup, since we usually want to
+    -- restore instead of install
+    missing = false,
+  },
+})
