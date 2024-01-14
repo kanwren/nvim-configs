@@ -200,50 +200,37 @@ do
     return s:match('^%s*(.-)%s*$')
   end
 
-  local function set_indent_to(indent_level, opts)
-    local use_tabs = false
-    if opts then
-      use_tabs = opts.tabs or false
-    end
-    if use_tabs then
-      vim.bo.expandtab = false
-      vim.bo.tabstop = indent_level
-      vim.bo.softtabstop = 0
-      vim.bo.shiftwidth = indent_level
-    else
-      vim.bo.expandtab = true
-      vim.bo.tabstop = indent_level
-      vim.bo.softtabstop = indent_level
-      vim.bo.shiftwidth = indent_level
-    end
-    vim.api.nvim_command('redraw')
-    local msg = ''
-    msg = msg .. 'ts=' .. vim.bo.tabstop
-    msg = msg .. ', sts=' .. vim.bo.softtabstop
-    msg = msg .. ', sw=' .. vim.bo.shiftwidth
-    msg = msg .. ', et=' .. (vim.bo.expandtab and 1 or 0)
-    print(msg)
+  local function configure_indentation()
+    -- Get a character from the user, either tab or space, and configure
+    -- expand_tabs with that input
+    vim.ui.select({ 'tabs', 'spaces' }, {
+      prompt = 'Indentation style:',
+    }, function(choice)
+      local expand_tabs = false
+      expand_tabs = choice == 'spaces'
+
+      vim.ui.input({ prompt = 'Indentation level:' }, function(input)
+        local indent_level = tonumber(trim_str(input))
+
+        vim.bo.expandtab = expand_tabs
+        vim.bo.tabstop = indent_level
+        vim.bo.softtabstop = (vim.bo.expandtab and indent_level or 0)
+        vim.bo.shiftwidth = indent_level
+
+        vim.api.nvim_command('redraw')
+
+        local msg = ''
+        msg = msg .. 'ts=' .. vim.bo.tabstop
+        msg = msg .. ', sts=' .. vim.bo.softtabstop
+        msg = msg .. ', sw=' .. vim.bo.shiftwidth
+        msg = msg .. ', et=' .. (vim.bo.expandtab and 1 or 0)
+        print(msg)
+      end)
+    end)
   end
 
-  map('n', '<Leader>ti=', function()
-    local input = trim_str(vim.fn.input('ts=sts=sw='))
-    local indent_level = tonumber(input)
-    if indent_level then
-      set_indent_to(indent_level)
-    else
-      print('invalid indent: ' .. input)
-    end
-  end, {
-    desc = 'set indentation',
-  })
-  map('n', '<Leader>ti2', function() set_indent_to(2) end, {
-    desc = 'indent 4 spaces',
-  })
-  map('n', '<Leader>ti4', function() set_indent_to(4) end, {
-    desc = 'indent 2 spaces',
-  })
-  map('n', '<Leader>ti<Tab>', function() set_indent_to(4, { tabs = true }) end, {
-    desc = 'indent with tabs',
+  map('n', '<Leader>ti', configure_indentation, {
+    desc = 'configure indentation',
   })
 
   -- colorcolumn
