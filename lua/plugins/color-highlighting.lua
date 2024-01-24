@@ -4,7 +4,9 @@
 local filetypes = {
   'css',
   'javascript',
+  'javascriptreact',
   'typescript',
+  'typescriptreact',
   'html',
   'vim',
   'lua',
