@@ -26,17 +26,17 @@ local highlight_group = augroup('highlight_group', { clear = true })
 
 autocmd({ 'ColorScheme' }, {
   group = highlight_group,
-  command = 'highlight SpecialKey guifg=LightBlue',
+  command = 'highlight SpecialKey guifg=Gray',
   desc = 'Highlight non-printable characters',
 })
 autocmd({ 'ColorScheme' }, {
   group = highlight_group,
-  command = 'highlight NonText guifg=LightBlue',
+  command = 'highlight NonText guifg=Gray',
   desc = 'Highlight listchars',
 })
 autocmd({ 'ColorScheme' }, {
   group = highlight_group,
-  command = 'highlight Whitespace guifg=LightBlue',
+  command = 'highlight Whitespace guifg=Gray',
 })
 
 -- Highlight trailing whitespace
