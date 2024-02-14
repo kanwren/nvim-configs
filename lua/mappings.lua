@@ -124,6 +124,13 @@ do
     desc = 'clean whitespace',
     silent = true,
   })
+
+  -- Reverse a range of lines. Some ways to do this manually:
+  -- - select lines, 'o' the cursor to <line2> and use <esc>mrgv:g/^/m'r<cr>
+  -- - select lines, :g/^/m<c-r>=getpos("'<")[1]-1<cr><cr>
+  vim.cmd([[
+    command! -nargs=0 -bar -range=% Reverse <line1>,<line2>g/^/m<line1>-1 <bar> nohlsearch
+  ]])
 end
 -- }}}
 
