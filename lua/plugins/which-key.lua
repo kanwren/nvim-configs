@@ -1,5 +1,10 @@
 return {
   'folke/which-key.nvim',
+
+  -- defining prefixes which are later assigned mappings is broken in 1.5.0 due
+  -- to https://github.com/folke/which-key.nvim/issues/482
+  version = '1.4.x',
+
   config = function()
     local wk = require('which-key')
 

@@ -61,5 +61,5 @@
   "vim-protocol": { "branch": "master", "commit": "eb9a7b9f81b3042b03a2126e7a659c4d942b5b03" },
   "vim-repeat": { "branch": "master", "commit": "6dd787884b4df5c9193073325775b22c3a800225" },
   "vim-visual-multi": { "branch": "master", "commit": "b84a6d42c1c10678928b0bf8327f378c8bc8af5a" },
-  "which-key.nvim": { "branch": "main", "commit": "4433e5ec9a507e5097571ed55c02ea9658fb268a" }
+  "which-key.nvim": { "branch": "main", "commit": "e271c28118998c93a14d189af3395812a1aa646c" }
 }
