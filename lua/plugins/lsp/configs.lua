@@ -36,8 +36,6 @@ return {
       -- <C-q>, or the <Leader>lq prefix is used for the normal quickfix queries.
 
       -- actions at a cursor position
-      map('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', 'hover')
-      map('n', '<Leader>lf', '<cmd>lua vim.diagnostic.open_float()<CR>', 'open float diagnostic')
       map({ 'n', 'x' }, '<Leader>la', ':lua vim.lsp.buf.code_action()<CR>', 'code action')
       map('n', '<Leader>ls', '<Cmd>lua vim.lsp.buf.signature_help()<CR>', 'signature help')
       map('n', '<Leader>lr', '<cmd>lua vim.lsp.buf.rename()<CR>', 'rename')
@@ -73,8 +71,6 @@ return {
       map('n', '<Leader>lci', '<cmd>lua require("telescope.builtin").lsp_incoming_calls()<CR>', 'incoming calls')
       map('n', '<Leader>lco', '<cmd>lua require("telescope.builtin").lsp_outgoing_calls()<CR>', 'outgoing calls')
       -- navigation
-      map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', 'previous LSP diagnostic')
-      map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', 'next LSP diagnostic')
       map('n', '<Leader>lxs', '<cmd>LspStop<CR>', 'stop LSP')
       map('n', '<Leader>lxr', '<cmd>LspRestart<CR>', 'restart LSP')
       -- diagnostics (TODO: add variants for severity levels, see `:h telescope.builtins.diagnostics()`)

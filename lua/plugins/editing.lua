@@ -8,12 +8,6 @@ return {
   -- exchanging two regions
   'tommcdo/vim-exchange',
 
-  -- easy commenting
-  {
-    'numToStr/Comment.nvim',
-    config = true,
-  },
-
   -- switch between single-line and multiline constructs
   {
     'Wansmer/treesj',

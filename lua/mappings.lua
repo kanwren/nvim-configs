@@ -26,15 +26,7 @@ do
     silent = true,
     expr = true,
   })
-  -- Makes temporary macros faster
-  map('n', 'Q', '@q', {
-    desc = 'run @q',
-  })
-  -- Repeat macros/commands across visual selections
-  map('x', 'Q', ':normal @q<CR>', {
-    desc = 'linewise @q',
-    silent = true,
-  })
+  -- Repeat commands across visual selections
   map('x', '.', ':normal .<CR>', {
     desc = 'linewise .',
     silent = true,
