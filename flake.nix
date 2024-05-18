@@ -3,63 +3,60 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, flake-utils }:
-    flake-utils.lib.eachDefaultSystem (system:
-      let
-        inherit (nixpkgs) lib;
-        pkgs = nixpkgs.legacyPackages.${system};
+  outputs = { self, nixpkgs }:
+    let
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+        "x86_64-darwin"
+        "aarch64-darwin"
+      ];
+
+      forAllSystems = f: nixpkgs.lib.genAttrs systems (system: f nixpkgs.legacyPackages.${system});
+    in
+    {
+      packages = forAllSystems (pkgs: {
+        default = self.packages.${pkgs.system}.neovim;
 
         neovim =
-          let
-            nvim = pkgs.neovim.override {
-              # Can't set customRC here, since it will assume a .vim extension
-              # It's fine that these are created before nvim is wrapped
-              viAlias = true;
-              vimAlias = true;
-            };
-          in
-          nvim.overrideAttrs (old: {
+          (pkgs.neovim.override {
+            viAlias = true;
+            vimAlias = true;
+          }).overrideAttrs (old: {
             installPhase = (old.installPhase or "") + ''
-              wrapProgram $out/bin/nvim --prefix PATH : ${lib.makeBinPath deps}
+              wrapProgram $out/bin/nvim --prefix PATH : ${nixpkgs.lib.makeBinPath (with pkgs; [
+                # core
+                xxd
+                git
+
+                # for plugins
+                gcc
+                nodejs_latest
+                yarn
+                fzf
+                code-minimap
+
+                # language servers (+ associated tools)
+                nixd
+                texlab
+                rust-analyzer
+                lua-language-server
+                gopls
+                terraform-ls
+                emmet-ls
+                nodePackages.vscode-langservers-extracted
+                nodePackages.bash-language-server
+
+                # formatters
+                nodePackages.prettier
+
+                # linters
+                shellcheck
+              ])}
             '';
           });
-
-        deps = with pkgs; [
-          # core
-          xxd
-          git
-
-          # for plugins
-          gcc
-          nodejs_latest
-          yarn
-          fzf
-          code-minimap
-
-          # language servers (+ associated tools)
-          nixd
-          texlab
-          rust-analyzer
-          lua-language-server
-          gopls
-          terraform-ls
-          emmet-ls
-          nodePackages.vscode-langservers-extracted
-          nodePackages.bash-language-server
-
-          # formatters
-          nodePackages.prettier
-
-          # linters
-          shellcheck
-        ];
-      in
-      {
-        defaultPackage = self.packages.${system}.neovim;
-        packages.neovim = neovim;
-      }
-    );
+      });
+    };
 }
