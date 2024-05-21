@@ -191,6 +191,7 @@ return {
       emmet_ls = { on_attach = default_on_attach_no_format },
       bashls = {},
       tsserver = {},
+      solargraph = {},
     }
 
     for server, server_config in pairs(server_configs) do

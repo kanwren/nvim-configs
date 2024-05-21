@@ -48,6 +48,7 @@
                 emmet-ls
                 nodePackages.vscode-langservers-extracted
                 nodePackages.bash-language-server
+                solargraph
 
                 # formatters
                 nodePackages.prettier
