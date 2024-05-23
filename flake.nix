@@ -49,6 +49,7 @@
                 nodePackages.vscode-langservers-extracted
                 nodePackages.bash-language-server
                 solargraph
+                java-language-server
 
                 # formatters
                 nodePackages.prettier

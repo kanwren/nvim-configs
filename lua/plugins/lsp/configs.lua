@@ -192,6 +192,7 @@ return {
       bashls = {},
       tsserver = {},
       solargraph = {},
+      java_language_server = { cmd = { 'java-language-server' } },
     }
 
     for server, server_config in pairs(server_configs) do
