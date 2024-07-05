@@ -56,7 +56,7 @@ autocmd({ 'BufRead', 'BufWinEnter', 'InsertLeave' }, {
   group = general_group,
   callback = function()
     trailspace_unhighlight()
-    if vim.api.nvim_buf_get_option(0, 'buftype') == '' then
+    if vim.api.nvim_get_option_value('buftype', { buf = 0 }) == '' then
       vim.fn.matchadd(trailspace_group_name, [[\s\+$]])
     end
   end,
@@ -66,7 +66,7 @@ autocmd({ 'InsertEnter' }, {
   group = general_group,
   callback = function()
     trailspace_unhighlight()
-    if vim.api.nvim_buf_get_option(0, 'buftype') == '' then
+    if vim.api.nvim_get_option_value('buftype', { buf = 0 }) == '' then
       vim.fn.matchadd(trailspace_group_name, [[\s\+\%#\@<!$]])
     end
   end,

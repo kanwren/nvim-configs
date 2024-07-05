@@ -1,4 +1,4 @@
-function hatch(key, creature, speed, description)
+local function hatch(key, creature, speed, description)
   return {
     '<Leader>c' .. key,
     function()

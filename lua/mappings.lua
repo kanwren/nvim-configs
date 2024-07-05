@@ -49,9 +49,6 @@ do
   map('n', '<Leader>s', '<cmd>write<CR>', {
     desc = 'save buffer',
   })
-  map('n', '<Leader>S', '<cmd>wall<CR>', {
-    desc = 'save all',
-  })
   -- changing directories
   map('n', '<Leader>mc', '<cmd>cd %:h<CR>', {
     desc = 'cd to current buffer',
