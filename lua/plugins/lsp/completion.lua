@@ -80,6 +80,8 @@ return {
         }),
         ['<C-n>'] = cmp.mapping(next_item, { 'i', 's' }),
         ['<C-p>'] = cmp.mapping(prev_item, { 'i', 's' }),
+        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-f>'] = cmp.mapping.scroll_docs(4),
       },
       sources = cmp.config.sources({
         { name = 'copilot' },
@@ -129,15 +131,19 @@ return {
       },
     })
 
+    local cmdline_mapping = cmp.mapping.preset.cmdline()
+    cmdline_mapping['<Tab>'] = nil
+    cmdline_mapping['<S-Tab>'] = nil
+
     cmp.setup.cmdline('/', {
-      mapping = cmp.mapping.preset.cmdline(),
+      mapping = cmdline_mapping,
       sources = {
         { name = 'buffer' }
       }
     })
 
     cmp.setup.cmdline(':', {
-      mapping = cmp.mapping.preset.cmdline(),
+      mapping = cmdline_mapping,
       sources = cmp.config.sources({
         { name = 'path' }
       }, {
