@@ -41,7 +41,7 @@ local function setup_lsp_mappings(client, bufnr)
   map('n', '<Leader>lxx', '<cmd>LspStop<CR>', 'stop LSP')
   map('n', '<Leader>lxs', function()
     vim.ui.select(lspconfig.util.available_servers(), { prompt = 'LSP server' }, function(choice)
-      vim.api.nvim_command('LspStart ' .. choice)
+      if choice then vim.api.nvim_command('LspStart ' .. choice) end
     end)
   end, 'start LSP')
   map('n', '<Leader>lxr', '<cmd>LspRestart<CR>', 'restart LSP')
