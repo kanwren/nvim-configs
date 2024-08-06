@@ -53,6 +53,7 @@
 
                 # formatters
                 nodePackages.prettier
+                gotools
 
                 # linters
                 shellcheck

@@ -194,6 +194,7 @@ return {
         null_ls.builtins.formatting.prettier.with({
           filetypes = { 'html', 'css' },
         }),
+        null_ls.builtins.formatting.goimports,
         null_ls.builtins.diagnostics.shellcheck,
       },
     })
