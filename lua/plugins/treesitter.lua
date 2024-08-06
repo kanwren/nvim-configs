@@ -4,9 +4,9 @@ return {
     dependencies = {
       'mfussenegger/nvim-treehopper',
     },
-    build = function()
-      vim.api.nvim_command('TSUninstall all | TSInstall all')
-    end,
+    -- build = function()
+    --   vim.api.nvim_command('TSUninstall all | TSInstall all')
+    -- end,
     opts = function()
       local treesitter_configs = require('nvim-treesitter.configs')
 
