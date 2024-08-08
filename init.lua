@@ -30,6 +30,7 @@ end
 require('disable')
 require('settings')
 require('mappings')
+require('commands')
 require('autocmd')
 require('lazy').setup('plugins', {
   install = {
