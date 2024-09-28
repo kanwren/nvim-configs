@@ -1,10 +1,6 @@
 return {
   'folke/which-key.nvim',
 
-  -- defining prefixes which are later assigned mappings is broken in 1.5.0 due
-  -- to https://github.com/folke/which-key.nvim/issues/482
-  version = '1.4.x',
-
   config = function()
     local wk = require('which-key')
 
@@ -12,133 +8,96 @@ return {
       plugins = {
         registers = false, -- breaks <C-r> in command line during macros
       },
-      operators = {
-        ["gc"] = "line comment",
-        ["gb"] = "block comment",
-        ["cx"] = "exchange",
-        ["ys"] = "surround",
-        ["yS"] = "surround to line",
-      },
     }
 
-    wk.register({
-      ["<leader>"] = {
-        ["c"] = { name = "creatures" },
-        ["m"] = { name = "change directory" },
-        ["g"] = {
-          name = "git",
-          ["y"] = { name = "copy permalink" },
-          ["t"] = { name = "toggle" },
-          ["h"] = { name = "hunk" },
-          ["b"] = {
-            name = "buffer",
-            ["d"] = { name = "diff" },
-          },
-          ["m"] = "line commit message",
-        },
-        ["t"] = {
-          name = "toggles",
-          ["n"] = { name = "line numbers" },
-          ["i"] = { name = "indent" },
-          ["c"] = { name = "colorcolumn" },
-        },
-        ["f"] = { name = "telescope" },
-        ["l"] = {
-          name = "lsp",
-          ["g"] = { name = "goto/query symbol" },
-          ["p"] = { name = "preview" },
-          ["q"] = {
-            name = "quickfix",
-            ["g"] = { name = "goto/query symbol" },
-            ["w"] = { name = "workspace" },
-            ["d"] = { name = "document" },
-            ["c"] = { name = "call graph" },
-          },
-          ["c"] = { name = "call graph" },
-          ["w"] = {
-            name = "workspace",
-            ["f"] = { name = "folders" },
-          },
-          ["d"] = { name = "document" },
-          ["t"] = { name = "toggle" },
-          ["D"] = { name = "dump diagnostics" },
-          ["x"] = { name = "server" },
-        },
-        ["h"] = { name = "highlight" },
-        ["b"] = { name = "buffer" },
-        ["w"] = { name = "wiki" },
+    wk.add({
+      { "<leader>b",   group = "buffer" },
+      { "<leader>c",   group = "creatures" },
+      { "<leader>f",   group = "telescope" },
+      { "<leader>g",   group = "git" },
+      { "<leader>gb",  group = "buffer" },
+      { "<leader>gbd", group = "diff" },
+      { "<leader>gh",  group = "hunk" },
+      { "<leader>gm",  desc = "line commit message" },
+      { "<leader>gt",  group = "toggle" },
+      { "<leader>gy",  group = "copy permalink" },
+      { "<leader>h",   group = "highlight" },
+      { "<leader>l",   group = "lsp" },
+      { "<leader>lD",  group = "dump diagnostics" },
+      { "<leader>lc",  group = "call graph" },
+      { "<leader>ld",  group = "document" },
+      { "<leader>lg",  group = "goto/query symbol" },
+      { "<leader>lp",  group = "preview" },
+      { "<leader>lq",  group = "quickfix" },
+      { "<leader>lqc", group = "call graph" },
+      { "<leader>lqd", group = "document" },
+      { "<leader>lqg", group = "goto/query symbol" },
+      { "<leader>lqw", group = "workspace" },
+      { "<leader>lt",  group = "toggle" },
+      { "<leader>lw",  group = "workspace" },
+      { "<leader>lwf", group = "folders" },
+      { "<leader>lx",  group = "server" },
+      { "<leader>m",   group = "change directory" },
+      { "<leader>t",   group = "toggles" },
+      { "<leader>tc",  group = "colorcolumn" },
+      { "<leader>ti",  group = "indent" },
+      { "<leader>tn",  group = "line numbers" },
+      { "<leader>w",   group = "wiki" },
+      { "\\",          group = "visual-multi" },
+      { "\\/",         desc = "regex search" },
+      { "\\A",         desc = "select all" },
+      { "\\\\",        desc = "add cursor" },
+      { "cr",          group = "coerce" },
+      { "cr-",         desc = "dash-case" },
+      { "cr.",         desc = "dot.case" },
+      { "cr<space>",   desc = "space case" },
+      { "crU",         desc = "SNAKE_UPPERCASE" },
+      { "cr_",         desc = "snake_case" },
+      { "crc",         desc = "camelCase" },
+      { "crk",         desc = "kebab-case" },
+      { "crm",         desc = "MixedCase" },
+      { "crs",         desc = "snake_case" },
+      { "crt",         desc = "Title Case" },
+      { "cru",         desc = "SNAKE_UPPERCASE" },
+      { "cx",          group = "exchange" },
+      { "cxc",         desc = "cancel exchange" },
+      { "cxx",         desc = "exchange line" },
+      { "g+",          desc = "later text state" },
+      { "g-",          desc = "earlier text state" },
+      { "gJ",          desc = "join construct" },
+      { "gS",          desc = "split construct" },
+      { "ga",          desc = "character info" },
+      { "gb",          group = "block comment" },
+      { "gbc",         desc = "end of line" },
+      { "gc",          group = "line comment" },
+      { "gcA",         desc = "append line comment" },
+      { "gcO",         desc = "insert line comment above" },
+      { "gcc",         desc = "current line" },
+      { "gco",         desc = "insert line comment below" },
+      { "yS",          group = "surround to line" },
+      { "ySS",         desc = "current line" },
+      { "ySs",         desc = "current line" },
+      { "ys",          group = "surround" },
+      { "yss",         desc = "current line" },
+      {
+        mode = { "x" },
+        { "<leader>g",  group = "git" },
+        { "<leader>gh", group = "hunk" },
+        { "<leader>h",  group = "highlight" },
+        { "S",          desc = "surround" },
+        { "gS",         desc = "virtual surround (suppress indent)" },
+        { "gb",         desc = "block comment" },
+        { "gc",         desc = "line comment" },
       },
-      ["g"] = {
-        ["a"] = "character info",
-        ["S"] = "split construct",
-        ["J"] = "join construct",
-        ["+"] = "later text state",
-        ["-"] = "earlier text state",
+      {
+        mode = { "o" },
+        { "m",  desc = "treehopper" },
+        { "gc", desc = "line comment" },
+        { "gb", desc = "block comment" },
+        { "cx", desc = "exchange" },
+        { "ys", desc = "surround" },
+        { "yS", desc = "surround to line" },
       },
-      ["cr"] = {
-        name = "coerce",
-        ["c"] = "camelCase",
-        ["m"] = "MixedCase",
-        ["_"] = "snake_case",
-        ["s"] = "snake_case",
-        ["u"] = "SNAKE_UPPERCASE",
-        ["U"] = "SNAKE_UPPERCASE",
-        ["-"] = "dash-case",
-        ["k"] = "kebab-case",
-        ["."] = "dot.case",
-        ["<space>"] = "space case",
-        ["t"] = "Title Case",
-      },
-      ["\\"] = {
-        name = "visual-multi",
-        ["\\"] = "add cursor",
-        ["/"] = "regex search",
-        ["A"] = "select all",
-      },
-      -- operators
-      ["gc"] = {
-        name = "line comment",
-        ["c"] = "current line",
-        ["A"] = "append line comment",
-        ["o"] = "insert line comment below",
-        ["O"] = "insert line comment above",
-      },
-      ["gb"] = {
-        name = "block comment",
-        ["c"] = "end of line",
-      },
-      ["ys"] = {
-        name = "surround",
-        ["s"] = "current line",
-      },
-      ["yS"] = {
-        name = "surround to line",
-        ["s"] = "current line",
-        ["S"] = "current line",
-      },
-      ["cx"] = {
-        name = "exchange",
-        ["c"] = "cancel exchange",
-        ["x"] = "exchange line",
-      },
-    }, { mode = 'n' })
-
-    wk.register({
-      ["<leader>"] = {
-        ["g"] = {
-          name = "git",
-          ["h"] = { name = "hunk" },
-        },
-        ["h"] = { name = "highlight" },
-      },
-      ["S"] = "surround",
-      ["gc"] = "line comment",
-      ["gb"] = "block comment",
-      ["gS"] = "virtual surround (suppress indent)",
-    }, { mode = "x" })
-
-    wk.register({
-      ["m"] = "treehopper",
-    }, { mode = "o" })
+    })
   end,
 }

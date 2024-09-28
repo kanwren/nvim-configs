@@ -165,7 +165,7 @@ return {
         format_on_save = false,
       },
       bashls = {},
-      tsserver = {},
+      ts_ls = {},
       solargraph = {},
       java_language_server = {
         cmd = { 'java-language-server' },
