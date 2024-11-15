@@ -143,6 +143,7 @@ return {
       gopls = {
         settings = {
           gopls = {
+            usePlaceholders = true,
             experimentalPostfixCompletions = true,
             analyses = {
               unusedparams = true,
