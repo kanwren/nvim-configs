@@ -61,5 +61,13 @@
             '';
           });
       });
+
+      devShells = forAllSystems (pkgs: {
+        default = pkgs.mkShell {
+          packages = [
+            pkgs.just
+          ];
+        };
+      });
     };
 }
