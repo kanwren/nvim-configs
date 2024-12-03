@@ -66,6 +66,13 @@ do
   end, {
     desc = 'cd to git root',
   })
+  -- run jq commands
+  map('n', '<Leader>j', ":%!jq '' <left><left>", {
+    desc = 'run a jq command',
+  })
+  map('x', '<Leader>j', ":!jq '' <left><left>", {
+    desc = 'run a jq command',
+  })
 end
 -- }}}
 
