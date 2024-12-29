@@ -8,6 +8,20 @@ return {
   -- exchanging two regions
   'tommcdo/vim-exchange',
 
+  -- screen navigation
+  {
+    'ggandor/leap.nvim',
+    config = function()
+      local leap = require('leap')
+      local leap_user = require('leap.user')
+      vim.keymap.set('n',        's', '<Plug>(leap)')
+      vim.keymap.set('n',        'S', '<Plug>(leap-from-window)')
+      vim.keymap.set({'x', 'o'}, 's', '<Plug>(leap-forward)')
+      leap_user.set_repeat_keys('<enter>', '<backspace>')
+      vim.keymap.set({'x', 'o'}, 'S', '<Plug>(leap-backward)')
+    end
+  },
+
   -- switch between single-line and multiline constructs
   {
     'Wansmer/treesj',
