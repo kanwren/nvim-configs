@@ -17,7 +17,6 @@ return {
       vim.keymap.set('n', 's', '<Plug>(leap)')
       vim.keymap.set('n', 'S', '<Plug>(leap-from-window)')
       vim.keymap.set({ 'x', 'o' }, 's', '<Plug>(leap)')
-      leap_user.set_repeat_keys('<enter>', '<backspace>')
     end
   },
 
