@@ -75,14 +75,14 @@ return {
   dependencies = {
     'hrsh7th/cmp-nvim-lsp',
     'lukas-reineke/lsp-format.nvim',
-    'jose-elias-alvarez/null-ls.nvim',
+    'nvimtools/none-ls.nvim',
   },
 
   config = function()
     local lspconfig = require('lspconfig')
     local cmp_nvim_lsp = require('cmp_nvim_lsp')
     local lsp_format = require('lsp-format')
-    local null_ls = require('null-ls')
+    local none_ls = require('null-ls')
 
     vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
       virtual_text = { spacing = 5, prefix = '~' },
@@ -154,7 +154,15 @@ return {
         },
       },
       terraformls = {},
-      nixd = {},
+      nixd = {
+        settings = {
+          nixd = {
+            formatting = {
+              command = { 'nixpkgs-fmt' },
+            },
+          },
+        },
+      },
       texlab = {},
       html = {
         format_on_save = false,
@@ -187,16 +195,25 @@ return {
       default_on_attach_no_format(client, bufnr)
     end
 
-    null_ls.setup({
+    none_ls.setup({
       on_attach = default_on_attach,
       sources = {
+        -- Diagnostics
         -- NOTE: can disable diagnostics on change with
-        -- .with({ method = null_ls.methods.DIAGNOSTICS_ON_SAVE })
-        null_ls.builtins.formatting.prettier.with({
-          filetypes = { 'html', 'css' },
-        }),
-        null_ls.builtins.formatting.goimports,
-        null_ls.builtins.diagnostics.shellcheck,
+        -- .with({ method = none_ls.methods.DIAGNOSTICS_ON_SAVE })
+        none_ls.builtins.diagnostics.fish,
+        none_ls.builtins.diagnostics.staticcheck,
+        none_ls.builtins.diagnostics.statix,
+
+        -- Formatting
+        none_ls.builtins.formatting.fish_indent,
+        none_ls.builtins.formatting.goimports,
+        none_ls.builtins.formatting.just,
+        none_ls.builtins.formatting.shellharden,
+
+        -- LSP actions
+        none_ls.builtins.code_actions.gomodifytags,
+        none_ls.builtins.code_actions.impl,
       },
     })
 

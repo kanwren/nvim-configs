@@ -39,24 +39,35 @@
                 code-minimap
 
                 # language servers (+ associated tools)
-                nixd
-                texlab
-                rust-analyzer
-                lua-language-server
+                ## go
+                go-tools
+                gomodifytags
                 gopls
-                terraform-ls
-                emmet-ls
-                nodePackages.vscode-langservers-extracted
-                nodePackages.bash-language-server
-                solargraph
-                typescript-language-server
-
-                # formatters
-                nodePackages.prettier
                 gotools
-
-                # linters
+                impl
+                ## html/css/etc
+                emmet-ls
+                vscode-langservers-extracted
+                ## lua
+                lua-language-server
+                ## nix
+                nixd
+                nixpkgs-fmt
+                statix
+                ## ruby
+                solargraph
+                ## rust
+                rust-analyzer
+                ## shell
+                bash-language-server
                 shellcheck
+                shellharden
+                ## terraform
+                terraform-ls
+                ## tex
+                texlab
+                ## typescript
+                typescript-language-server
               ])}
             '';
           });
