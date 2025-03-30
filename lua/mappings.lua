@@ -145,29 +145,6 @@ do
 end
 -- }}}
 
--- Matching navigation commands (like in unimpaired) {{{
-do
-  for lowerkey, cmd_desc in pairs({ b = { 'b', 'buffer' }, t = { 't', 'tab' }, q = { 'c', 'quickfix item' },
-    l = { 'l', 'loclist item' } }) do
-    local upperkey = lowerkey:upper()
-    local cmd = cmd_desc[1]
-    local desc = cmd_desc[2]
-    map('n', "]" .. lowerkey, "<cmd>" .. cmd .. "next<CR>", {
-      desc = 'next ' .. desc,
-    })
-    map('n', "[" .. lowerkey, "<cmd>" .. cmd .. "previous<CR>", {
-      desc = 'previous ' .. desc,
-    })
-    map('n', "]" .. upperkey, "<cmd>" .. cmd .. "last<CR>", {
-      desc = 'last ' .. desc,
-    })
-    map('n', "[" .. upperkey, "<cmd>" .. cmd .. "first<CR>", {
-      desc = 'first ' .. desc,
-    })
-  end
-end
--- }}}
-
 -- Toggles {{{
 do
   map('n', '<Leader>tw', '<cmd>setlocal wrap!<CR>', {

@@ -22,9 +22,7 @@ return {
   },
 
   config = function()
-    vim.o.completeopt = 'menuone,noinsert,noselect'
-    vim.g.completion_enable_fuzzy_match = 1
-    vim.g.completion_confirm_key = ''
+    vim.o.completeopt = 'fuzzy,menuone,noinsert,noselect'
 
     local cmp = require('cmp')
     local cmp_context = require('cmp.config.context')

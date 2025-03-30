@@ -1,12 +1,12 @@
-if vim.fn.has('nvim-0.9') == 0 then
-  vim.notify('configuration requires neovim v0.9+', vim.log.levels.ERROR)
+if vim.fn.has('nvim-0.11') == 0 then
+  vim.notify('configuration requires neovim v0.11+', vim.log.levels.ERROR)
   return
 end
 
 -- bootstrap lazy.nvim
 do
   local lazy_path = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-  if not vim.loop.fs_stat(lazy_path) then
+  if not vim.uv.fs_stat(lazy_path) then
     vim.notify('lazy.nvim not found, installing...', vim.log.levels.WARN)
     local output = vim.fn.system({
       "git",

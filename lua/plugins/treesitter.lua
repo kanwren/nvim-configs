@@ -1,12 +1,6 @@
 return {
   {
     'nvim-treesitter/nvim-treesitter',
-    dependencies = {
-      'mfussenegger/nvim-treehopper',
-    },
-    -- build = function()
-    --   vim.api.nvim_command('TSUninstall all | TSInstall all')
-    -- end,
     opts = function()
       local treesitter_configs = require('nvim-treesitter.configs')
 
@@ -34,10 +28,6 @@ return {
           },
         },
       }
-
-      -- nvim-ts-hint-textobject
-      vim.keymap.set('o', 'm', ":<C-U>lua require('tsht').nodes()<CR>", { silent = true })
-      vim.keymap.set('x', 'm', ":lua require('tsht').nodes()<CR>", { noremap = true, silent = true })
     end,
   },
 
