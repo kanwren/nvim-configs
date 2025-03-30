@@ -13,14 +13,6 @@ return {
     },
   },
 
-  -- smart substitution, spelling correction, etc.
-  'tpope/vim-abolish',
-
   -- see more character metadata in the 'ga', output
   'tpope/vim-characterize',
-
-  {
-    'PotatoesMaster/i3-vim-syntax',
-    ft = { 'i3' },
-  },
 }

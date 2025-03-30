@@ -6,7 +6,7 @@ return {
   -- LSP status indicator
   {
     'j-hui/fidget.nvim',
-    tag = 'legacy',
+    tag = 'v1.2.0',
     config = true,
   },
 }
