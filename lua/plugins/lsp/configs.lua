@@ -15,12 +15,12 @@ vim.api.nvim_create_autocmd('LspAttach', {
       vim.keymap.set(mode, k, v, map_opts)
     end
 
-    map('n', 'gd', '<cmd>lua require("telescope.builtin").lsp_definitions()<CR>', 'list definitions')
-    map('n', 'grt', '<cmd>lua require("telescope.builtin").lsp_type_definitions()<CR>', 'list type definitions')
-    map('n', 'gO', '<cmd>lua require("telescope.builtin").lsp_document_symbols()<CR>', 'query document symbols')
-    map('n', 'grci', '<cmd>lua require("telescope.builtin").lsp_incoming_calls()<CR>', 'incoming calls')
-    map('n', 'grco', '<cmd>lua require("telescope.builtin").lsp_outgoing_calls()<CR>', 'outgoing calls')
-    map('n', '<Leader>lf', '<cmd>lua vim.lsp.buf.format()<CR>', 'format buffer')
+    map('n', 'gd', '<cmd>lua require("telescope.builtin").lsp_definitions()<CR>', 'Goto definition')
+    map('n', 'grt', '<cmd>lua require("telescope.builtin").lsp_type_definitions()<CR>', 'List type definitions')
+    map('n', 'gO', '<cmd>lua require("telescope.builtin").lsp_document_symbols()<CR>', 'Document symbols')
+    map('n', 'grci', '<cmd>lua require("telescope.builtin").lsp_incoming_calls()<CR>', 'Incoming calls')
+    map('n', 'grco', '<cmd>lua require("telescope.builtin").lsp_outgoing_calls()<CR>', 'Outgoing calls')
+    map('n', '<Leader>lf', '<cmd>lua vim.lsp.buf.format()<CR>', 'Format buffer')
 
     if not client:supports_method('textDocument/willSaveWaitUntil') and client:supports_method('textDocument/formatting') then
       vim.api.nvim_create_autocmd('BufWritePre', {

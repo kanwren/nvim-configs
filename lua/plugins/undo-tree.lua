@@ -6,7 +6,7 @@ return {
       '<cmd>UndotreeToggle<CR>',
       mode = 'n',
       noremap = true,
-      desc = 'toggle undo tree',
+      desc = 'Toggle undo tree',
     },
   },
 }

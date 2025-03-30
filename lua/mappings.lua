@@ -1,4 +1,3 @@
--- vim.keymap.set, but defaults to { noremap = true }
 local function map(mode, k, v, opts)
   opts = opts or {}
   if opts.noremap == nil then
@@ -28,26 +27,26 @@ do
   })
   -- Repeat commands across visual selections
   map('x', '.', ':normal .<CR>', {
-    desc = 'linewise .',
+    desc = 'Repeat linewise',
     silent = true,
   })
   -- Redraw page and clear highlights
   map({ 'n', 'v', 'o' }, '<C-l>', '<cmd>nohlsearch<CR><C-l>', {
-    desc = 'redraw',
+    desc = 'Redraw',
     silent = true,
   })
   -- Search word underneath cursor/selection but don't jump
   map('n', '*', '<cmd>let wv=winsaveview()<CR>*<cmd>call winrestview(wv)<CR>', {
-    desc = 'search word forwards',
+    desc = 'Search word forwards',
     silent = true,
   })
   map('n', '#', '<cmd>let wv=winsaveview()<CR>#<cmd>call winrestview(wv)<CR>', {
-    desc = 'search word backwards',
+    desc = 'Search word backwards',
     silent = true,
   })
   -- saving
   map('n', '<Leader>s', '<cmd>write<CR>', {
-    desc = 'save buffer',
+    desc = 'Save buffer',
   })
   -- changing directories
   map('n', '<Leader>mc', '<cmd>cd %:h<CR>', {
@@ -68,10 +67,10 @@ do
   })
   -- run jq commands
   map('n', '<Leader>j', ":%!jq '' <left><left>", {
-    desc = 'run a jq command',
+    desc = 'Run a jq command',
   })
   map('x', '<Leader>j', ":!jq '' <left><left>", {
-    desc = 'run a jq command',
+    desc = 'Run a jq command',
   })
 end
 -- }}}
@@ -79,18 +78,18 @@ end
 -- Buffers {{{
 do
   map('n', '<Leader>bd', '<cmd>bdelete<CR>', {
-    desc = 'delete buffer',
+    desc = 'Delete buffer',
   })
   map('n', '<Leader>bX', '<cmd>bdelete!<CR>', {
-    desc = 'kill buffer',
+    desc = 'Kill buffer',
   })
   map('n', '<Leader>br', '<cmd>setlocal readonly!<CR>', {
-    desc = 'toggle readonly',
+    desc = 'Toggle readonly',
   })
   -- Make unlisted scratch buffer
   vim.cmd([[command! Scratch new | setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile]])
   map('n', '<Leader>bs', '<cmd>Scratch<CR>', {
-    desc = 'open scratch buffer',
+    desc = 'Open scratch buffer',
   })
 end
 -- }}}
@@ -99,12 +98,12 @@ end
 do
   -- Split current line by provided regex (\zs or \ze to preserve separators)
   map('n', 'gs', ':s//\\r/g<Left><Left><Left><Left><Left>', {
-    desc = 'regex split line',
+    desc = 'Regex split line',
   })
 
   -- Start a visual substitute
   map('x', 'gs', ':s/\\%V', {
-    desc = 'visual substitute',
+    desc = 'Visual substitute',
   })
 
   -- Delete trailing whitespace and retab
@@ -117,7 +116,7 @@ do
     ]])
     vim.fn.winrestview(wv)
   end, {
-    desc = 'clean whitespace',
+    desc = 'Clean whitespace',
     silent = true,
   })
 
@@ -139,7 +138,7 @@ do
     vim.api.nvim_command('let @' .. r2 .. '=@' .. r1)
     vim.notify('Copied @' .. r1 .. ' to @' .. r2, vim.log.levels.INFO)
   end, {
-    desc = 'register copy',
+    desc = 'Register copy',
     silent = true,
   })
 end
@@ -148,31 +147,31 @@ end
 -- Toggles {{{
 do
   map('n', '<Leader>tw', '<cmd>setlocal wrap!<CR>', {
-    desc = 'toggle line wrapping',
+    desc = 'Toggle line wrapping',
   })
   map('n', '<Leader>tna', '<cmd>setlocal number norelativenumber<CR>', {
-    desc = 'absolute line numbers',
+    desc = 'Absolute line numbers',
   })
   map('n', '<Leader>tnr', '<cmd>setlocal number relativenumber<CR>', {
-    desc = 'relative line numbers',
+    desc = 'Relative line numbers',
   })
   map('n', '<Leader>tnd', '<cmd>setlocal nonumber norelativenumber<CR>', {
-    desc = 'disable line numbers',
+    desc = 'Disable line numbers',
   })
   map('n', '<Leader>tb', function() vim.opt.laststatus = vim.opt.laststatus:get() == 0 and 2 or 0 end, {
-    desc = 'toggle statusline',
+    desc = 'Toggle statusline',
   })
   map('n', '<Leader>t!', function() vim.opt.signcolumn = vim.opt.signcolumn:get() == 'no' and 'yes' or 'no' end, {
-    desc = 'toggle sign column',
+    desc = 'Toggle sign column',
   })
   map('n', '<Leader>tz', '<cmd>setlocal spell!<CR>', {
-    desc = 'toggle spelling',
+    desc = 'Toggle spelling',
   })
   map('n', '<Leader>tf', function() vim.opt.foldcolumn = vim.opt.foldcolumn:get() == 0 and 1 or 0 end, {
-    desc = 'toggle fold column',
+    desc = 'Toggle fold column',
   })
   map('n', '<Leader>tl', '<cmd>setlocal list!<CR>', {
-    desc = 'toggle listchars',
+    desc = 'Toggle listchars',
   })
 
   -- indentation
@@ -186,11 +185,13 @@ do
     vim.ui.select({ 'tabs', 'spaces' }, {
       prompt = 'Indentation style:',
     }, function(choice)
-      local expand_tabs = false
-      expand_tabs = choice == 'spaces'
+      if not choice then return end
+
+      local expand_tabs = choice == 'spaces'
 
       vim.ui.input({ prompt = 'Indentation level:' }, function(input)
         local indent_level = tonumber(trim_str(input))
+        if not indent_level then return end
 
         vim.bo.expandtab = expand_tabs
         vim.bo.tabstop = indent_level
@@ -210,18 +211,18 @@ do
   end
 
   map('n', '<Leader>ti', configure_indentation, {
-    desc = 'configure indentation',
+    desc = 'Configure indentation',
   })
 
   -- colorcolumn
   map('n', '<Leader>tcd', '<cmd>setlocal colorcolumn=<CR>', {
-    desc = 'disable colorcolumn',
+    desc = 'Disable column',
   })
   map('n', '<Leader>tc1', '<cmd>setlocal colorcolumn=+1<CR>', {
-    desc = 'colorcolumn at textwidth + 1',
+    desc = 'Column at textwidth + 1',
   })
   map('n', '<Leader>tc=', function() vim.wo.colorcolumn = trim_str(vim.fn.input('colorcolumn=')) end, {
-    desc = 'set colorcolumn',
+    desc = 'Set column',
   })
 end
 -- }}}

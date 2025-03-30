@@ -1,5 +1,3 @@
--- TODO: redocument everything
-
 -- Basic {{{
 do
   vim.o.ffs = 'unix'

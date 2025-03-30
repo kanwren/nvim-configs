@@ -24,7 +24,7 @@ return {
   {
     'Wansmer/treesj',
     keys = {
-      { 'g<Space>', '<cmd>TSJToggle<CR>', mode = { 'n' }, noremap = true, desc = 'toggle node split' },
+      { 'g<Space>', '<cmd>TSJToggle<CR>', mode = { 'n' }, noremap = true, desc = 'Toggle node split' },
     },
     opts = {
       use_default_keymaps = false,

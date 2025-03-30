@@ -8,7 +8,7 @@ return {
       '<cmd>MinimapToggle<CR>',
       mode = 'n',
       noremap = true,
-      desc = 'toggle minimap',
+      desc = 'Toggle minimap',
     }
   },
 }

@@ -27,7 +27,7 @@ return {
       '<cmd>NvimTreeFindFileToggle<CR>',
       mode = 'n',
       noremap = true,
-      desc = 'toggle file tree',
+      desc = 'Toggle file tree',
     },
   },
 }

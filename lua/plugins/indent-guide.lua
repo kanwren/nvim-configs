@@ -2,6 +2,7 @@
 
 return {
   'lukas-reineke/indent-blankline.nvim',
+  main = 'ibl',
   opts = {
     enabled = 0,
     char = '│',
@@ -13,7 +14,7 @@ return {
       ':IndentBlanklineToggle<CR>',
       mode = 'n',
       noremap = true,
-      desc = 'toggle indent guides',
+      desc = 'Toggle indent guides',
     },
   },
 }

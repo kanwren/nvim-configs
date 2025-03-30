@@ -7,7 +7,7 @@ local keys = {
     mode = { 'n', 'x' },
     noremap = true,
     silent = true,
-    desc = 'remove highlight',
+    desc = 'Remove highlight',
   },
   {
     '<Leader>hc',
@@ -15,7 +15,7 @@ local keys = {
     mode = 'n',
     noremap = true,
     silent = true,
-    desc = 'clear all highlights',
+    desc = 'Clear all highlights',
   },
 }
 
@@ -26,7 +26,7 @@ for i = 0, 9 do
     mode = 'x',
     noremap = true,
     silent = true,
-    desc = 'highlight ' .. i,
+    desc = 'Highlight ' .. i,
   }
 end
 

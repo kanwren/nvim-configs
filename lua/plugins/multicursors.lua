@@ -12,13 +12,13 @@ return {
       '<C-j>',
       '<Plug>(VM-Add-Cursor-Down)',
       mode = 'n',
-      desc = 'add vm cursor down',
+      desc = 'Add cursor down',
     },
     {
       '<C-k>',
       '<Plug>(VM-Add-Cursor-Up)',
       mode = 'n',
-      desc = 'add vm cursor up',
+      desc = 'Add cursor up',
     },
   }
 }

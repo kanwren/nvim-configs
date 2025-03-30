@@ -13,7 +13,7 @@ local function hatch(key, creature, speed, description)
     end,
     mode = 'n',
     noremap = true,
-    desc = 'hatch ' .. description,
+    desc = 'Hatch ' .. description,
   }
 end
 
@@ -62,7 +62,7 @@ return {
         end,
         mode = 'n',
         noremap = true,
-        desc = 'remove a critter',
+        desc = 'Remove a critter',
       },
       hatch('c', '🦀', 5, 'a crab'),
       hatch('d', '🦆', 2, 'a duck'),
@@ -100,7 +100,7 @@ return {
           end
         end,
         noremap = true,
-        desc = 'hatch a sea creature',
+        desc = 'Hatch a sea creature',
       },
       hatch('a', 'ඞ', 4, 'an amogus'),
     },
