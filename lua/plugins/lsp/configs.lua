@@ -22,11 +22,24 @@ vim.api.nvim_create_autocmd('LspAttach', {
     map('n', 'grco', '<cmd>lua require("telescope.builtin").lsp_outgoing_calls()<CR>', 'Outgoing calls')
     map('n', '<Leader>lf', '<cmd>lua vim.lsp.buf.format()<CR>', 'Format buffer')
 
+    -- Format on save
+    if vim.b.autoformat == nil then
+      vim.b.autoformat = true
+    end
+    map('n', '<Leader>ta', function()
+      vim.b.autoformat = not vim.b.autoformat
+      if vim.b.autoformat then
+        vim.notify('Autoformatting enabled')
+      else
+        vim.notify('Autoformatting disabled')
+      end
+    end, 'Toggle autoformatting')
     if not client:supports_method('textDocument/willSaveWaitUntil') and client:supports_method('textDocument/formatting') then
       vim.api.nvim_create_autocmd('BufWritePre', {
         group = group,
         buffer = args.buf,
         callback = function()
+          if not vim.b.autoformat then return end
           vim.lsp.buf.format({ bufnr = args.buf, id = client.id, timeout_ms = 1000 })
         end,
       })
