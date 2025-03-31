@@ -167,7 +167,7 @@ do
   map('n', '<Leader>tz', '<cmd>setlocal spell!<CR>', {
     desc = 'Toggle spelling',
   })
-  map('n', '<Leader>tf', function() vim.opt.foldcolumn = vim.opt.foldcolumn:get() == 0 and 1 or 0 end, {
+  map('n', '<Leader>tf', function() vim.opt.foldcolumn = vim.opt.foldcolumn:get() == "0" and "1" or "0" end, {
     desc = 'Toggle fold column',
   })
   map('n', '<Leader>tl', '<cmd>setlocal list!<CR>', {
