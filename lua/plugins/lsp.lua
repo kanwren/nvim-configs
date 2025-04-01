@@ -20,7 +20,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     map('n', 'gO', '<cmd>lua require("telescope.builtin").lsp_document_symbols()<CR>', 'Document symbols')
     map('n', 'grci', '<cmd>lua require("telescope.builtin").lsp_incoming_calls()<CR>', 'Incoming calls')
     map('n', 'grco', '<cmd>lua require("telescope.builtin").lsp_outgoing_calls()<CR>', 'Outgoing calls')
-    map('n', '<Leader>lf', '<cmd>lua vim.lsp.buf.format()<CR>', 'Format buffer')
+    map('n', '<Leader><CR>', '<cmd>lua vim.lsp.buf.format()<CR>', 'Format buffer')
 
     -- Format on save
     if vim.b.autoformat == nil then
