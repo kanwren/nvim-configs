@@ -61,6 +61,98 @@ vim.api.nvim_create_autocmd('LspDetach', {
   end,
 })
 
+local function server_configs()
+  return {
+    bashls = {},
+    cssls = {},
+    emmet_ls = {},
+    gopls = {
+      settings = {
+        gopls = {
+          usePlaceholders = true,
+          experimentalPostfixCompletions = true,
+          analyses = {
+            unusedparams = true,
+            shadow = true,
+            nilness = true,
+          },
+        },
+      },
+    },
+    html = {},
+    java_language_server = {
+      cmd = { 'java-language-server' },
+    },
+    lua_ls = {
+      settings = {
+        Lua = {
+          runtime = {
+            version = 'LuaJIT',
+          },
+          diagnostics = {
+            globals = { 'vim' },
+          },
+          workspace = {
+            library = vim.api.nvim_get_runtime_file("", true),
+            checkThirdParty = false,
+          },
+          telemetry = {
+            enable = false,
+          },
+        },
+      }
+    },
+    nixd = {
+      settings = {
+        nixd = {
+          formatting = {
+            command = { 'nixpkgs-fmt' },
+          },
+        },
+      },
+    },
+    rust_analyzer = {
+      settings = {
+        ["rust-analyzer"] = {
+          assist = {
+            importMergeBehavior = "last",
+            importPrefix = "by_self",
+          },
+          cargo = {
+            loadOutDirsFromCheck = true,
+          },
+          procMacro = {
+            enable = true,
+          },
+        }
+      }
+    },
+    solargraph = {},
+    terraformls = {},
+    texlab = {},
+    ts_ls = {},
+  }
+end
+
+local function none_ls_sources(none_ls)
+  return {
+    -- Diagnostics
+    none_ls.builtins.diagnostics.fish,
+    none_ls.builtins.diagnostics.staticcheck,
+    none_ls.builtins.diagnostics.statix,
+
+    -- Formatting
+    none_ls.builtins.formatting.fish_indent,
+    none_ls.builtins.formatting.goimports,
+    none_ls.builtins.formatting.just,
+    none_ls.builtins.formatting.shellharden,
+
+    -- LSP actions
+    none_ls.builtins.code_actions.gomodifytags,
+    none_ls.builtins.code_actions.impl,
+  }
+end
+
 return {
   'neovim/nvim-lspconfig',
 
@@ -80,76 +172,8 @@ return {
       cmp_nvim_lsp.default_capabilities()
     )
 
-    for server, server_config in pairs({
-      rust_analyzer = {
-        settings = {
-          ["rust-analyzer"] = {
-            assist = {
-              importMergeBehavior = "last",
-              importPrefix = "by_self",
-            },
-            cargo = {
-              loadOutDirsFromCheck = true,
-            },
-            procMacro = {
-              enable = true,
-            },
-          }
-        }
-      },
-      lua_ls = {
-        settings = {
-          Lua = {
-            runtime = {
-              version = 'LuaJIT',
-            },
-            diagnostics = {
-              globals = { 'vim' },
-            },
-            workspace = {
-              library = vim.api.nvim_get_runtime_file("", true),
-              checkThirdParty = false,
-            },
-            telemetry = {
-              enable = false,
-            },
-          },
-        }
-      },
-      gopls = {
-        settings = {
-          gopls = {
-            usePlaceholders = true,
-            experimentalPostfixCompletions = true,
-            analyses = {
-              unusedparams = true,
-              shadow = true,
-              nilness = true,
-            },
-          },
-        },
-      },
-      terraformls = {},
-      nixd = {
-        settings = {
-          nixd = {
-            formatting = {
-              command = { 'nixpkgs-fmt' },
-            },
-          },
-        },
-      },
-      texlab = {},
-      html = {},
-      cssls = {},
-      emmet_ls = {},
-      bashls = {},
-      ts_ls = {},
-      solargraph = {},
-      java_language_server = {
-        cmd = { 'java-language-server' },
-      },
-    }) do
+    local configs = server_configs()
+    for server, server_config in pairs(configs) do
       server_config.capabilities = vim.tbl_deep_extend(
         'force',
         default_capabilities,
@@ -158,25 +182,6 @@ return {
       lspconfig[server].setup(server_config)
     end
 
-    none_ls.setup({
-      sources = {
-        -- Diagnostics
-        -- NOTE: can disable diagnostics on change with
-        -- .with({ method = none_ls.methods.DIAGNOSTICS_ON_SAVE })
-        none_ls.builtins.diagnostics.fish,
-        none_ls.builtins.diagnostics.staticcheck,
-        none_ls.builtins.diagnostics.statix,
-
-        -- Formatting
-        none_ls.builtins.formatting.fish_indent,
-        none_ls.builtins.formatting.goimports,
-        none_ls.builtins.formatting.just,
-        none_ls.builtins.formatting.shellharden,
-
-        -- LSP actions
-        none_ls.builtins.code_actions.gomodifytags,
-        none_ls.builtins.code_actions.impl,
-      },
-    })
+    none_ls.setup({ sources = none_ls_sources(none_ls) })
   end,
 }
