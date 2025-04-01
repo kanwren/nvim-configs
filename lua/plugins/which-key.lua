@@ -23,7 +23,7 @@ return {
         { "<leader>gh",  group = "hunk" },
         { "<leader>gm",  desc = "Line commit message" },
         { "<leader>gt",  group = "toggle" },
-        { "<leader>gy",  group = "copy permalink" },
+        { "<leader>gy",  desc = "Copy permalink" },
         { "<leader>h",   group = "highlight" },
         { "<leader>m",   group = "change directory" },
         { "<leader>t",   group = "toggles" },
