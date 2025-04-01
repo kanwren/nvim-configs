@@ -62,5 +62,7 @@ return {
     map_picker('p', 'projects', 'projects'),
     map_picker('a', 'aerial', 'aerial symbols'),
     map_picker('n', 'notify', 'notifications'),
+    map_picker('d', 'diagnostics bufnr=0', 'diagnostics'),
+    map_picker('D', 'diagnostics', 'workspace diagnostics'),
   },
 }
