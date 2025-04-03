@@ -150,7 +150,7 @@ local function none_ls_sources(none_ls)
   return {
     -- Diagnostics
     none_ls.builtins.diagnostics.fish,
-    none_ls.builtins.diagnostics.staticcheck,
+    -- none_ls.builtins.diagnostics.staticcheck,
     none_ls.builtins.diagnostics.statix,
 
     -- Formatting
