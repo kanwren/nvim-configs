@@ -11,9 +11,27 @@ return {
       'nvim-tree',
     },
     sections = {
+      lualine_a = {
+        'mode',
+      },
+      lualine_b = {
+        'branch',
+        'diff',
+        'diagnostics',
+      },
       lualine_c = {
-        -- show relative filepath in filename
-        { 'filename', path = 1, }
+        { 'filename', path = 1 }
+      },
+      lualine_x = {
+        'encoding',
+        'fileformat',
+        'filetype',
+      },
+      lualine_y = {
+        'progress',
+      },
+      lualine_z = {
+        'location',
       },
     },
     winbar = { lualine_c = { 'filename' } },
