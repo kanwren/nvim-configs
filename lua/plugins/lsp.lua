@@ -4,6 +4,10 @@ vim.diagnostic.config({
   underline = true,
 })
 
+local disable_autoformatting_in = {
+  'sh'
+}
+
 local group = vim.api.nvim_create_augroup('my.lsp', {})
 vim.api.nvim_create_autocmd('LspAttach', {
   group = group,
@@ -24,7 +28,15 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     -- Format on save
     if vim.b.autoformat == nil then
-      vim.b.autoformat = true
+      -- should this buffer autoformat by default?
+      local autoformat = true
+      for _, ft in ipairs(disable_autoformatting_in) do
+        if vim.bo.filetype == ft then
+          autoformat = false
+          break
+        end
+      end
+      vim.b.autoformat = autoformat
     end
     map('n', '<Leader>ta', function()
       vim.b.autoformat = not vim.b.autoformat
