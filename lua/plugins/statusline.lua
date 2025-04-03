@@ -23,6 +23,7 @@ return {
         { 'filename', path = 1 }
       },
       lualine_x = {
+        function() return vim.bo.eol and "eol" or "noeol" end,
         'encoding',
         'fileformat',
         'filetype',

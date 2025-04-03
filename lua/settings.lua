@@ -1,6 +1,7 @@
 -- Basic {{{
 do
   vim.o.ffs = 'unix'
+  vim.o.fixendofline = false
   vim.o.secure = true
 end
 -- }}}
