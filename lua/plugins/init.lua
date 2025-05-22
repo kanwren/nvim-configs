@@ -1,6 +1,4 @@
 return {
-  'gpanders/editorconfig.nvim',
-
   -- edit remote files without netrw
   'lambdalisue/vim-protocol',
 
