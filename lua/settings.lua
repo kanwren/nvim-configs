@@ -99,12 +99,6 @@ end
 
 -- Editing {{{
 do
-  if vim.fn.has('clipboard') then
-    vim.opt.clipboard = { 'unnamed' }
-    if vim.fn.has('unnamedplus') then
-      vim.opt.clipboard:append({ 'unnamedplus' })
-    end
-  end
   vim.o.virtualedit = 'all'  -- allow editing past the ends of lines
   vim.o.joinspaces = false   -- never two spaces after sentence
   vim.opt.whichwrap:append({ -- direction key wrapping
