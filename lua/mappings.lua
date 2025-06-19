@@ -75,6 +75,29 @@ do
 end
 -- }}}
 
+-- Clipboard {{{
+do
+  map({ 'n', 'v' }, '<Leader>y', '"+y', {
+    desc = 'Yank to clipboard',
+  })
+  map({ 'n', 'v' }, '<Leader>Y', '"+Y', {
+    desc = 'Yank line to clipboard',
+  })
+  map({ 'n', 'v' }, '<Leader>d', '"+d', {
+    desc = 'Delete to clipboard',
+  })
+  map({ 'n', 'v' }, '<Leader>D', '"+D', {
+    desc = 'Delete to eol to clipboard',
+  })
+  map({ 'n', 'v' }, '<Leader>p', '"+p', {
+    desc = 'Paste after from clipboard',
+  })
+  map({ 'n', 'v' }, '<Leader>P', '"+P', {
+    desc = 'Paste before from clipboard',
+  })
+end
+-- }}}
+
 -- Buffers {{{
 do
   map('n', '<Leader>bd', '<cmd>bdelete<CR>', {
