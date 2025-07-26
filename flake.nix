@@ -52,7 +52,7 @@
                 lua-language-server
                 ## nix
                 nixd
-                nixpkgs-fmt
+                alejandra
                 statix
                 ## ruby
                 solargraph

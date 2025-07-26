@@ -118,7 +118,7 @@ local function server_configs()
       settings = {
         nixd = {
           formatting = {
-            command = { 'nixpkgs-fmt' },
+            command = { 'alejandra' },
           },
         },
       },
