@@ -27,14 +27,6 @@ do
   vim.opt.rtp:prepend(lazy_path)
 end
 
--- Disable netrw
-do
-  vim.g.loaded_netrw = 1
-  vim.g.loaded_netrwPlugin = 1
-  vim.g.loaded_netrwSettings = 1
-  vim.g.loaded_netrwFileHandlers = 1
-end
-
 -- Settings
 do
   vim.o.ffs = 'unix'
