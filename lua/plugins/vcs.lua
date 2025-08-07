@@ -1,18 +1,4 @@
 return {
-  -- better commit message editing
-  'rhysd/committia.vim',
-
-  -- see commit message of last commit under cursor (<Leader>gm)
-  'rhysd/git-messenger.vim',
-
-  -- Generate gitignores
-  {
-    'wintermute-cell/gitignore.nvim',
-    dependencies = {
-      'nvim-telescope/telescope.nvim',
-    },
-  },
-
   -- sign column
   {
     'lewis6991/gitsigns.nvim',

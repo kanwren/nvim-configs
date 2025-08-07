@@ -16,7 +16,6 @@ return {
     'nvim-lua/plenary.nvim',
     -- extensions
     'nvim-telescope/telescope-ui-select.nvim',
-    'rcarriga/nvim-notify',
   },
   config = function()
     local telescope = require('telescope')
@@ -27,16 +26,10 @@ return {
         ['ui-select'] = {
           telescope_themes.get_dropdown {},
         },
-        aerial = {
-          show_nesting = true,
-        },
       },
     }
 
     telescope.load_extension('ui-select')
-    telescope.load_extension('aerial')
-    telescope.load_extension('notify')
-    telescope.load_extension('projects')
   end,
   keys = {
     map_picker('f', 'find_files', 'files'),
@@ -59,9 +52,6 @@ return {
     map_picker('l', 'loclist', 'loclist'),
     map_picker('/', 'current_buffer_fuzzy_find skip_empty_lines=true', 'fuzzy find in buf'),
     map_picker('P', 'builtin include_extensions=true', 'pickers'),
-    map_picker('p', 'projects', 'projects'),
-    map_picker('a', 'aerial', 'aerial symbols'),
-    map_picker('n', 'notify', 'notifications'),
     map_picker('d', 'diagnostics bufnr=0', 'diagnostics'),
     map_picker('D', 'diagnostics', 'workspace diagnostics'),
   },

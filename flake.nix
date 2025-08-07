@@ -36,7 +36,6 @@
                 nodejs_latest
                 yarn
                 fzf
-                code-minimap
 
                 # language servers (+ associated tools)
                 ## go
