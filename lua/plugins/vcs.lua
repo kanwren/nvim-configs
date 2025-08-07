@@ -13,16 +13,29 @@ return {
         end
 
         -- navigation
-        map('n', ']h', function()
-          if vim.wo.diff then return ']c' end
-          vim.schedule(function() gs.next_hunk() end)
-          return '<Ignore>'
-        end, { desc = 'Next hunk', expr = true })
-        map('n', '[h', function()
-          if vim.wo.diff then return '[c' end
-          vim.schedule(function() gs.prev_hunk() end)
-          return '<Ignore>'
-        end, { desc = 'Previous hunk', expr = true })
+        map(
+          'n',
+          ']h',
+          function()
+            if vim.wo.diff then return ']c' end
+            vim.schedule(function() gs.next_hunk() end)
+            return '<Ignore>'
+          end,
+          {
+            desc = 'Next hunk',
+            expr = true,
+          }
+        )
+        map(
+          'n',
+          '[h',
+          function()
+            if vim.wo.diff then return '[c' end
+            vim.schedule(function() gs.prev_hunk() end)
+            return '<Ignore>'
+          end,
+          { desc = 'Previous hunk', expr = true }
+        )
         -- line operations
         map('n', '<Leader>gl', function() gs.blame_line { full = true } end, { desc = 'Blame line' })
         -- hunk operations
@@ -33,8 +46,14 @@ return {
         -- buffer operations
         map('n', '<Leader>gbdi', gs.diffthis, { desc = 'Diff against index' })
         map('n', '<Leader>gbdp', function() gs.diffthis('~') end, { desc = 'Diff against parent' })
-        map('n', '<Leader>gbdd', function() gs.diffthis(vim.fn.input('ref: '):match('^%s*(.-)%s*$')) end,
-          { desc = 'Custom diff' })
+        map(
+          'n',
+          '<Leader>gbdd',
+          function()
+            gs.diffthis(vim.fn.input('ref: '):match('^%s*(.-)%s*$'))
+          end,
+          { desc = 'Custom diff' }
+        )
         map('n', '<Leader>gbs', gs.stage_buffer, { desc = 'Stage buffer' })
         map('n', '<Leader>gbr', gs.reset_buffer, { desc = 'Reset buffer' })
         -- UI stuff

@@ -174,17 +174,22 @@ do
     desc = 'lcd to current buffer',
     noremap = true,
   })
-  vim.keymap.set({ 'n' }, '<Leader>mg', function()
-    local result = vim.fn.system({ 'git', 'rev-parse', '--show-toplevel' })
-    if vim.api.nvim_get_vvar('shell_error') ~= 0 then
-      vim.notify('failed to get git root: ' .. result, vim.log.levels.ERROR)
-      return
-    end
-    vim.cmd('cd ' .. result:gsub('\n$', ''))
-  end, {
-    desc = 'cd to git root',
-    noremap = true,
-  })
+  vim.keymap.set(
+    { 'n' },
+    '<Leader>mg',
+    function()
+      local result = vim.fn.system({ 'git', 'rev-parse', '--show-toplevel' })
+      if vim.api.nvim_get_vvar('shell_error') ~= 0 then
+        vim.notify('failed to get git root: ' .. result, vim.log.levels.ERROR)
+        return
+      end
+      vim.cmd('cd ' .. result:gsub('\n$', ''))
+    end,
+    {
+      desc = 'cd to git root',
+      noremap = true,
+    }
+  )
 
   -- run jq commands
   vim.keymap.set({ 'n' }, '<Leader>j', ":%!jq '' <left><left>", {
@@ -228,19 +233,24 @@ do
   })
 
   -- Delete trailing whitespace and retab
-  vim.keymap.set({ 'n' }, '<Leader><Tab>', function()
-    local wv = vim.fn.winsaveview()
-    vim.cmd([[
+  vim.keymap.set(
+    { 'n' },
+    '<Leader><Tab>',
+    function()
+      local wv = vim.fn.winsaveview()
+      vim.cmd([[
       keeppatterns %s/\s\+\ze\r\=$//e
       nohlsearch
       retab
     ]])
-    vim.fn.winrestview(wv)
-  end, {
-    desc = 'Clean whitespace',
-    silent = true,
-    noremap = true,
-  })
+      vim.fn.winrestview(wv)
+    end,
+    {
+      desc = 'Clean whitespace',
+      silent = true,
+      noremap = true,
+    }
+  )
 end
 
 vim.api.nvim_create_user_command(

@@ -38,14 +38,19 @@ vim.api.nvim_create_autocmd('LspAttach', {
       end
       vim.b.autoformat = autoformat
     end
-    map('n', '<Leader>ta', function()
-      vim.b.autoformat = not vim.b.autoformat
-      if vim.b.autoformat then
-        vim.notify('Autoformatting enabled')
-      else
-        vim.notify('Autoformatting disabled')
-      end
-    end, 'Toggle autoformatting')
+    map(
+      'n',
+      '<Leader>ta',
+      function()
+        vim.b.autoformat = not vim.b.autoformat
+        if vim.b.autoformat then
+          vim.notify('Autoformatting enabled')
+        else
+          vim.notify('Autoformatting disabled')
+        end
+      end,
+      'Toggle autoformatting'
+    )
     if not client:supports_method('textDocument/willSaveWaitUntil') and client:supports_method('textDocument/formatting') then
       vim.api.nvim_create_autocmd('BufWritePre', {
         group = group,
