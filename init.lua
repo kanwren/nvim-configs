@@ -159,6 +159,32 @@ do
     noremap = true,
   })
 
+  -- extra text objects
+  vim.keymap.set({ 'v' }, 'af', ':<C-u>silent! normal! gg0VG$<CR>', {
+    desc = 'Around file',
+    noremap = true,
+  })
+  vim.keymap.set({ 'o' }, 'af', ':normal Vaf<CR>', {
+    desc = 'Around file',
+    noremap = false,
+  })
+  vim.keymap.set({ 'v' }, 'il', ':<C-u>silent! normal! ^vg_<CR>', {
+    desc = 'Inner line',
+    noremap = true,
+  })
+  vim.keymap.set({ 'o' }, 'il', ':normal vil<CR>', {
+    desc = 'Inner line',
+    noremap = false,
+  })
+  vim.keymap.set({ 'v' }, 'al', ':<C-u>silent! normal! 0v$<CR>', {
+    desc = 'Around line',
+    noremap = true,
+  })
+  vim.keymap.set({ 'o' }, 'al', ':normal val<CR>', {
+    desc = 'Around line',
+    noremap = false,
+  })
+
   -- saving
   vim.keymap.set({ 'n' }, '<Leader>w', '<cmd>write<CR>', {
     desc = 'Write buffer',
