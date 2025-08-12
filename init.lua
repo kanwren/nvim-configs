@@ -57,6 +57,7 @@ do
   vim.o.relativenumber = true
   vim.o.cursorline = true
   vim.o.signcolumn = 'yes'
+  vim.o.foldlevelstart = 99
   vim.o.colorcolumn = '+1'
   vim.o.list = true
   vim.opt.listchars = {
