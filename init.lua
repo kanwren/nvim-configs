@@ -69,6 +69,7 @@ do
   }
   vim.o.statusline = '[%n] %f%< %m%y%h%w%r  %(0x%B %b%)%=%p%%  %(%l/%L%)%( | %c%V%)%( %)'
 
+  vim.opt.completeopt = { 'menuone', 'noselect', 'popup' }
   vim.opt.wildmode = { 'longest:list', 'full' }
   vim.opt.shortmess:append({
     I = true, -- no intro message

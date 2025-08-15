@@ -12,19 +12,52 @@ local group = vim.api.nvim_create_augroup('my.lsp', {})
 vim.api.nvim_create_autocmd('LspAttach', {
   group = group,
   callback = function(args)
+    local bufnr = args.buf
     local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
 
-    local function map(mode, k, v, desc)
-      local map_opts = { noremap = true, silent = true, desc = desc, buffer = args.buf }
-      vim.keymap.set(mode, k, v, map_opts)
-    end
+    vim.lsp.completion.enable(true, client.id, bufnr, {
+      autotrigger = true,
+      convert = function(item)
+        return { abbr = item.label:gsub("%b()", "") }
+      end,
+    })
 
-    map('n', 'gd', '<cmd>lua require("telescope.builtin").lsp_definitions()<CR>', 'Goto definition')
-    map('n', 'grt', '<cmd>lua require("telescope.builtin").lsp_type_definitions()<CR>', 'List type definitions')
-    map('n', 'gO', '<cmd>lua require("telescope.builtin").lsp_document_symbols()<CR>', 'Document symbols')
-    map('n', 'grci', '<cmd>lua require("telescope.builtin").lsp_incoming_calls()<CR>', 'Incoming calls')
-    map('n', 'grco', '<cmd>lua require("telescope.builtin").lsp_outgoing_calls()<CR>', 'Outgoing calls')
-    map('n', '<Leader><CR>', '<cmd>lua vim.lsp.buf.format()<CR>', 'Format buffer')
+    vim.keymap.set(
+      { 'n' },
+      'gd',
+      '<cmd>lua require("telescope.builtin").lsp_definitions()<CR>',
+      { desc = 'Goto definition', noremap = true, silent = true, buffer = bufnr }
+    )
+    vim.keymap.set(
+      { 'n' },
+      'grt',
+      '<cmd>lua require("telescope.builtin").lsp_type_definitions()<CR>',
+      { desc = 'List type definitions', noremap = true, silent = true, buffer = bufnr }
+    )
+    vim.keymap.set(
+      { 'n' },
+      'gO',
+      '<cmd>lua require("telescope.builtin").lsp_document_symbols()<CR>',
+      { desc = 'Document symbols', noremap = true, silent = true, buffer = bufnr }
+    )
+    vim.keymap.set(
+      { 'n' },
+      'grci',
+      '<cmd>lua require("telescope.builtin").lsp_incoming_calls()<CR>',
+      { desc = 'Incoming calls', noremap = true, silent = true, buffer = bufnr }
+    )
+    vim.keymap.set(
+      { 'n' },
+      'grco',
+      '<cmd>lua require("telescope.builtin").lsp_outgoing_calls()<CR>',
+      { desc = 'Outgoing calls', noremap = true, silent = true, buffer = bufnr }
+    )
+    vim.keymap.set(
+      { 'n' },
+      '<Leader><CR>',
+      '<cmd>lua vim.lsp.buf.format()<CR>',
+      { desc = 'Format buffer', noremap = true, silent = true, buffer = bufnr }
+    )
 
     -- Format on save
     if vim.b.autoformat == nil then
@@ -38,8 +71,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
       end
       vim.b.autoformat = autoformat
     end
-    map(
-      'n',
+    vim.keymap.set(
+      { 'n' },
       '<Leader>ta',
       function()
         vim.b.autoformat = not vim.b.autoformat
@@ -49,7 +82,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
           vim.notify('Autoformatting disabled')
         end
       end,
-      'Toggle autoformatting'
+      { desc = 'Toggle autoformatting', noremap = true, silent = true, buffer = bufnr }
     )
     if not client:supports_method('textDocument/willSaveWaitUntil') and client:supports_method('textDocument/formatting') then
       vim.api.nvim_create_autocmd('BufWritePre', {
@@ -174,20 +207,14 @@ return {
   'neovim/nvim-lspconfig',
 
   dependencies = {
-    'hrsh7th/cmp-nvim-lsp',
     'nvimtools/none-ls.nvim',
   },
 
   config = function()
     local lspconfig = require('lspconfig')
-    local cmp_nvim_lsp = require('cmp_nvim_lsp')
     local none_ls = require('null-ls')
 
-    local default_capabilities = vim.tbl_deep_extend(
-      'force',
-      vim.lsp.protocol.make_client_capabilities(),
-      cmp_nvim_lsp.default_capabilities()
-    )
+    local default_capabilities = vim.lsp.protocol.make_client_capabilities()
 
     local configs = server_configs()
     for server, server_config in pairs(configs) do
