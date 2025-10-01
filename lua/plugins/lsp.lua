@@ -211,7 +211,6 @@ return {
   },
 
   config = function()
-    local lspconfig = require('lspconfig')
     local none_ls = require('null-ls')
 
     local default_capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -223,7 +222,8 @@ return {
         default_capabilities,
         server_config.capabilities or {}
       )
-      lspconfig[server].setup(server_config)
+      vim.lsp.config(server, server_config)
+      vim.lsp.enable(server)
     end
 
     none_ls.setup({ sources = none_ls_sources(none_ls) })
