@@ -53,8 +53,6 @@
                 nixd
                 alejandra
                 statix
-                ## ruby
-                solargraph
                 ## rust
                 rust-analyzer
                 ## shell
