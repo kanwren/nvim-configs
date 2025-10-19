@@ -5,7 +5,8 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
   };
 
-  outputs = { self, nixpkgs }:
+  outputs =
+    { self, nixpkgs }:
     let
       systems = [
         "x86_64-linux"
@@ -24,50 +25,56 @@
           (pkgs.neovim.override {
             viAlias = true;
             vimAlias = true;
-          }).overrideAttrs (old: {
-            installPhase = (old.installPhase or "") + ''
-              wrapProgram $out/bin/nvim --prefix PATH : ${nixpkgs.lib.makeBinPath (with pkgs; [
-                # core
-                xxd
-                git
+          }).overrideAttrs
+            (old: {
+              installPhase = (old.installPhase or "") + ''
+                wrapProgram $out/bin/nvim --prefix PATH : ${
+                  nixpkgs.lib.makeBinPath (
+                    with pkgs;
+                    [
+                      # core
+                      xxd
+                      git
 
-                # for plugins
-                gcc
-                nodejs_latest
-                yarn
-                fzf
+                      # for plugins
+                      gcc
+                      nodejs_latest
+                      yarn
+                      fzf
 
-                # language servers (+ associated tools)
-                ## go
-                go-tools
-                gomodifytags
-                gopls
-                gotools
-                impl
-                ## html/css/etc
-                emmet-ls
-                vscode-langservers-extracted
-                ## lua
-                lua-language-server
-                ## nix
-                nixd
-                alejandra
-                statix
-                ## rust
-                rust-analyzer
-                ## shell
-                bash-language-server
-                shellcheck
-                shellharden
-                ## terraform
-                terraform-ls
-                ## tex
-                texlab
-                ## typescript
-                typescript-language-server
-              ])}
-            '';
-          });
+                      # language servers (+ associated tools)
+                      ## go
+                      go-tools
+                      gomodifytags
+                      gopls
+                      gotools
+                      impl
+                      ## html/css/etc
+                      emmet-ls
+                      vscode-langservers-extracted
+                      ## lua
+                      lua-language-server
+                      ## nix
+                      nixd
+                      alejandra
+                      statix
+                      ## rust
+                      rust-analyzer
+                      ## shell
+                      bash-language-server
+                      shellcheck
+                      shellharden
+                      ## terraform
+                      terraform-ls
+                      ## tex
+                      texlab
+                      ## typescript
+                      typescript-language-server
+                    ]
+                  )
+                }
+              '';
+            });
       });
 
       devShells = forAllSystems (pkgs: {
@@ -77,5 +84,7 @@
           ];
         };
       });
+
+      formatter = forAllSystems (pkgs: pkgs.nixfmt-tree);
     };
 }
